@@ -1,0 +1,151 @@
+---
+title: "#30DMC_8Nov_HDX"
+author: "Clémentine Cottineau-Mugadza"
+date: "2024-10-28"
+format: 
+  html: default
+  pdf: default
+---
+
+## 8 November. Data: HDX. 
+
+"Use data from HDX to map humanitarian topics. Explore the datasets from the Humanitarian Data Exchange, covering disaster response, health, population, and development. Map for social good."
+
+### 1. Package Installation and Loading
+
+```{r, message=FALSE, warning=FALSE, output=FALSE}
+# Define the packages to be used
+packages <- c("tidyverse", "sf", "geojsonR", 
+              "lubridate", "magick", "magrittr",
+              "grid", "extrafont","readxl")
+
+# Function to check if packages are installed and load them
+load_packages <- function(pkgs) {
+  # Check for missing packages
+  missing_pkgs <- pkgs[!(pkgs %in% installed.packages()[, "Package"])]
+  
+  # Install missing packages
+  if (length(missing_pkgs)) {
+    install.packages(missing_pkgs)
+  }
+  
+  # Load all packages
+  lapply(pkgs, library, character.only = TRUE)
+}
+
+# Load the packages
+load_packages(packages)
+loadfonts(device = "postscript")
+
+# Developer's version of ggsflabel
+if("ggsflabel" %in% rownames(installed.packages())){
+  library(ggsflabel)
+}else{
+  devtools::install_github("yutannihilation/ggsflabel")
+  library(ggsflabel)
+  }
+
+
+```
+
+### 2. Import HDX data, backgrounds & Rbanism logo
+
+```{r}
+# HDX data
+# https://data.humdata.org/dataset/palestine-acled-conflict-data
+demonstrations <- read_excel("palestine_hrp_demonstration_events_by_month-year_as-of-28oct2024.xlsx",
+                             sheet = "Data") %>%
+  mutate(shapeISO = ifelse(Admin2 == "North Gaza", "PS-NGZ",
+                     ifelse(Admin2 == "Jericho", "PS-JRH", 
+                     ifelse(Admin2 == "Tubas", "PS-TBS",
+                     ifelse(Admin2 == "Deir El Balah", "PS-DEB",  
+                     ifelse(Admin2 == "Rafah", "PS-RFH",
+                     ifelse(Admin2 == "Qalqilya", "PS-QQA",
+                     ifelse(Admin2 == "Al Quds", "PS-NGZ",
+                     ifelse(Admin2 == "Tulkarm", "PS-TKM",
+                     ifelse(Admin2 == "Nablus", "PS-NBS",
+                     ifelse(Admin2 == "Ramallah and Al Bireh", "PS-RBH*",   
+                     ifelse(Admin2 == "Nablus", "PS-NBS",
+                     ifelse(Admin2 == "Bethlehem", "PS-BTH",
+                     ifelse(Admin2 == "Gaza City", "PS-GZA*",
+                     ifelse(Admin2 == "Hebron", "PS-HBN",
+                     ifelse(Admin2 == "Salfit", "PS-SLT",
+                     ifelse(Admin2 == "Khan Yunis", "PS-KYS", 
+                     ifelse(Admin2 == "Jenin", "PS_JEN", NA       
+                            ))))))))))))))))),
+         date = my(paste(Month, Year, sep=" "))
+  )
+
+# administrative boundaries
+# https://data.humdata.org/dataset/geoboundaries-admin-boundaries-for-state-of-palestine
+Palestine <- st_read("geoBoundaries-PSE-ADM2.geojson") 
+
+# https://data.humdata.org/dataset/whosonfirst-data-admin-isr
+Israel <- st_read("whosonfirst-data-admin-il-country-polygon.shp")
+
+# Download Rbanism logo
+rbanism_logo <- image_read('https://rbanism.org/assets/imgs/about/vi_l.jpg')
+```
+
+### 3. Sum number of demonstrations in each province since October 2023
+
+```{r}
+demo <- demonstrations %>%
+  filter(date >= ymd(20231001)) %>%
+  group_by(shapeISO) %>%
+  summarise(Demonstrations = sum(Events, na.rm = T))
+```
+
+### 4. Join and map data
+
+```{r, warning = F}
+geodemo <- left_join(Palestine, demo, by="shapeISO") %>%
+  mutate(data_avail = ifelse(is.na(Demonstrations), "Unavailable data", ""))
+centroids <- st_centroid(geodemo)
+
+# Crop Israel map to bounding box of Palestine
+if(st_crs(Palestine) == st_crs(Israel)){
+cropped_Israel <- st_crop(Israel,
+                          sf::st_bbox(geodemo))
+}
+
+## Map the result
+ggplot() +
+  geom_sf(data = cropped_Israel, fill = alpha("grey", 0.3), colour = "white") +
+   geom_sf(data = geodemo, aes(fill=data_avail), colour = "white") +
+  geom_sf(data = centroids, colour=alpha("#93278F",0.7), 
+          aes(size=Demonstrations)) +
+  guides(size=guide_legend(title="# of demonstrations\nheld between Oct'23 \nand Oct'24")) +
+  ggsflabel::geom_sf_text_repel(data = geodemo %>% filter(Demonstrations > 50), 
+                                 aes(label = shapeName),  fill = alpha("white", 0.5),
+                                 size = 2.5, family="Courier",
+                      nudge_x = -0.02, nudge_y = 0.05, seed = 25) +
+   ggsflabel::geom_sf_text_repel(data = geodemo %>% 
+                                   filter(data_avail == 'Unavailable data'), 
+                                 aes(label = shapeName),  fill = alpha("white", 0.5),
+                                 size = 2.5, family="Courier",
+                      nudge_x = 0, nudge_y = 0.015, seed = 25) +
+  coord_sf(datum = st_crs(geodemo)) +
+  scale_fill_manual(values = c(alpha("grey", 0.65), alpha("grey", 0.2)), 
+                    name="", limits = c('Unavailable data')) +
+  ggtitle(paste0("8Nov. HDX Data Palestine \n",
+                 "A year of demonstrations")) +
+  ylab("")+
+  xlab(paste0("#30DayMapChallenge. Clémentine Cottineau-Mugadza, 2024. 
+  HDX data: Palestinian Central Bureau of Statistics. 	Who's On First.
+  Open Data WatchgeoBoundaries, Open Data Watchraster2polygon.")) +
+  theme_minimal() +
+  theme(axis.text=element_text(size=6, family="Courier"),
+       plot.title=element_text(size=12, family="Courier"),
+        axis.title=element_text(size=8, family="Courier"),
+       legend.text=element_text(size=8, family="Courier"),
+       legend.title=element_text(size=10, family="Courier"),
+       ) 
+
+grid.raster(rbanism_logo,
+            x = 0.9, y=0.9,
+            width = unit(100, "points"))
+  ggsave(filename = "HDX.png",
+         width = 8, height = 8, dpi = 300)
+
+```

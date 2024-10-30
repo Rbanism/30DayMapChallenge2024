@@ -17,10 +17,9 @@ This template uses a polygon map as an example to illustrate the process of crea
 
 ### 1. Package Installation and Loading
 
-```{r}
+```{r, echo=FALSE, warning=FALSE}
 # Define the packages to be used
-packages <- c("ggplot2", "dplyr", "sf", "readr", "tidyr", "rmapshaper",
-              "showtext")
+packages <- c("ggplot2", "dplyr", "sf", "readr", "tidyr", "rmapshaper","showtext","here")
 
 # Function to check if packages are installed and load them
 load_packages <- function(pkgs) {
@@ -48,10 +47,10 @@ cat("All specified packages have been loaded successfully!\n")
 
 ```{r}
 
-tiles <- st_read("template/data/3DBAG_tiles.shp")
+tiles <- st_read(here("template/data/3DBAG_tiles.shp"))
 ```
 
-### 3. Calculate builing density per tile
+### 3. Calculate building density per tile
 
 ```{r}
 
@@ -74,7 +73,7 @@ plot(tiles)
 
 ```{r}
 
-cities_labels <- st_read("template/data/ne_10m_populated_places_simple.shp") 
+cities_labels <- st_read(here("template/data/ne_10m_populated_places_simple.shp"))
 ```
 
 ```{r}
@@ -90,14 +89,14 @@ cities_labels <- st_intersection(tiles, cities_labels)
 cities_labels <- cities_labels %>%   filter(iso_a2 == "NL")  # Check the result plot(st_geometry(cities_labels))
 ```
 
-### 5. Import provincies from CBS
+### 5. Import provinces from CBS
 
 ```{r}
 
-provincies <- st_read("template/data/provincies.shp")
+provincies <- st_read(here("template/data/provincies.shp"))
 ```
 
-### 6. Simplify provincies
+### 6. Simplify provinces
 
 ```{r}
 
@@ -198,56 +197,6 @@ unbuffered_polygons <- st_buffer(buffered_polygons, dist = -2000) # Remove the b
 ```{r}
 provincies_simple5 <- buffered_polygons
 ```
-
-`{r} par(mfrow = c(1, 2)) plot(provincies) plot(provincies_simple)}`
-
-`{r} provincies_simple2 <- st_simplify(provincies_simple, dTolerance = 2000)  # More simplification}`
-
-`{r} par(mfrow = c(1, 2)) plot(provincies_simple) plot(provincies_simple2)}`
-
-`{r} library(sf) library(rmapshaper) library(dplyr)  # Load or create your spatial data # For example, using a sample of tiles # tiles <- st_read("path_to_your_shapefile")  # Step 1: Simplify the polygons (reduce number of vertices) provincies_simple3 <- ms_simplify(provincies_simple2, keep = 0.5)  # Keep 1% of original vertices  # Step 2: Extract the simplified polygon coordinates # Use st_geometry() to extract only the geometries, and then apply st_coordinates simple_coords <- st_coordinates(st_geometry(provincies_simple3))  # Step 3: Snap the coordinates to 8 cardinal directions # Define the cardinal directions (N, S, E, W, NE, NW, SE, SW) directions <- c(0, 45, 90, 135, 180, 225, 270, 315)  # Angles in degrees  # Define the snapping function snap_to_direction <- function(x, y, directions) {   # Calculate angle from origin (x, y) and snap to the nearest direction   angle <- atan2(y, x) * 180 / pi   angle <- (angle + 360) %% 360  # Normalize angle to [0, 360]   closest_direction <- directions[which.min(abs(directions - angle))]      # Calculate the new snapped coordinates   rad <- closest_direction * pi / 180   new_x <- cos(rad) * sqrt(x^2 + y^2)   new_y <- sin(rad) * sqrt(x^2 + y^2)      return(c(new_x, new_y)) }  # Apply the snapping function to each vertex (loop over the coordinates) snapped_coords <- apply(simple_coords, 1, function(coord) snap_to_direction(coord[1], coord[2], directions))  # Reshape snapped_coords into the correct format for polygons (a matrix of x, y) snapped_matrix <- matrix(snapped_coords, ncol = 2, byrow = TRUE)  # Step 4: Close the polygon by ensuring the first and last vert}`
-
-`{r} par(mfrow = c(1, 3)) plot(provincies_simple) plot(provincies_simple2) plot(provincies_simple3)}`
-
-`{r} provincies_simple4 <- st_make_valid(provincies_simple3) provincies_simple4 <- st_snap(provincies_simple4, provincies_simple4, tolerance = 0.001)}`
-
-`{r} # Apply a small buffer to close gaps or remove overlaps buffered_polygons <- st_buffer(provincies_simple4, dist = 2000) # Small positive buffer unbuffered_polygons <- st_buffer(buffered_polygons, dist = -2000) # Remove the buffer}`
-
-`{r} par(mfrow = c(1, 3)) plot(provincies_simple) plot(provincies_simple3) plot(provincies_simple4) plot(buffered_polygons)}`
-
-`{r} provincies_simple5 <- buffered_polygons}`
-
-`{r} # Define custom breaks custom_breaks <- c(0, 2000, 4000, 6000, 8000, 10000)  # Create a new class column using these custom breaks tiles$class_custom <- cut(tiles$bdens, breaks = custom_breaks, include.lowest = TRUE, right = TRUE)  # Define custom labels for the legend to match the breaks class_labels <- c("0-2000", "2000-4000", "4000-6000", "6000-8000", "8000-10000")  # Plot with custom classes and use the class_labels ggplot(data = tiles) +   geom_sf(aes(fill = class_custom), color = "white", size = 0.1) +  # Fill using custom class   scale_fill_manual(values = colorRampPalette(c("#E5C3D1", "#613F75"))(5),                      labels = class_labels) +  # Use custom labels for legend   theme_void() +    theme(     legend.position = "bottom",      legend.title = element_blank(),  # Hide legend title     legend.text = element_text(size = 8)  # Adjust text size for legend   ) +   labs(fill = "Building Density")  # Legend label for fill}`
-
-`{r} library(ggplot2) library(sf)  # Define custom breaks and labels custom_breaks <- c(0, 2000, 4000, 6000, 8000, 10000) class_labels <- c("0-2000", "2000-4000", "4000-6000", "6000-8000", "8000-10000")  # Create a new class column using these custom breaks tiles$class_custom <- cut(tiles$bdens,                                breaks = custom_breaks,                                include.lowest = TRUE,                                labels = class_labels,                                right = TRUE)  # Ensure that 'class_custom' is treated as a factor tiles$class_custom <- factor(tiles$class_custom, levels = class_labels)  # Plot bdens using custom breaks and labels ggplot(data = tiles) +   # Fill the tiles with the color corresponding to their class   geom_sf(aes(fill = class_custom), color = "white", size = 0.1) +  # Use class_custom for fill      # Define custom scale for fill using manual colors and labels   scale_fill_viridis_c((option = "B"),                     labels = class_labels) +  # Ensure labels match class      # Set the theme and background   theme_void() +    theme(     legend.position = "bottom",      legend.title = element_blank(),  # Hide legend title     legend.text = element_text(size = 8),  # Adjust text size for legend     plot.title = element_text(size = 16, hjust = 0.5)  # Centered title   ) +   labs(fill = "Building Density")  # Add a label for the legend}`
-
-`{r} library(ggplot2) library(sf)  # Simple plot using class_custom ggplot(data = tiles) +   geom_sf(aes(fill = class_custom), color = "white", size = 0.1) +  # Fill using class_custom      # Set the background to void   theme_void() +      # Add a basic title   labs(title = "Building Density by Custom Class")}`
-
-`{r} # Load necessary libraries library(ggplot2) library(sf) library(showtext)  # For loading Google Fonts  # Add a Google font (e.g., Roboto) font_add_google("Roboto", "roboto")  showtext_auto()  # Create 5 classes using cut() and store the bin labels tiles$class <- cut(tiles$bdens,                         breaks = 5,                         labels = FALSE, include.lowest = TRUE)  # Get the breaks for the bins to use them in the legend labels bin_breaks <- cut(tiles$bdens, breaks = 5, include.lowest = TRUE) bin_labels <- levels(bin_breaks)  # Plot with discrete color bins, custom labels, and city names with dynamic size ggplot() +   # First layer: provincies_simple2 (provinces borders)   geom_sf(data = provincies_simple2, color="white", fill = "black", alpha = 0.1, show.legend = FALSE) +  # Set outlines to white, no fill      # Second layer: tiles (building tiles with color) with transparency   geom_sf(data = tiles, aes(fill = factor(class)), color="#F4F7BE", size = 0.1, alpha = 0.9) +  # 0.5 transparency        # First layer: provincies_simple2 (provinces borders)   geom_sf(data = provincies_simple2, color="white", fill = NA, show.legend = FALSE) +  # Set outlines to white, no fill         # Third layer: cities_labels_transformed (city points)   geom_sf(data = cities_labels_transformed) +      # Fourth layer: labels for cities   geom_sf_text(data = cities_labels_transformed,                 aes(label = name, size = class),  # Use the 'population' field for size                show.legend = FALSE,                color = "black", family = "roboto") +  # Set font family to Google font      # Adjust the range of the size aesthetic for better visualization   scale_size(range = c(2, 5)) +  # Adjust minimum and maximum font sizes      # Fill scale with color gradient   scale_fill_manual(values = colorRampPalette(c("#E5C3D1", "#613F75"))(5),  # 5 color palette                     labels = bin_labels) +  # Use bin range labels for the legend    # Set background and remove axes   theme_void() +  # Clean background without grid or axes   theme(     plot.background = element_rect(fill = "#F4F7BE", color = NA),  # Set background color     legend.position = "bottom",  # Move the legend to the bottom     legend.box = "horizontal",  # Arrange legends horizontally in bottom     legend.key.width = unit(1, "cm"),  # Adjust width of the legend items     legend.title = element_blank(),  # Remove the title for the fill legend     legend.text = element_text(size = 8, family = "roboto"),  # Adjust text size and font for the legend     plot.title = element_text(size = 21, family = "roboto")  # Title font customization   ) +    # Add a title to the map   ggtitle("How many buildings are in the Netherlands?") +  # Add your map title here      # Legend for size   labs(fill = "Object Number", size = "Population") +  # Add a label for the size legend      # Control legend appearance   guides(     fill = guide_legend(ncol = 3, keyheight = 0.5, keywidth = 0.5),  # Arrange legend items in 3 columns and adjust symbol size     size = guide_legend(order = 1, keyheight = 0.5, keywidth = 0.5),  # Adjust the size of the symbols for size legend     class = "none"  # Hide the 'class' legend   )}`
-
-`{r} # Load necessary libraries library(ggplot2) library(sf)  # Format the breaks without scientific notation pretty_breaks <- format(pretty(tiles$bdens, n = 5), scientific = FALSE)  # Create a new class column using these breaks tiles$class2 <- format(cut(tiles$bdens, breaks = as.numeric(pretty_breaks), include.lowest = TRUE), scientific = FALSE)   # Get the breaks for the bins to use them in the legend labels bin_labels <- levels(cut(tiles$bdens, breaks = pretty_breaks, include.lowest = TRUE))  # Plot the map with the pretty breaks and custom legend ggplot() +   # Fill the tiles with color   geom_sf(data = tiles, aes(fill = factor(class)), color = "#F4F7BE", size = 0.1) +       # Fill scale with color gradient   scale_fill_manual(values = colorRampPalette(c("#E5C3D1", "#613F75"))(length(pretty_breaks) - 1),  # Color palette based on breaks                     labels = bin_labels) +  # Use pretty break labels for the legend    # Set background and remove axes   theme_void() +  # Clean background without grid or axes   theme(     plot.background = element_rect(fill = "#F4F7BE", color = NA),  # Set background color     legend.position = "bottom",  # Move the legend to the bottom     legend.box = "horizontal",  # Arrange legends horizontally in bottom     legend.key.width = unit(1, "cm"),  # Adjust width of the legend items     legend.title = element_blank(),  # Remove the title for the fill legend     legend.text = element_text(size = 8),  # Adjust text size and font for the legend     plot.title = element_text(size = 21)  # Title font customization   ) +    # Add a title to the map   ggtitle("How many buildings are in the Netherlands?") +  # Add your map title here      # Control legend appearance   labs(fill = "Object Number") +  # Add a label for the fill legend      # Control legend appearance   guides(     fill = guide_legend(ncol = 3, keyheight = 0.5, keywidth = 0.5)  # Arrange legend items in 3 columns and adjust symbol size   )}`
-
-`{r} library(ggplot2)  tiles_p <- ggplot()+   geom_sf(data=tiles, aes(fill=bdens))  tiles_p}`
-
-`{r} # Set scipen to a higher value to avoid scientific notation options(scipen = 999)  # Calculate quantiles qa <- round(quantile(tiles$bdens, c(0, 0.2, 0.4, 0.6, 0.8, 1.0)),2)  # Print the result without scientific notation qa}`
-
-`{r}  tiles$bdens_q_c <- cut (tiles$bdens, qa,                       labels = c(1:5),                         include.lowest = TRUE)  tiles}`
-
-`{r} tiles$bdens_q <- cut (tiles$bdens, qa,                       labels = c("0-72.85", "72.85-231.95", "231.95-800", "800-2124", "2124-8432"),                         include.lowest = TRUE)  tiles}`
-
-`{r} pal <- colorRampPalette(c("#559999", "grey80", "#BB650B"))(5) pal #> [1] "#559999" "#90B2B2" "#CCCCCC" "#C3986B" "#BB650B"}`
-
-`{r} tiles_p <- ggplot()+   geom_sf(data=tiles, aes(fill=bdens_q))+   scale_fill_manual(values = pal)  tiles_p <- tiles_p +   theme_void()  tiles_p}`
-
-`{r} tiles_p <- ggplot()+      geom_sf(data=provincies_simple5, fill="#00A99E", color="white")+      geom_sf(data=tiles, fill="NA", color="lightgrey", linetype = "dotted", alpha=0.1)+      geom_sf(data=tiles, aes(alpha=bdens), fill="white", color=NA)+     scale_alpha_continuous(range = c(0,1))     tiles_p <- tiles_p +   theme_void()+   theme(     plot.background = element_rect(fill = "#00A99E", color = NA),  # Set bg color     legend.position = "bottom",  # Move the legend to the bottom     legend.box = "horizontal",  # Arrange legends horizontally in bottom     legend.key.width = unit(1, "cm"),  # Adjust width of the legend items     legend.title = element_blank(),  # Remove the title for the fill legend     legend.text = element_text(size = 8),  # Adjust text size and font for legend     plot.title = element_text(size = 21),  # Title font customization     plot.subtitle = element_text(size = 8),  # Adjust text size and font for legend     plot.caption = element_text(size = 8)   )+       # Add a title to the map   ggtitle("How many buildings are in the Netherlands?") +  # Add your map title here    # Control legend appearance   labs(     title = "Building density in the Netherlands",     subtitle = "per 3D bag tile",     caption = "Source: 3DBAG, Author: Daniele Cannatella",     fill = "Object Number") +  # Add a label for the fill legend    # Control legend appearance   guides(     fill = guide_legend(ncol = 3, keyheight = 0.5, keywidth = 0.5)  # Arrange legend items in 3 columns and adjust symbol size   )   tiles_p}`
-
-`{r} library(showtext)  # List all available Google Fonts google_fonts <- showtext::font_google() head(google_fonts)}`
-
-`{r} # Add Google Fonts to the system showtext_auto()  # Automatically use showtext for text rendering font_add_google("Roboto", "roboto")  # Add the "Roboto" font from Google Fonts font_add_google("Lobster", "script")  # Add the "Roboto" font from Google Fonts}`
-
-`{r} library(grid)  tiles_p <- ggplot()+      geom_sf(data=provincies_simple5, fill="#103251", color="#EDF292")+      geom_sf(data=tiles, fill="NA", color="#103251", size = 0.1, linetype = "dotted", alpha=0.1)+      geom_sf(data=tiles, aes(alpha=bdens), fill="white", color=NA)+     scale_alpha_continuous(range = c(0.05,1)) +      geom_sf(data = cities_labels, color = "#EDF292", size = 1, alpha = 0.25)+      geom_sf_text(data = cities_labels, aes(label = name), color = "#EDF292",                family="script",                alpha=1,                nudge_x = 0.1,  # Adjust this value to move the labels horizontally                nudge_y = 0.1  # Adjust this value to move the labels vertically                )      # Add city labels with nudging to avoid overlap with the polygons   #geom_sf_label(data = cities_labels,    #              aes(label = name), color = "#EDF292",   #              nudge_x = 0.2,  # Adjust horizontally   #              nudge_y = 0.2,  # Adjust vertically   #              label.size = 0.1,    #              family = "script")       tiles_p <- tiles_p +   theme_void()+   theme(     plot.background = element_rect(fill = "#103251", color = NA),  # Set bg color     plot.margin = margin(10, 10, 10, 10),  # Adjust margins     legend.position = "bottom",  # Move the legend to the bottom     legend.box = "horizontal",  # Arrange legends horizontally in bottom     legend.title = element_blank(),  # Remove the title for the fill legend     legend.text = element_text(size = 8,                               family = "script",                               color = "white"),  # Adjust text size and fon     plot.title = element_text(size = 21,                               face = "bold",                               family = "script",                               color = "white"),  # Title font customization     plot.subtitle = element_text(size = 8,                               family = "script",                               color = "white"),  # Adjust text size and font legend     plot.caption = element_text(size = 8,                               family = "script",                               color = "white"),     legend.key.height = unit(1, "cm"),  # Adjust height to make keys squared     legend.key.width = unit(1, "cm"),   # Adjust width to match height   )+       # Add a title to the map   ggtitle("How many buildings are in the Netherlands?") +  # Add your map title here    # Control legend appearance   labs(     title = "Building density in the Netherlands",     subtitle = "per 3D bag tile",     caption = "Source: 3DBAG, Author: Daniele Cannatella",     fill = "Object Number") +  # Add a label for the fill legend    # Control legend appearance   # Adjust the legend to have two rows   guides(     fill = guide_legend(ncol = 1, nrow = 2, keyheight = unit(1, "cm"), keywidth = unit(1, "cm"))   )+      # Add paragraph text using annotation_custom and textGrob   annotation_custom(     grob = textGrob(       label = "This map shows the custom building density classification.\nThe data reflects the distribution of buildings in relation to\nurban development patterns across the Netherlands.",       x = 0.95, y = 0.5,    # Position on the plot (bottom-left corner)       hjust = 1,            # Left-align the text       gp = gpar(fontsize = 8, fontfamily = "script")  # Adjust text properties     )   )   tiles_p}`
-
-`{r} # Export to A3 PDF (Portrait) ggsave("figures/my_map_A3_portrait2.pdf", plot = tiles_p, width = 29.7, height = 42, units = "cm")}`
 
 ## Plot the Polygon map
 
