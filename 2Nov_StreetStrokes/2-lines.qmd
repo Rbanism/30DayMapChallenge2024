@@ -9,13 +9,12 @@ format:
   pdf: default
 ---
 
-## Data preparation
-
-### 1. Load packages
+### 0. Load packages
 
 ```{r}
 # Define the packages to be used
-cran_packages <- c("ggplot2", "dplyr", "sf", "pak")
+cran_packages <- c("tidyverse", "sf", "pak", "sysfonts", "showtext", 
+                   "osmdata", "magick", "grid")
 
 # Function to check if packages are installed and load them
 load_packages <- function(pkgs) {
@@ -40,8 +39,28 @@ suppressMessages({
   pak::pkg_install("CityRiverSpaces/rcoins")
 })
 
+library(CRiSp)
+library(rcoins)
+
 # Print a message to confirm successful loading
 cat("All packages have been loaded successfully!\n")
+```
+
+```{r}
+# Download Rbanism logo
+rbanism_logo <- image_read('../rbanism_logo_white.png')
+```
+
+
+### 1. Get base street network of Bucharest
+
+```{r}
+# Get full street network
+streets <- opq("Bucharest") |> 
+  add_osm_feature(key = "highway") |> 
+  osmdata_sf()
+street_data <- streets$osm_lines |> 
+  st_transform(32635)
 ```
 
 ### 2. Calculate strokes along street network
@@ -57,9 +76,7 @@ strokes <- rcoins::stroke(bucharest$streets)
 
 ```{r}
 # Calculate length of strokes
-strokes <- strokes |> 
-    st_as_sf() |> 
-    mutate(length = st_length(strokes))
+strokes <- strokes |> st_as_sf() |> mutate(length = st_length(strokes))
 
 # Ensure that the geometry column is properly named
 st_geometry(strokes) <- "geom"
@@ -70,10 +87,14 @@ st_geometry(strokes) <- "geom"
 ### 1. Create the plot
 
 ```{r}
-p <- strokes |>
-  ggplot() +
-  geom_sf(aes(linewidth = as.numeric(length))) +
-  scale_linewidth_continuous(range = c(0.1, 1))
+# Create the base plot
+p <- ggplot() +
+  geom_sf(data = street_data, linewidth = 0.05, color = "white") +
+  geom_sf(data = strokes, aes(linewidth = as.numeric(length)), color = "#FFFFC5") +
+  scale_linewidth_continuous(name = "Main structures:", range = c(0.1, 1.2)) +
+  xlim(418500, 437500) +
+  ylim(4909800, 4931500) +
+  coord_sf(datum = st_crs(32635))
 ```
 
 ### 2. Style the map
@@ -82,73 +103,65 @@ p <- strokes |>
 
 ```{r}
 # Add Google Fonts to the system
-showtext_auto()  # Automatically use showtext for text rendering
-font_add_google("Roboto", "roboto")  # Add the "Roboto" font from Google Fonts
-font_add_google("Lobster", "script")  # Add the "Roboto" f
+font_add_google("Roboto", "roboto")  # Add the "Roboto" font
+font_add_google("Montserrat", "montserrat")  # Add the "Montserrat" font
+showtext_auto()
 ```
 
 #### 2.2 Plot your map
 
 ```{r}
-p <- p +
-  theme_void()+
+p_styled <- p +
+  theme_void() +
   theme(
-    plot.background = element_rect(fill = "#103251", color = NA),  # Set bg color
-    plot.margin = margin(10, 10, 10, 10),  # Adjust margins
-    legend.position = "bottom",  # Move the legend to the bottom
-    legend.box = "horizontal",  # Arrange legends horizontally in bottom
-    legend.title = element_blank(),  # Remove the title for the fill legend
+    plot.background = element_rect(fill = "#103251"),
+    plot.margin = margin(10, 90, 10, 90),
+    legend.position = "bottom",
+    legend.box = "horizontal",
+    # legend.title = element_blank(), 
+    legend.title = element_text(size = 13,
+                              family = "montserrat",
+                              color = "white"), 
     legend.text = element_text(size = 13,
-                              family = "script",
-                              color = "white"),  # Adjust text size and fon
+                              family = "montserrat",
+                              color = "white"),  
     plot.title = element_text(size = 34,
                               face = "bold",
-                              family = "script",
-                              color = "white"),  # Title font customization
+                              family = "montserrat",
+                              color = "white"), 
     plot.subtitle = element_text(size = 13,
-                              family = "script",
-                              color = "white"),  # Adjust text size and font legend
-    plot.caption = element_text(size = 13,
-                              family = "script",
-                              color = "white"),
+                              family = "montserrat",
+                              color = "white"), 
+    plot.caption = element_text(size = 10,
+                              family = "montserrat",
+                              color = "white",
+                              hjust = 0,
+                              lineheight = 0.4),
     legend.key.height = unit(1, "cm"),  # Adjust height to make keys squared
     legend.key.width = unit(1, "cm"),   # Adjust width to match height
   ) +
-  
-   # Add a title to the map
-  ggtitle("How many buildings are in the Netherlands?") +  # Add your map title here
-
   # Control legend appearance
-  labs(
-    title = "Building density in the Netherlands",
-    subtitle = "per 3D bag tile",
-    caption = "Source: 3DBAG, Author: Daniele Cannatella",
-    fill = "Object Number") +  # Add a label for the fill legend
+  labs(title = "The structure of Bucharest",
+       subtitle = "Continuous streets along the main street network, lineweight by length\n",
+       caption = "Data: OpenStreetMap\nAuthor: Claudiu Forgaci\nPackages used:
+- Forgaci C, Nattino F (2024). CRiSp: Automate the Delineation of Urban River Spaces. R package version 0.0.0.9000, https://cityriverspaces.github.io/CRiSp/.
+- Nattino F, Forgaci C (2024). rcoins: Continuity in street networks. R package version 0.0.0.9000, https://cityriverspaces.github.io/rcoins/") 
 
-  # Control legend appearance
-  # Adjust the legend to have two rows
-  guides(
-    fill = guide_legend(ncol = 1, nrow = 2, keyheight = unit(0.25, "cm"), keywidth = unit(0.25, "cm"))
-  )
-
-
-tiles_p
+p_styled
 ```
 
 ```{r}
 # Define the output file name
-output_file <- "template/output/example_map.png"
+output_file <- "output/2Nov_StreetStrokes.png"
 
 # Export the map as a PNG with 1:1 aspect ratio
-ggsave(filename = output_file, plot = tiles_p, device = "png", 
-       width = 6, height = 6, units = "in", dpi = 300)
+ggsave(filename = output_file, plot = p_styled, device = "png", 
+       width = 6, height = 6, dpi = 300)
 
 # Print a message to confirm export
 cat("Map has been exported as", output_file, "with a 1:1 aspect ratio.\n")
-
-# 
 ```
 
 ## And here is the map!
 
-![Example Map](output/example_map.png){#fig:example_map}
+![Street strokes in Bucharest](output/2-streetstrokes.png)
