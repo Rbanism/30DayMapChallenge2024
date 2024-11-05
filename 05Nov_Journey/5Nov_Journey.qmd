@@ -88,7 +88,7 @@ ggplot() +
   geom_sf(data = journee, aes(fill=diff), colour = "black") +
     coord_sf(datum = st_crs(journee)) +
   scale_fill_gradient2(low = "#00A99D", high = "#F7931E") +
-   guides(fill=guide_legend(title="Difference in ambient \nhigh income population \nbetween 2pm and 2am \n-: more people at night \n+: more people during the day")) +
+   guides(fill=guide_legend(title="Difference in ambient share \nof high income population \nbetween 2pm and 2am \n-: more rich people at night \n+: more during the day")) +
  ggtitle(paste0("5Nov. A Journée \n",
                 "Result of a day of trips in the Paris region")) +
   ggsflabel::geom_sf_label_repel(data = journee %>% filter(diff == min(diff) | diff == max(diff)), 
@@ -103,7 +103,7 @@ ylab("")+
        plot.title=element_text(size=12, family="Courier"),
         axis.title=element_text(size=8, family="Courier"),
        legend.text=element_text(size=8, family="Courier"),
-       legend.title=element_text(size=10, family="Courier"),
+       legend.title=element_text(size=10, family="Courier")
        ) 
 
 grid.raster(rbanism_logo,
