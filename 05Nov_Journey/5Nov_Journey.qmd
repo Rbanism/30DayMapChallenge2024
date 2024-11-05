@@ -1,0 +1,115 @@
+---
+title: "#30DMC_5Nov_Journey"
+author: "Clémentine Cottineau-Mugadza"
+date: "2024-11-05"
+format: 
+  html: default
+  pdf: default
+---
+
+## 5 November. A Journey.
+
+"Map any journey. Personal or not. Trace a journey—this could be a daily commute, a long-distance trip, or something from history. The key is to map movement from one place to another."
+
+### 1. Package Installation and Loading
+
+```{r, message=FALSE, warning=FALSE, output=FALSE}
+# Define the packages to be used
+packages <- c("tidyverse", "sf", "geojsonR", 
+              "lubridate", "magick", "magrittr",
+              "grid", "extrafont")
+
+# Function to check if packages are installed and load them
+load_packages <- function(pkgs) {
+  # Check for missing packages
+  missing_pkgs <- pkgs[!(pkgs %in% installed.packages()[, "Package"])]
+  
+  # Install missing packages
+  if (length(missing_pkgs)) {
+    install.packages(missing_pkgs)
+  }
+  
+  # Load all packages
+  lapply(pkgs, library, character.only = TRUE)
+}
+
+# Load the packages
+load_packages(packages)
+loadfonts(device = "postscript")
+
+# Developer's version of ggsflabel
+if("ggsflabel" %in% rownames(installed.packages())){
+  library(ggsflabel)
+}else{
+  devtools::install_github("yutannihilation/ggsflabel")
+  library(ggsflabel)
+  }
+
+
+```
+
+### 2. Import Mobiliscope data & Rbanism logo
+
+```{r}
+# Mobiliscope data
+# https://mobiliscope.cnrs.fr/zip-streamer.php?lang=en&city=idf&file=stacked/rev_choro_stacked.csv&layers=1
+ambient <- read_csv("data/idf_rev_pct.csv") %>%
+  mutate(district = as.character(district))
+
+# administrative boundaries
+# https://mobiliscope.cnrs.fr/zip-streamer.php?lang=en&city=idf&file=stacked/rev_choro_stacked.csv&layers=1
+paris <- st_read("data/idf_secteurs.geojson") %>%
+  mutate(district = as.character(CODE_SEC))
+
+# Download Rbanism logo
+rbanism_logo <- image_read('https://rbanism.org/assets/imgs/about/vi_l.jpg')
+```
+
+### 3. Compute difference in ambient high-income population between 2pm and 2am
+
+```{r}
+ambient_rich <- ambient %>%
+  select(district, hour, rev4) %>%
+  mutate(hour = paste0("at", hour)) %>%
+  filter(hour %in% c("at2am", "at2pm")) %>%
+  pivot_wider(
+    names_from = hour,
+    values_from = rev4) %>%
+  mutate(diff = at2pm - at2am)
+```
+
+### 4. Join and map data
+
+```{r, warning = F}
+journee <- left_join(paris, ambient_rich, by="district") 
+
+## Map the result
+ggplot() +
+  geom_sf(data = journee, aes(fill=diff), colour = "black") +
+    coord_sf(datum = st_crs(journee)) +
+  scale_fill_gradient2(low = "#00A99D", high = "#F7931E") +
+   guides(fill=guide_legend(title="Difference in ambient \nhigh income population \nbetween 2pm and 2am \n-: more people at night \n+: more people during the day")) +
+ ggtitle(paste0("5Nov. A Journée \n",
+                "Result of a day of trips in the Paris region")) +
+  ggsflabel::geom_sf_label_repel(data = journee %>% filter(diff == min(diff) | diff == max(diff)), 
+                                 aes(label = LIB),  fill = "white",
+                                 size = 2.5, family="Courier",
+                                nudge_x = 0, nudge_y = 0.25, seed = 10) +
+ylab("")+
+  xlab(paste0("\n#30DayMapChallenge. Clémentine Cottineau-Mugadza, 2024. 
+              \nData: Mobiliscope (v4.3).  Vallée J, Douet A, Le Roux G, \nCommenges H, Lecomte C, Villard E (2024). Mobiliscope, \nan open platform to explore cities and social mix around the clock. \nwww.mobiliscope.cnrs.fr doi:10.5281/zenodo.11111161 \nEnquête Globale Transport (EGT) 2010 - Paris / Ile-de-France \nDRIEA-STIF-OMNIL (prod.), Progedo (distrib.)")) +
+  theme_void() +
+  theme(axis.text=element_text(size=6, family="Courier"),
+       plot.title=element_text(size=12, family="Courier"),
+        axis.title=element_text(size=8, family="Courier"),
+       legend.text=element_text(size=8, family="Courier"),
+       legend.title=element_text(size=10, family="Courier"),
+       ) 
+
+grid.raster(rbanism_logo,
+            x = 0.9, y=0.9,
+            width = unit(100, "points"))
+  ggsave(filename = "journey.png",
+         width = 8, height = 8, dpi = 300)
+
+```
