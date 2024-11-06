@@ -1,0 +1,128 @@
+---
+title: "7. Vintage Map: Fetching a historical map from the Allmaps tile server"
+author:
+  - "Claudiu Forgaci"
+date: "2024-11-06"
+format: 
+  html: default
+  pdf: default
+---
+
+### 0. Load packages
+
+```{r}
+# Define the packages to be used
+cran_packages <- c("tidyverse", "sf", "pak", "sysfonts", "showtext", "ggtext",
+                   "osmdata", "magick", "grid", "png", "leaflet", "mapview")
+
+# Function to check if packages are installed and load them
+load_packages <- function(pkgs) {
+  # Check for missing packages
+  missing_pkgs <- pkgs[!(pkgs %in% installed.packages()[, "Package"])]
+  
+  # Install missing packages
+  if (length(missing_pkgs)) {
+    install.packages(missing_pkgs)
+  }
+  
+  # Load all packages
+  lapply(pkgs, library, character.only = TRUE)
+}
+
+# Load the packages
+load_packages(cran_packages)
+
+# Print a message to confirm successful loading
+cat("All packages have been loaded successfully!\n")
+```
+
+```{r}
+# Download Rbanism logo
+rbanism_logo <- image_read('../rbanism_logo_white.png')
+```
+
+### 1. Get tiles and prepare map
+
+```{r}
+map <- leaflet() |> 
+  setView(lng = 4.50, lat = 51.91, zoom = 14) |> 
+  addTiles(
+    urlTemplate = 'https://allmaps.xyz/images/dfeeddb75af3d46d/{z}/{x}/{y}.png')
+
+mapshot(map, file = "leaflet_map.png", remove_controls = TRUE)
+
+img <- png::readPNG("leaflet_map.png")
+
+img_height <- dim(img)[1]
+img_width <- dim(img)[2]
+
+square_size <- min(img_width, img_height)
+
+xmin <- (img_width - square_size) / 2
+xmax <- xmin + square_size
+ymin <- (img_height - square_size) / 2
+ymax <- ymin + square_size
+
+gg <- ggplot() +
+  annotation_custom(rasterGrob(img[ymin:ymax, xmin:xmax, ])) +
+  coord_fixed() + 
+  theme_void() +
+  labs(title = "High-Resolution Map from Leaflet")
+
+print(gg)
+
+# attribution = 'Map data licensed under CCO. Allmaps is a project by Bert Spaan & Jules Schoonman.'
+```
+
+
+### 2. Style the map
+
+#### 2.1 Add custom fonts
+
+```{r}
+# Add Google Fonts to the system
+font_add_google("Roboto", "roboto")  # Add the "Roboto" font
+font_add_google("Montserrat", "montserrat")  # Add the "Montserrat" font
+font_add_google("Eczar", "eczar")  # Add the "Montserrat" font
+showtext_auto()
+```
+
+#### 2.2 Plot your map
+
+```{r}
+gg_styled <- gg +
+  theme_void() +
+  theme(
+    plot.background = element_rect(fill = "#e5d7c8", linewidth = 0),
+    # plot.margin = margin(10, 90, 10, 90),
+    plot.title = element_markdown(size = 32, face = "bold",
+                              family = "roboto",
+                              lineheight = 0.2,
+                              colour = "#b86a26"), 
+    plot.caption = element_text(size = 16,
+                              family = "roboto",
+                              colour = "#b86a26",
+                              hjust = 0,
+                              lineheight = 0.4)) +
+  # Control legend appearance
+  labs(title = "<span style='font-size:32pt'>CITY OF ROTTERDAM</span><br><span style='font-size:24pt'>LOCATION OF BOMBINGS, 1940</span>",
+       caption = "Map data licensed under CCO. Allmaps is a project by Bert Spaan & Jules Schoonman.") 
+
+gg_styled
+```
+
+```{r}
+# Define the output file name
+output_file <- "output/7Nov_vintage.png"
+
+# Export the map as a PNG with 1:1 aspect ratio
+ggsave(filename = output_file, plot = gg_styled, device = "png", 
+       width = 4, height = 4, dpi = 300)
+
+# Print a message to confirm export
+cat("Map has been exported as", output_file, "with a 1:1 aspect ratio.\n")
+```
+
+## And here is the map!
+
+![Street strokes in Bucharest](output/2-streetstrokes.png)
