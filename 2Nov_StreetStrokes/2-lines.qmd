@@ -2,7 +2,7 @@
 title: "2. Lines Map: Natural roads in Bucharest"
 author:
   - "Claudiu Forgaci"
-  - "Francesco Nattino?"
+  - "Francesco Nattino"
 date: "2024-10-25"
 format: 
   html: default
@@ -114,7 +114,8 @@ showtext_auto()
 p_styled <- p +
   theme_void() +
   theme(
-    plot.background = element_rect(fill = "#103251"),
+    plot.background = element_rect(fill = "#103251",
+                                    color = NA),
     plot.margin = margin(10, 90, 10, 90),
     legend.position = "bottom",
     legend.box = "horizontal",
@@ -148,6 +149,11 @@ p_styled <- p +
 - Nattino F, Forgaci C (2024). rcoins: Continuity in street networks. R package version 0.0.0.9000, https://cityriverspaces.github.io/rcoins/") 
 
 p_styled
+```
+
+```{r}
+p_styled <- cowplot::ggdraw(p_styled) +
+  cowplot::draw_image(rbanism_logo, x = 0, y = 0, width = 0.1, height = 0.1, hjust = 0, vjust = 0)
 ```
 
 ```{r}
