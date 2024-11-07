@@ -1,0 +1,199 @@
+---
+title: "#30DMC_1Nov_Points"
+author: "Pietro Bernardini, Claudiu Forgaci"
+date: "2024-10-31"
+format: 
+  html: default
+  pdf: default
+---
+
+## 1 November - Points 
+
+"30DayMapChallenge classic: A map with points. Start the challenge with points. Show individual locations—anything from cities to trees or more abstract concepts. Simple, but a key part of the challenge."
+
+### 1. Load packages
+
+```{r, message=FALSE, warning=FALSE, output=FALSE}
+# Define the packages to be used
+packages <- c("tidyverse", "sf", "geojsonR", 
+              "lubridate", "magick", "magrittr",
+              "grid", "extrafont","bsicons",
+              "showtext", "sysfonts",
+              "fontawesome", "terra",
+              "ggtext")
+
+# Function to check if packages are installed and load them
+load_packages <- function(pkgs) {
+  # Check for missing packages
+  missing_pkgs <- pkgs[!(pkgs %in% installed.packages()[, "Package"])]
+  
+  # Install missing packages
+  if (length(missing_pkgs)) {
+    install.packages(missing_pkgs)
+  }
+  
+  # Load all packages
+  lapply(pkgs, library, character.only = TRUE)
+}
+
+# Load the packages
+load_packages(packages)
+loadfonts(device = "postscript")
+
+# Developer's version of ggsflabel
+if("ggsflabel" %in% rownames(installed.packages())){
+  library(ggsflabel)
+}else{
+  devtools::install_github("yutannihilation/ggsflabel")
+  library(ggsflabel)
+}
+```
+
+### 2. Import data & Rbanism logo
+
+```{r}
+# Load frame and admin boundary
+frame <- st_read("data/Amsterdam Case North West/Frame_NorthWest.shp")
+boundary <- st_read("data/Amsterdam Case North West/city boundaries.gpkg") |> 
+  st_transform(st_crs(sport))
+
+# Load amenities data
+sport <- st_read("data/geopackage.gpkg", layer = "SPORT") |> 
+  filter(status == "Pand in gebruik", gebr_sport > 0) |> 
+  st_geometry() |> st_intersection(frame)
+schools <- st_read("data/geopackage.gpkg", layer = "SCUOLE") |> 
+  st_transform(st_crs(sport)) |> st_intersection(frame)
+health <- st_read("data/geopackage.gpkg", layer = "SALUTE") |> 
+  filter(status == "Pand in gebruik", gebr_gezon > 0) |> 
+  st_intersection(frame)
+religion <- st_read("data/geopackage.gpkg", layer = "RELIGIOSO") |> 
+  st_transform(st_crs(sport)) |> st_intersection(frame)
+industry <- st_read("data/geopackage.gpkg", layer = "INDUSTRIA") |> 
+  filter(status == "Pand in gebruik", gebr_indus > 0) |> 
+  st_intersection(frame)
+commercial <- st_read("data/geopackage.gpkg", layer = "COMMERCIALE") |> 
+  filter(status == "Pand in gebruik", gebr_winke > 0) |> 
+  st_intersection(frame)
+
+
+# Download Rbanism logo
+rbanism_logo <- image_read('https://rbanism.org/assets/imgs/about/vi_l.jpg')
+
+dtm <- terra::rast("data/dtm.tif") |> terra::crop(frame)
+```
+
+### 3. Visualize
+
+```{r}
+font_add_google("Montserrat", family = "sans-serif")
+showtext_auto()
+
+sport_coords <- as.data.frame(st_coordinates(sport))
+schools_coords <- as.data.frame(st_coordinates(schools))
+health_coords <- as.data.frame(st_coordinates(health))
+religion_coords <- as.data.frame(st_coordinates(religion))
+industry_coords <- as.data.frame(st_coordinates(industry))
+commercial_coords <- as.data.frame(st_coordinates(commercial))
+
+ggplot() +
+  geom_raster(data = as.data.frame(dtm, xy = TRUE) |> filter(dtm != 0),
+              aes(x, y, fill = dtm), alpha = 0.5) +
+  scale_fill_gradient(low = "white",
+                      high = "grey40",
+                      guide = NULL) +
+  geom_text(data = sport,
+            aes(x = sport_coords$X,
+                y = sport_coords$Y,
+                label = "\u2661",
+                color = "Sports"), size = 5) +
+  geom_text(data = commercial,
+            aes(x = commercial_coords$X,
+                y = commercial_coords$Y,
+                label = "\u2727", 
+                color = "Commerce"), size = 5, alpha = 0.7) +
+  geom_point(data = schools,
+             aes(x = schools_coords$X,
+                 y = schools_coords$Y,
+                 color = "Schools",
+                 shape = "Schools"), size = 0.8, pch = 8, alpha = 0.7) +
+  geom_point(data = industry,
+             aes(x = industry_coords$X,
+                 y = industry_coords$Y, 
+                 color = "Industry",
+                 shape = "Industry"), size = 0.8, pch = 2, alpha = 0.4) +
+  geom_point(data = health,
+             aes(x = health_coords$X,
+                 y = health_coords$Y, 
+                 color = "Health",
+                 shape = "Health"), size = 0.8, pch = 3, alpha = 0.4) +
+  geom_point(data = religion,
+             aes(x = religion_coords$X,
+                 y = religion_coords$Y, 
+                 color = "Religion",
+                 shape = "Religion"), size = 0.8, pch = 3, alpha = 0.8) +
+  scale_color_manual(name = "   Amenities",
+                     values = c("Sports" = "#9abb77", "Commerce" = "#e7504e", 
+                                "Schools" = "#e7504e", "Industry" = "#5d758c", 
+                                "Health" = "#60a88e", "Religion" = "black")) +
+  scale_shape_manual(name = "   Amenities",
+                     values = c("Sports" = 1, "Commerce" = 1, 
+                                "Schools" = 8, "Industry" = 2, 
+                                "Health" = 3, "Religion" = 3)) +
+  theme_minimal() +
+  labs(title = "   Urban amenities in Amsterdam", x = "", y = "",
+       caption = "   #30DayMapChallenge. Map by Pietro Bernardini, reproduced in R by Claudiu Forgaci, 2024. Data: OpenStreetMap, AHN3") +
+  guides(
+    color = guide_legend(
+      override.aes = list(
+        label = c("\u2727", "", "", "", "", "\u2661")
+        # , # Only for geom_text
+        # size = 3 
+      )
+    ),
+    shape = guide_legend()
+  ) +
+  scale_x_continuous(
+    breaks = seq(107710, 122710, by = 1000),
+    labels = function(x) x - 107710
+  ) +
+  theme(# Keep x-axis text and ticks
+        axis.text.x = element_text(size = 16),
+        axis.ticks.x = element_line(linewidth = 0.2),
+        axis.ticks.length = unit(-0.15, "cm"),
+        
+        # Remove x-axis line
+        axis.line.x = element_blank(),
+        
+        # Remove all y-axis components
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.line.y = element_blank(),
+        
+        # Remove x and y grid lines if desired
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        # panel.grid.major.y = element_blank(),
+        # panel.grid.minor.y = element_blank(),
+        # panel.grid.major = element_blank(),
+        # panel.grid.minor = element_blank(),
+        plot.title = element_text(size=36, family="sans-serif", face = "bold", 
+                                  hjust = 0.05, margin = margin(b = -5)),
+        plot.caption = element_text(size=12, family="sans-serif",
+                                    hjust = 0.11),
+        legend.text = element_text(size=20, family="sans-serif"),
+        legend.title = element_text(size=30, family="sans-serif", face = "bold"),
+        legend.margin = margin(r = 20, l = -20),
+        plot.caption.position = "plot") +
+  coord_equal()
+
+grid.raster(rbanism_logo,
+            x = 0.7, y=0.9,
+            width = unit(70, "points"))
+
+ggsave(filename = "output/points.png",width = 6, height = 6, dpi = 300, bg = "white")
+
+
+```
+
+
+
