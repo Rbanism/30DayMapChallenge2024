@@ -1,0 +1,102 @@
+---
+title: "#30DMC_12Nov_Time&Space"
+author: "Kyri Janssen, Eugenio Muccio, Chiara Mazzarella"
+date: "2024-11-11"
+format: 
+  html: default
+  pdf: default
+---
+
+## 12 November - Time and space
+
+"Map something where time matters. Visualize change over time—urban growth, migration, or environmental shifts. Show the relationship between time and geography."
+
+### 1. Load packages
+
+```{r}
+library(tidyverse)
+library(here)
+library(sf)
+library(ggplot2)
+library(scales)  # Needed for the alpha() function
+library(gridExtra)
+library(magick)
+library(grid)
+
+
+
+```
+
+## 12 November - Time and space
+
+"Map something where time matters. Visualize change over time—urban growth, migration, or environmental shifts. Show the relationship between time and geography."
+
+### 2. Import data & Rbanism logo
+
+```{r}
+
+banism_logo <- image_read('https://rbanism.org/assets/imgs/about/vi_l.jpg') # Download our logo}
+layer_2023 <- read_sf(here('data', 'layer_2023_pc4_selection.shp'))
+layer_2015 <- read_sf(here('data', 'CBS_PC4_2015_v2.shp'))
+
+
+```
+
+### 3. Data processing
+
+```{r}
+layer_2015 <- layer_2015%>%
+  select(c(PC4_1, WONING))%>%
+  mutate(WONING = ifelse(WONING==-99997, NA, WONING))%>%
+  as.data.frame()%>%
+  select(-geometry)
+
+merge_2023_2015 <- merge(layer_2023,layer_2015, by.x='postcod', by.y="PC4_1", all.x=T)
+merge_2023_2015<-merge_2023_2015%>%
+  mutate(change_dwellings = ((antl_wn - WONING )/WONING) *100)%>%
+ filter(!is.na(change_dwellings))
+
+
+
+```
+
+### 3. Visualize
+
+```{r}
+ggplot(data = merge_2023_2015) +
+  geom_sf(aes(fill = change_dwellings), color = 'grey20') +  # Plotting without borders
+  scale_fill_gradient2(
+    low = "red",       # Color for negative values
+    mid = "white",     # Color for values close to zero
+    high = "blue",     # Color for positive values
+    midpoint = 0,      # Set midpoint to zero
+    name = "Percentage change"     # Legend title
+  ) +
+  labs(
+    title = "Day 12. Time and space - Growth and loss of dwellings in Rotterdam, 2015–2023",
+    subtitle = "Analyzing housing growth and decline across postcodes (PC4 level)",
+    x = "", y = "",
+    caption = "#30DayMapChallenge | Map by Kyri Janssen, Eugenio Muccio, Chiara Mazzarella, 2024 | Data: CBS"
+  ) +
+  theme_classic() +
+  theme(
+    legend.position = "right",
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, size = 12)
+  ) +
+  # Adding a smaller subtitle with annotate
+  annotate(
+    "text", x = Inf, y = -Inf, label = "Note: harbor and non-residential areas are excluded from analysis",
+    hjust = 1.1, vjust = -1.5, size = 3.5, color = "gray40", fontface = "italic"
+  )
+
+# Display the plot
+
+grid.raster(rbanism_logo, x = 0.9, y=0.9, 
+            width = unit(100, "points"))   # width determines the size of the logo
+
+```
+
+{r}
+
+\`\`\`
