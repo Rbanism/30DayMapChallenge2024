@@ -1,9 +1,8 @@
 # 30DayMapChallenge2024 by Rbanism
 
-The [#30DayMapChallenge](https://30daymapchallenge.com/) is an event which gathers mappers on social media each November since 2019. The challenge is to produce a map for each of the 30 days of November, following the set of themes / topics / constraints set by the organisers. The list of themes for November 2024 has just been published!
+The [#30DayMapChallenge](https://30daymapchallenge.com/) is an event which gathers mappers on social media each November since 2019. The challenge is to produce a map for each of the 30 days of November, following the set of themes / topics / constraints set by the organisers. 
 
-
-This year, we would like to participate in the **#30DayMapChallenge** as a group: Rbanism. Given our community focus on the programming language R, we add a constraint to the challenge: **each map has to be made using R**. To make it more manageable, we spread the task of producing 30 maps among ourselves, and we provide inspiration and data by including BK bachelor, MSc Urbanism and Landscape Architecture students' GIS production. That way, if you lack inspiration, your task is *only* to reproduce the map using with R.
+This year, we participate in the **#30DayMapChallenge** as a group: Rbanism. Given our community focus on the programming language R, we add a constraint to the challenge: **each map has to be made using R**. 
 
 If you would like to join the challenge, you can:
 1. You pick a topic that interests you and put your name next to it [here](https://docs.google.com/spreadsheets/d/1YEGjTCaki1-eSwPiO6DEi5-kWVbGZF_MznGGCCHTlis/edit?usp=sharing) (if you haven’t already). We welcome multiple maps or map-makers per topic, so feel free to work on any topic that you wish (…but if you like a topic with no name on it, that’s even better and maybe we can complete the challenge with a map for each day)
