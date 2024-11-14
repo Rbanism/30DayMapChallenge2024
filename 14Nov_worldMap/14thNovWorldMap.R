@@ -67,7 +67,7 @@ theme(plot.title = element_text(face = "bold"),
   labs(title = "Day 14. Partition of the world according to economic development levels.",
        #subtitle = "Economy of Countries",
        x = NULL, y = NULL,
-       caption = "#30DayMapChallenge. 'A World Map' by Soroush Saffarzadeh, 2024. Data: `natural earth`.")
+       caption = "#30DayMapChallenge. 'A World Map' by Soroush Saffarzadeh, 2024. Data: `rnaturalearth`.")
 
 rbanism_logo <- image_read('https://rbanism.org/assets/imgs/about/vi_l.jpg') # Download our logo
 
