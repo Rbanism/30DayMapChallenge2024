@@ -92,7 +92,7 @@ custom_theme <- theme_minimal(base_family = "roboto_mono") +
   theme(plot.title = element_text(family = "roboto_mono", size = 15, face = "bold",      hjust = 0.5),
     plot.subtitle = element_text(family = "roboto_mono", size = 11, hjust = 0.5),
     plot.caption = element_text(family = "roboto_mono", size = 9, hjust = 0.5),
-    legend.text = element_text(family = "roboto_mono", size = 9, hjust = 0.5),
+    legend.text = element_text(family = "roboto_mono", size = 1, hjust = 0.5),
     legend.position = "none") # Remove default legend
 
 # Create the bivariate map
@@ -112,7 +112,8 @@ bivariate_legend <- bi_legend(
   dim = 3,
   xlab = "WOZ (Low → High)",
   ylab = "ADR (Low → High)",
-  size = 20)
+  arrows = FALSE,
+  size = 10)
 
 
 final_plot <- bivariate_map + 
