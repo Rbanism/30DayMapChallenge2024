@@ -13,25 +13,30 @@ format:
 
 ### 1. Load packages
 
-```{r}
-library(tidyverse)
-library(here)
-library(sf)
-library(ggplot2)
-library(scales) 
-library(gridExtra)
-library(magick)
-library(grid)
-library(dplyr)
-library(biscale) # For bivariate classification
-library(patchwork)
-library(sysfonts)
-library(showtext)
-library(jsonlite)
-library(curl)
-library(cowplot)
+```{r, echo=FALSE, warning=FALSE}
 
+# Define the packages to be used
+packages <- c("tidyverse","here","sf","ggplot2","scales","gridExtra","magick","grid", "dplyr","biscale","patchwork", "sysfonts","showtext", "jsonlite","curl","cowplot")
 
+# Function to check if packages are installed and load them
+load_packages <- function(pkgs) {
+  # Check for missing packages
+  missing_pkgs <- pkgs[!(pkgs %in% installed.packages()[, "Package"])]
+  
+  # Install missing packages
+  if (length(missing_pkgs)) {
+    install.packages(missing_pkgs)
+  }
+  
+  # Load all packages
+  lapply(pkgs, library, character.only = TRUE)
+}
+
+# Load the packages
+load_packages(packages)
+
+# Print a message to confirm successful loading
+cat("All specified packages have been loaded successfully!\n")
 ```
 
 ### 2. Import data & Rbanism logo
@@ -84,16 +89,19 @@ bivariate_class <- bi_class(
 ### 3. Visualize
 
 ```{r}
-# Custom theme
-font_add_google("Roboto Mono", "roboto_mono") 
+
+# Add Google font
+font_add_google("Roboto Mono", "roboto_mono")
 showtext_auto()
 
+# Custom theme
 custom_theme <- theme_minimal(base_family = "roboto_mono") +
-  theme(plot.title = element_text(family = "roboto_mono", size = 15, face = "bold",      hjust = 0.5),
-    plot.subtitle = element_text(family = "roboto_mono", size = 11, hjust = 0.5),
-    plot.caption = element_text(family = "roboto_mono", size = 9, hjust = 0.5),
-    legend.text = element_text(family = "roboto_mono", size = 1, hjust = 0.5),
-    legend.position = "none") # Remove default legend
+  theme(
+    plot.title = element_text(family = "roboto_mono", size = 40, face = "bold", hjust = 0.5),
+    plot.subtitle = element_text(family = "roboto_mono", size = 28, hjust = 0.5),
+    plot.caption = element_text(family = "roboto_mono", size = 25, hjust = 0.5),
+    legend.position = "none"
+  )
 
 # Create the bivariate map
 bivariate_map <- ggplot() +
@@ -101,10 +109,10 @@ bivariate_map <- ggplot() +
   bi_scale_fill(pal = "DkBlue", dim = 3) +
   custom_theme +
   labs(
-    title = "Day 16. Choropleth. \nThe Long-Term & Short-Term City",
-    subtitle = "Average Market Value (WOZ) of Residential Property vs. \nAverage Daily Rate of Short-Term Rentals in Rotterdam, 2023",
+    title = "Day 16. Choropleth. The Long-Term & Short-Term City",
+    subtitle = "Average Market Value (WOZ) of Residential Property vs. Average Daily Rate of Short-Term Rentals in Rotterdam, 2023",
     caption = "#30DayMapChallenge | Map by Eugenio Muccio, 2024 | Data: CBS, Inside Airbnb"
-    )
+  )
 
 # Create the bivariate legend
 bivariate_legend <- bi_legend(
@@ -113,19 +121,39 @@ bivariate_legend <- bi_legend(
   xlab = "WOZ (Low → High)",
   ylab = "ADR (Low → High)",
   arrows = FALSE,
-  size = 10)
+  size = 15
+)
 
-
+# Add legend to the map
 final_plot <- bivariate_map + 
-  inset_element(bivariate_legend, left = 0.02, bottom = 0.02, right = 0.3, top = 0.2, align_to = "panel")  # Bottom-left legend
+  inset_element(
+    bivariate_legend, 
+    left = 0.02, bottom = 0.02, right = 0.3, top = 0.2, 
+    align_to = "panel"
+  )
 
-# Convert to a patchwork object
-final_plot <- wrap_elements(panel = final_plot)
+# Insert logo
+logo_grob <- rasterGrob(rbanism_logo, interpolate = TRUE)
 
-final_plot
-# Insert legend and logo
-grid.raster(rbanism_logo, x = 0.9, y=0.9, width = unit(100, "points"))
+final_plot_with_logo <- final_plot + 
+  inset_element(
+    logo_grob, 
+    left = 0.85, right = 1, bottom = 0.075, top = 0.175,
+    align_to = "full"
+  )
 
-ggsave("choropleth_map.png", final_plot, width = 16, height = 9, units = "in", dpi = 300)
+# Save the final plot with the logo
+ggsave(
+  "choropleth_map.png", 
+  plot = final_plot_with_logo, 
+  width = 16, 
+  height = 9, 
+  units = "in", 
+  dpi = 250
+)
 
 ```
+
+# Output
+
+![](choropleth_map.png)
