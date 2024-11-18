@@ -115,132 +115,215 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="load-packages" class="level3">
 <h3 class="anchored" data-anchor-id="load-packages">1. Load packages</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.4     ✔ readr     2.1.5
 ✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
 ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
 ✔ purrr     1.0.2     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>here() starts at /Users/ccottineau/GitHub/30DayMapChallenge2024/16Nov_Choropleth</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'sf' was built under R version 4.4.1</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Linking to GEOS 3.11.0, GDAL 3.5.3, PROJ 9.1.0; sf_use_s2() is TRUE</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'scales'
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors
+here() starts at C:/Users/eugen/Documents/Choropleth/16Nov_Choropleth
 
-The following object is masked from 'package:purrr':
+Linking to GEOS 3.11.2, GDAL 3.7.2, PROJ 9.3.0; sf_use_s2() is TRUE
+
+
+Caricamento pacchetto: 'scales'
+
+
+Il seguente oggetto è mascherato da 'package:purrr':
 
     discard
 
-The following object is masked from 'package:readr':
 
-    col_factor</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'gridExtra'
+Il seguente oggetto è mascherato da 'package:readr':
 
-The following object is masked from 'package:dplyr':
+    col_factor
 
-    combine</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magick)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'magick' was built under R version 4.4.1</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Linking to ImageMagick 6.9.12.93
-Enabled features: cairo, fontconfig, freetype, heic, lcms, pango, raw, rsvg, webp
-Disabled features: fftw, ghostscript, x11</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(grid)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(biscale) <span class="co"># For bivariate classification</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'patchwork' was built under R version 4.4.1</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sysfonts)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(showtext)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: showtextdb</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jsonlite)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'jsonlite' was built under R version 4.4.1</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'jsonlite'
 
-The following object is masked from 'package:purrr':
 
-    flatten</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(curl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Using libcurl 8.7.1 with LibreSSL/3.3.6
+Caricamento pacchetto: 'gridExtra'
 
-Attaching package: 'curl'
 
-The following object is masked from 'package:readr':
+Il seguente oggetto è mascherato da 'package:dplyr':
 
-    parse_date</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'cowplot'
+    combine
 
-The following object is masked from 'package:patchwork':
+
+Linking to ImageMagick 6.9.12.98
+Enabled features: cairo, freetype, fftw, ghostscript, heic, lcms, pango, raw, rsvg, webp
+Disabled features: fontconfig, x11
+
+Caricamento del pacchetto richiesto: showtextdb
+
+
+Caricamento pacchetto: 'jsonlite'
+
+
+Il seguente oggetto è mascherato da 'package:purrr':
+
+    flatten
+
+
+Using libcurl 8.3.0 with Schannel
+
+
+Caricamento pacchetto: 'curl'
+
+
+Il seguente oggetto è mascherato da 'package:readr':
+
+    parse_date
+
+
+
+Caricamento pacchetto: 'cowplot'
+
+
+Il seguente oggetto è mascherato da 'package:patchwork':
 
     align_plots
 
-The following object is masked from 'package:lubridate':
+
+Il seguente oggetto è mascherato da 'package:lubridate':
 
     stamp</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+ [1] "lubridate" "forcats"   "stringr"   "dplyr"     "purrr"     "readr"    
+ [7] "tidyr"     "tibble"    "ggplot2"   "tidyverse" "stats"     "graphics" 
+[13] "grDevices" "utils"     "datasets"  "methods"   "base"     
+
+[[2]]
+ [1] "here"      "lubridate" "forcats"   "stringr"   "dplyr"     "purrr"    
+ [7] "readr"     "tidyr"     "tibble"    "ggplot2"   "tidyverse" "stats"    
+[13] "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+
+[[3]]
+ [1] "sf"        "here"      "lubridate" "forcats"   "stringr"   "dplyr"    
+ [7] "purrr"     "readr"     "tidyr"     "tibble"    "ggplot2"   "tidyverse"
+[13] "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"  
+[19] "base"     
+
+[[4]]
+ [1] "sf"        "here"      "lubridate" "forcats"   "stringr"   "dplyr"    
+ [7] "purrr"     "readr"     "tidyr"     "tibble"    "ggplot2"   "tidyverse"
+[13] "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"  
+[19] "base"     
+
+[[5]]
+ [1] "scales"    "sf"        "here"      "lubridate" "forcats"   "stringr"  
+ [7] "dplyr"     "purrr"     "readr"     "tidyr"     "tibble"    "ggplot2"  
+[13] "tidyverse" "stats"     "graphics"  "grDevices" "utils"     "datasets" 
+[19] "methods"   "base"     
+
+[[6]]
+ [1] "gridExtra" "scales"    "sf"        "here"      "lubridate" "forcats"  
+ [7] "stringr"   "dplyr"     "purrr"     "readr"     "tidyr"     "tibble"   
+[13] "ggplot2"   "tidyverse" "stats"     "graphics"  "grDevices" "utils"    
+[19] "datasets"  "methods"   "base"     
+
+[[7]]
+ [1] "magick"    "gridExtra" "scales"    "sf"        "here"      "lubridate"
+ [7] "forcats"   "stringr"   "dplyr"     "purrr"     "readr"     "tidyr"    
+[13] "tibble"    "ggplot2"   "tidyverse" "stats"     "graphics"  "grDevices"
+[19] "utils"     "datasets"  "methods"   "base"     
+
+[[8]]
+ [1] "grid"      "magick"    "gridExtra" "scales"    "sf"        "here"     
+ [7] "lubridate" "forcats"   "stringr"   "dplyr"     "purrr"     "readr"    
+[13] "tidyr"     "tibble"    "ggplot2"   "tidyverse" "stats"     "graphics" 
+[19] "grDevices" "utils"     "datasets"  "methods"   "base"     
+
+[[9]]
+ [1] "grid"      "magick"    "gridExtra" "scales"    "sf"        "here"     
+ [7] "lubridate" "forcats"   "stringr"   "dplyr"     "purrr"     "readr"    
+[13] "tidyr"     "tibble"    "ggplot2"   "tidyverse" "stats"     "graphics" 
+[19] "grDevices" "utils"     "datasets"  "methods"   "base"     
+
+[[10]]
+ [1] "biscale"   "grid"      "magick"    "gridExtra" "scales"    "sf"       
+ [7] "here"      "lubridate" "forcats"   "stringr"   "dplyr"     "purrr"    
+[13] "readr"     "tidyr"     "tibble"    "ggplot2"   "tidyverse" "stats"    
+[19] "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+
+[[11]]
+ [1] "patchwork" "biscale"   "grid"      "magick"    "gridExtra" "scales"   
+ [7] "sf"        "here"      "lubridate" "forcats"   "stringr"   "dplyr"    
+[13] "purrr"     "readr"     "tidyr"     "tibble"    "ggplot2"   "tidyverse"
+[19] "stats"     "graphics"  "grDevices" "utils"     "datasets"  "methods"  
+[25] "base"     
+
+[[12]]
+ [1] "sysfonts"  "patchwork" "biscale"   "grid"      "magick"    "gridExtra"
+ [7] "scales"    "sf"        "here"      "lubridate" "forcats"   "stringr"  
+[13] "dplyr"     "purrr"     "readr"     "tidyr"     "tibble"    "ggplot2"  
+[19] "tidyverse" "stats"     "graphics"  "grDevices" "utils"     "datasets" 
+[25] "methods"   "base"     
+
+[[13]]
+ [1] "showtext"   "showtextdb" "sysfonts"   "patchwork"  "biscale"   
+ [6] "grid"       "magick"     "gridExtra"  "scales"     "sf"        
+[11] "here"       "lubridate"  "forcats"    "stringr"    "dplyr"     
+[16] "purrr"      "readr"      "tidyr"      "tibble"     "ggplot2"   
+[21] "tidyverse"  "stats"      "graphics"   "grDevices"  "utils"     
+[26] "datasets"   "methods"    "base"      
+
+[[14]]
+ [1] "jsonlite"   "showtext"   "showtextdb" "sysfonts"   "patchwork" 
+ [6] "biscale"    "grid"       "magick"     "gridExtra"  "scales"    
+[11] "sf"         "here"       "lubridate"  "forcats"    "stringr"   
+[16] "dplyr"      "purrr"      "readr"      "tidyr"      "tibble"    
+[21] "ggplot2"    "tidyverse"  "stats"      "graphics"   "grDevices" 
+[26] "utils"      "datasets"   "methods"    "base"      
+
+[[15]]
+ [1] "curl"       "jsonlite"   "showtext"   "showtextdb" "sysfonts"  
+ [6] "patchwork"  "biscale"    "grid"       "magick"     "gridExtra" 
+[11] "scales"     "sf"         "here"       "lubridate"  "forcats"   
+[16] "stringr"    "dplyr"      "purrr"      "readr"      "tidyr"     
+[21] "tibble"     "ggplot2"    "tidyverse"  "stats"      "graphics"  
+[26] "grDevices"  "utils"      "datasets"   "methods"    "base"      
+
+[[16]]
+ [1] "cowplot"    "curl"       "jsonlite"   "showtext"   "showtextdb"
+ [6] "sysfonts"   "patchwork"  "biscale"    "grid"       "magick"    
+[11] "gridExtra"  "scales"     "sf"         "here"       "lubridate" 
+[16] "forcats"    "stringr"    "dplyr"      "purrr"      "readr"     
+[21] "tidyr"      "tibble"     "ggplot2"    "tidyverse"  "stats"     
+[26] "graphics"   "grDevices"  "utils"      "datasets"   "methods"   
+[31] "base"      </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>All specified packages have been loaded successfully!</code></pre>
 </div>
 </div>
 </section>
 <section id="import-data-rbanism-logo" class="level3">
 <h3 class="anchored" data-anchor-id="import-data-rbanism-logo">2. Import data &amp; Rbanism logo</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>woz_2023 <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="fu">here</span>(<span class="st">'30_day_map/data'</span>, <span class="st">'rotterdam_buurten_stats_2023.shp'</span>))</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>listings_2023 <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="fu">here</span>(<span class="st">'30_day_map/data'</span>, <span class="st">'listings_12_2023_mean.shp'</span>))</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>rbanism_logo <span class="ot">&lt;-</span> <span class="fu">image_read</span>(<span class="st">'https://rbanism.org/assets/imgs/about/vi_l.jpg'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>woz_2023 <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="fu">here</span>(<span class="st">'30_day_map/data'</span>, <span class="st">'rotterdam_buurten_stats_2023.shp'</span>))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>listings_2023 <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="fu">here</span>(<span class="st">'30_day_map/data'</span>, <span class="st">'listings_12_2023_mean.shp'</span>))</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>rbanism_logo <span class="ot">&lt;-</span> <span class="fu">image_read</span>(<span class="st">'https://rbanism.org/assets/imgs/about/vi_l.jpg'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="data-processing" class="level3">
 <h3 class="anchored" data-anchor-id="data-processing">3. Data processing</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace -99997 values</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>woz_2023 <span class="ot">&lt;-</span> woz_2023 <span class="sc">%&gt;%</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gemiddel_1 =</span> <span class="fu">ifelse</span>(gemiddel_1 <span class="sc">==</span> <span class="sc">-</span><span class="dv">99997</span>, <span class="cn">NA</span>, gemiddel_1))</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Align CRS</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>listings_2023 <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(listings_2023, <span class="fu">st_crs</span>(woz_2023))</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Check</span></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(listings_2023)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace -99997 values</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>woz_2023 <span class="ot">&lt;-</span> woz_2023 <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gemiddel_1 =</span> <span class="fu">ifelse</span>(gemiddel_1 <span class="sc">==</span> <span class="sc">-</span><span class="dv">99997</span>, <span class="cn">NA</span>, gemiddel_1))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Align CRS</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>listings_2023 <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(listings_2023, <span class="fu">st_crs</span>(woz_2023))</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Check</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(listings_2023)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Coordinate Reference System:
   User input: Amersfoort / RD New 
@@ -284,7 +367,7 @@ PROJCRS["Amersfoort / RD New",
         BBOX[50.75,3.2,53.7,7.22]],
     ID["EPSG",28992]]</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(woz_2023)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(woz_2023)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Coordinate Reference System:
   User input: Amersfoort / RD New 
@@ -328,77 +411,97 @@ PROJCRS["Amersfoort / RD New",
         BBOX[50.75,3.2,53.7,7.22]],
     ID["EPSG",28992]]</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Attribute-based join</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>merged_data <span class="ot">&lt;-</span> woz_2023 <span class="sc">%&gt;%</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">st_drop_geometry</span>(listings_2023), <span class="at">by =</span> <span class="st">"buurtcode"</span>)</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace NA values with 0</span></span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>merged_data <span class="ot">&lt;-</span> merged_data <span class="sc">%&gt;%</span></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">gemiddel_1 =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(gemiddel_1), <span class="dv">0</span>, gemiddel_1),</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">price_n_me =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(price_n_me), <span class="dv">0</span>, price_n_me)</span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Bivariate classification</span></span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>bivariate_class <span class="ot">&lt;-</span> <span class="fu">bi_class</span>(</span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>  merged_data,</span>
-<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> gemiddel_1,    </span>
-<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> price_n_me,   </span>
-<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="st">"quantile"</span>,</span>
-<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">dim =</span> <span class="dv">3</span></span>
-<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Attribute-based join</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>merged_data <span class="ot">&lt;-</span> woz_2023 <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">st_drop_geometry</span>(listings_2023), <span class="at">by =</span> <span class="st">"buurtcode"</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace NA values with 0</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>merged_data <span class="ot">&lt;-</span> merged_data <span class="sc">%&gt;%</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">gemiddel_1 =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(gemiddel_1), <span class="dv">0</span>, gemiddel_1),</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">price_n_me =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(price_n_me), <span class="dv">0</span>, price_n_me)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Bivariate classification</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>bivariate_class <span class="ot">&lt;-</span> <span class="fu">bi_class</span>(</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  merged_data,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> gemiddel_1,    </span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> price_n_me,   </span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="st">"quantile"</span>,</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">dim =</span> <span class="dv">3</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="visualize" class="level3">
 <h3 class="anchored" data-anchor-id="visualize">3. Visualize</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Custom theme</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">font_add_google</span>(<span class="st">"Roboto Mono"</span>, <span class="st">"roboto_mono"</span>) </span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">showtext_auto</span>()</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>custom_theme <span class="ot">&lt;-</span> <span class="fu">theme_minimal</span>(<span class="at">base_family =</span> <span class="st">"roboto_mono"</span>) <span class="sc">+</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"roboto_mono"</span>, <span class="at">size =</span> <span class="dv">15</span>, <span class="at">face =</span> <span class="st">"bold"</span>,      <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"roboto_mono"</span>, <span class="at">size =</span> <span class="dv">11</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"roboto_mono"</span>, <span class="at">size =</span> <span class="dv">9</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"roboto_mono"</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="co"># Remove default legend</span></span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the bivariate map</span></span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>bivariate_map <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> bivariate_class, <span class="fu">aes</span>(<span class="at">fill =</span> bi_class), <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bi_scale_fill</span>(<span class="at">pal =</span> <span class="st">"DkBlue"</span>, <span class="at">dim =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>  custom_theme <span class="sc">+</span></span>
-<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Day 16. Choropleth. </span><span class="sc">\n</span><span class="st">The Long-Term &amp; Short-Term City"</span>,</span>
-<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Average Market Value (WOZ) of Residential Property vs. </span><span class="sc">\n</span><span class="st">Average Daily Rate of Short-Term Rentals in Rotterdam, 2023"</span>,</span>
-<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"#30DayMapChallenge | Map by Eugenio Muccio, 2024 | Data: CBS, Inside Airbnb"</span></span>
-<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the bivariate legend</span></span>
-<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>bivariate_legend <span class="ot">&lt;-</span> <span class="fu">bi_legend</span>(</span>
-<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">pal =</span> <span class="st">"DkBlue"</span>,</span>
-<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">dim =</span> <span class="dv">3</span>,</span>
-<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">"WOZ (Low → High)"</span>,</span>
-<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">"ADR (Low → High)"</span>,</span>
-<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">arrows =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">size =</span> <span class="dv">10</span>)</span>
-<span id="cb32-31"><a href="#cb32-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-32"><a href="#cb32-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-33"><a href="#cb32-33" aria-hidden="true" tabindex="-1"></a>final_plot <span class="ot">&lt;-</span> bivariate_map <span class="sc">+</span> </span>
-<span id="cb32-34"><a href="#cb32-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inset_element</span>(bivariate_legend, <span class="at">left =</span> <span class="fl">0.02</span>, <span class="at">bottom =</span> <span class="fl">0.02</span>, <span class="at">right =</span> <span class="fl">0.3</span>, <span class="at">top =</span> <span class="fl">0.2</span>, <span class="at">align_to =</span> <span class="st">"panel"</span>)  <span class="co"># Bottom-left legend</span></span>
-<span id="cb32-35"><a href="#cb32-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-36"><a href="#cb32-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to a patchwork object</span></span>
-<span id="cb32-37"><a href="#cb32-37" aria-hidden="true" tabindex="-1"></a>final_plot <span class="ot">&lt;-</span> <span class="fu">wrap_elements</span>(<span class="at">panel =</span> final_plot)</span>
-<span id="cb32-38"><a href="#cb32-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-39"><a href="#cb32-39" aria-hidden="true" tabindex="-1"></a>final_plot</span>
-<span id="cb32-40"><a href="#cb32-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Insert legend and logo</span></span>
-<span id="cb32-41"><a href="#cb32-41" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.raster</span>(rbanism_logo, <span class="at">x =</span> <span class="fl">0.9</span>, <span class="at">y=</span><span class="fl">0.9</span>, <span class="at">width =</span> <span class="fu">unit</span>(<span class="dv">100</span>, <span class="st">"points"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="16Nov_Choropleth_Rotterdam_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
-</div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"choropleth_map.png"</span>, final_plot, <span class="at">width =</span> <span class="dv">16</span>, <span class="at">height =</span> <span class="dv">9</span>, <span class="at">units =</span> <span class="st">"in"</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add Google font</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">font_add_google</span>(<span class="st">"Roboto Mono"</span>, <span class="st">"roboto_mono"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">showtext_auto</span>()</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Custom theme</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>custom_theme <span class="ot">&lt;-</span> <span class="fu">theme_minimal</span>(<span class="at">base_family =</span> <span class="st">"roboto_mono"</span>) <span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"roboto_mono"</span>, <span class="at">size =</span> <span class="dv">40</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"roboto_mono"</span>, <span class="at">size =</span> <span class="dv">28</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"roboto_mono"</span>, <span class="at">size =</span> <span class="dv">25</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the bivariate map</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>bivariate_map <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> bivariate_class, <span class="fu">aes</span>(<span class="at">fill =</span> bi_class), <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bi_scale_fill</span>(<span class="at">pal =</span> <span class="st">"DkBlue"</span>, <span class="at">dim =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  custom_theme <span class="sc">+</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Day 16. Choropleth. The Long-Term &amp; Short-Term City"</span>,</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Average Market Value (WOZ) of Residential Property vs. Average Daily Rate of Short-Term Rentals in Rotterdam, 2023"</span>,</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"#30DayMapChallenge | Map by Eugenio Muccio, 2024 | Data: CBS, Inside Airbnb"</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the bivariate legend</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>bivariate_legend <span class="ot">&lt;-</span> <span class="fu">bi_legend</span>(</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">pal =</span> <span class="st">"DkBlue"</span>,</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">dim =</span> <span class="dv">3</span>,</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">"WOZ (Low → High)"</span>,</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">"ADR (Low → High)"</span>,</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">arrows =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">size =</span> <span class="dv">15</span></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Add legend to the map</span></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>final_plot <span class="ot">&lt;-</span> bivariate_map <span class="sc">+</span> </span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inset_element</span>(</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>    bivariate_legend, </span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">left =</span> <span class="fl">0.02</span>, <span class="at">bottom =</span> <span class="fl">0.02</span>, <span class="at">right =</span> <span class="fl">0.3</span>, <span class="at">top =</span> <span class="fl">0.2</span>, </span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">align_to =</span> <span class="st">"panel"</span></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Insert logo</span></span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>logo_grob <span class="ot">&lt;-</span> <span class="fu">rasterGrob</span>(rbanism_logo, <span class="at">interpolate =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>final_plot_with_logo <span class="ot">&lt;-</span> final_plot <span class="sc">+</span> </span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inset_element</span>(</span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>    logo_grob, </span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">left =</span> <span class="fl">0.85</span>, <span class="at">right =</span> <span class="dv">1</span>, <span class="at">bottom =</span> <span class="fl">0.075</span>, <span class="at">top =</span> <span class="fl">0.175</span>,</span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">align_to =</span> <span class="st">"full"</span></span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the final plot with the logo</span></span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(</span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>  <span class="st">"choropleth_map.png"</span>, </span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot =</span> final_plot_with_logo, </span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">16</span>, </span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="dv">9</span>, </span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a>  <span class="at">units =</span> <span class="st">"in"</span>, </span>
+<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>  <span class="at">dpi =</span> <span class="dv">250</span></span>
+<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
+</section>
+<section id="output" class="level1">
+<h1>Output</h1>
+<p><img src="choropleth_map.png" class="img-fluid"></p>
 </section>
 
 </main>
