@@ -89,9 +89,10 @@ font_add_google("Roboto Mono", "roboto_mono")
 showtext_auto()
 
 custom_theme <- theme_minimal(base_family = "roboto_mono") +
-  theme(plot.title = element_text(family = "roboto_mono", size = 50, face = "bold",      hjust = 0.5),
-    plot.subtitle = element_text(family = "roboto_mono", size = 42, hjust = 0.5),
-    plot.caption = element_text(family = "roboto_mono", size = 38, hjust = 0.5),
+  theme(plot.title = element_text(family = "roboto_mono", size = 15, face = "bold",      hjust = 0.5),
+    plot.subtitle = element_text(family = "roboto_mono", size = 11, hjust = 0.5),
+    plot.caption = element_text(family = "roboto_mono", size = 9, hjust = 0.5),
+    legend.text = element_text(family = "roboto_mono", size = 9, hjust = 0.5),
     legend.position = "none") # Remove default legend
 
 # Create the bivariate map
@@ -100,8 +101,8 @@ bivariate_map <- ggplot() +
   bi_scale_fill(pal = "DkBlue", dim = 3) +
   custom_theme +
   labs(
-    title = "Day 16. Choropleth - The Long-Term & Short-Term City",
-    subtitle = "Average Market Value (WOZ) of Residential Property vs. Average Daily Rate of Short-Term Rentals in Rotterdam, 2023",
+    title = "Day 16. Choropleth. \nThe Long-Term & Short-Term City",
+    subtitle = "Average Market Value (WOZ) of Residential Property vs. \nAverage Daily Rate of Short-Term Rentals in Rotterdam, 2023",
     caption = "#30DayMapChallenge | Map by Eugenio Muccio, 2024 | Data: CBS, Inside Airbnb"
     )
 
@@ -111,98 +112,19 @@ bivariate_legend <- bi_legend(
   dim = 3,
   xlab = "WOZ (Low → High)",
   ylab = "ADR (Low → High)",
-  size = 18)
+  size = 20)
 
-# Insert legend and logo
-grid.raster(rbanism_logo, x = 0.9, y=0.9, width = unit(100, "points"))
 
 final_plot <- bivariate_map + 
-  inset_element(bivariate_legend, left = 0.02, bottom = 0.02, right = 0.3, top = 0.2, align_to = "panel") + # Bottom-left legend
+  inset_element(bivariate_legend, left = 0.02, bottom = 0.02, right = 0.3, top = 0.2, align_to = "panel")  # Bottom-left legend
 
 # Convert to a patchwork object
 final_plot <- wrap_elements(panel = final_plot)
 
+final_plot
+# Insert legend and logo
+grid.raster(rbanism_logo, x = 0.9, y=0.9, width = unit(100, "points"))
+
 ggsave("choropleth_map.png", final_plot, width = 16, height = 9, units = "in", dpi = 300)
 
 ```
-
-```{r}
-
-## Map the result
-ggplot() +
-  geom_sf(data = cropped_Israel, fill = alpha("grey", 0.3), colour = "white") +
-   geom_sf(data = geodemo, aes(fill=data_avail), colour = "white") +
-  geom_sf(data = centroids, colour=alpha("#93278F",0.7), 
-          aes(size=Demonstrations)) +
-  guides(size=guide_legend(title="# of demonstrations\nheld between Oct'23 \nand Oct'24")) +
-  ggsflabel::geom_sf_text_repel(data = geodemo %>% filter(Demonstrations > 50), 
-                                 aes(label = shapeName),  fill = alpha("white", 0.5),
-                                 size = 2.5, family="Courier",
-                      nudge_x = -0.02, nudge_y = 0.05, seed = 25) +
-   ggsflabel::geom_sf_text_repel(data = geodemo %>% 
-                                   filter(data_avail == 'Unavailable data'), 
-                                 aes(label = shapeName),  fill = alpha("white", 0.5),
-                                 size = 2.5, family="Courier",
-                      nudge_x = 0, nudge_y = 0.015, seed = 25) +
-  coord_sf(datum = st_crs(geodemo)) +
-  scale_fill_manual(values = c(alpha("grey", 0.65), alpha("grey", 0.2)), 
-                    name="", limits = c('Unavailable data')) +
-  ggtitle(paste0("8Nov. HDX Data Palestine \n",
-                 "A year of demonstrations")) +
-  ylab("")+
-  xlab(paste0("#30DayMapChallenge. Clémentine Cottineau-Mugadza, 2024. 
-  HDX data: Palestinian Central Bureau of Statistics. 	Who's On First.
-  Open Data WatchgeoBoundaries, Open Data Watchraster2polygon.")) +
-  theme_minimal() +
-  theme(axis.text=element_text(size=6, family="Courier"),
-       plot.title=element_text(size=12, family="Courier"),
-        axis.title=element_text(size=8, family="Courier"),
-       legend.text=element_text(size=8, family="Courier"),
-       legend.title=element_text(size=10, family="Courier"),
-       ) 
-
-grid.raster(rbanism_logo,
-            x = 0.9, y=0.9,
-            width = unit(100, "points"))
-  ggsave(filename = "HDX.png",
-         width = 8, height = 8, dpi = 300)
-```
-
-```{r}
-ggplot(data = merge_2023_2015) +
-  geom_sf(aes(fill = change_dwellings), color = 'grey20') +  # Plotting without borders
-  scale_fill_gradient2(
-    low = "red",       # Color for negative values
-    mid = "white",     # Color for values close to zero
-    high = "blue",     # Color for positive values
-    midpoint = 0,      # Set midpoint to zero
-    name = "Percentage change"     # Legend title
-  ) +
-  labs(
-    title = "Day 12. Time and space - Growth and loss of dwellings in Rotterdam, 2015–2023",
-    subtitle = "Analyzing housing growth and decline across postcodes (PC4 level)",
-    x = "", y = "",
-    caption = "#30DayMapChallenge | Map by Eugenio Muccio, 2024 | Data: CBS, Inside Airbnb"
-  ) +
-  theme_classic() +
-  theme(
-    legend.position = "right",
-    plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
-    plot.subtitle = element_text(hjust = 0.5, size = 12)
-  ) +
-  # Adding a smaller subtitle with annotate
-  annotate(
-    "text", x = Inf, y = -Inf, label = "Note: harbor and non-residential areas are excluded from analysis",
-    hjust = 1.1, vjust = -1.5, size = 3.5, color = "gray40", fontface = "italic"
-  )
-
-# Display the plot
-
-grid.raster(rbanism_logo, x = 0.9, y=0.9, 
-            width = unit(100, "points"))   # width determines the size of the logo
-
-```
-
-{r}
-
-\`\`\`
