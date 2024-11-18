@@ -1,0 +1,2372 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Chiara Mazzarella, Daniele Cannatella, Clementine Cottineau-Mugadza">
+<meta name="dcterms.date" content="2024-11-17">
+
+<title>17Nov_collaborative</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="17Nov_Collaborative_files/libs/clipboard/clipboard.min.js"></script>
+<script src="17Nov_Collaborative_files/libs/quarto-html/quarto.js"></script>
+<script src="17Nov_Collaborative_files/libs/quarto-html/popper.min.js"></script>
+<script src="17Nov_Collaborative_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="17Nov_Collaborative_files/libs/quarto-html/anchor.min.js"></script>
+<link href="17Nov_Collaborative_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="17Nov_Collaborative_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="17Nov_Collaborative_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="17Nov_Collaborative_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="17Nov_Collaborative_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="17Nov_Collaborative.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">17Nov_collaborative</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Chiara Mazzarella, Daniele Cannatella, Clementine Cottineau-Mugadza </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 17, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="import-libraries" class="level2">
+<h2 class="anchored" data-anchor-id="import-libraries">0. Import libraries</h2>
+</section>
+<section id="import-data-from-natural-earth" class="level1">
+<h1>1. Import data from Natural Earth</h1>
+<section id="import-european-boundaries-and-cities" class="level2">
+<h2 class="anchored" data-anchor-id="import-european-boundaries-and-cities">1.1 Import European boundaries and cities</h2>
+</section>
+<section id="import-data-from-radar.squats.net" class="level2">
+<h2 class="anchored" data-anchor-id="import-data-from-radar.squats.net">1.2 Import data from radar.squats.net</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 3
+ $ result:List of 500
+  ..$ 7215  :List of 2
+  .. ..$ title: chr "‘T Landhuis"
+  .. ..$ uuid : chr "aa9bc262-f61b-42f0-b52f-ff40b9057ea3"
+  ..$ 447762:List of 2
+  .. ..$ title: chr "(A)ction Against Prison Society"
+  .. ..$ uuid : chr "47199736-73b1-4d71-b5b3-59f34d73c8a9"
+  ..$ 356218:List of 2
+  .. ..$ title: chr "1 in 12 Club"
+  .. ..$ uuid : chr "0268f9ef-da79-4007-b193-c6c9de29bd1f"
+  ..$ 362536:List of 2
+  .. ..$ title: chr "1 mei tilburg"
+  .. ..$ uuid : chr "44bc2a8a-f335-4db1-bcd5-f306cf595ef2"
+  ..$ 63423 :List of 2
+  .. ..$ title: chr "100CELLE Aperte"
+  .. ..$ uuid : chr "21969fb0-126d-4585-b46c-0e374a4bbc78"
+  ..$ 387495:List of 2
+  .. ..$ title: chr "105FM Mytillni self organised radio"
+  .. ..$ uuid : chr "5b92a99b-1ae8-4231-b50a-4df6ccc3c07e"
+  ..$ 381170:List of 2
+  .. ..$ title: chr "1872"
+  .. ..$ uuid : chr "473d7daa-dae4-4f51-84db-942b999ce817"
+  ..$ 329881:List of 2
+  .. ..$ title: chr "1aGrind"
+  .. ..$ uuid : chr "f2087157-cc94-419a-a4d9-103d3386ef40"
+  ..$ 232845:List of 2
+  .. ..$ title: chr "2. Mai - Internationaler Kampf- und Feiertag der Arbeitslosen"
+  .. ..$ uuid : chr "17678585-4812-42ee-ae11-7c51563a138c"
+  ..$ 432999:List of 2
+  .. ..$ title: chr "2.Dh5"
+  .. ..$ uuid : chr "581ec318-c509-4df1-a9d6-395049b5ae1d"
+  ..$ 490037:List of 2
+  .. ..$ title: chr "254"
+  .. ..$ uuid : chr "dcc12c91-9fd4-4203-b539-315b5e0abed0"
+  ..$ 80318 :List of 2
+  .. ..$ title: chr "269 Life Czech"
+  .. ..$ uuid : chr "4f44f9f2-d8fc-4287-abe4-8197c073766f"
+  ..$ 73421 :List of 2
+  .. ..$ title: chr "3CR Community Radio"
+  .. ..$ uuid : chr "47e0e922-2cc0-456c-a79d-7aabc9cf96a0"
+  ..$ 473015:List of 2
+  .. ..$ title: chr "42 avenue de la Couronne"
+  .. ..$ uuid : chr "8cce75e0-230a-4ab3-a91d-317cddb04a33"
+  ..$ 358927:List of 2
+  .. ..$ title: chr "430 On the Go"
+  .. ..$ uuid : chr "4e9a27e5-668c-4d63-9e29-c9642563e629"
+  ..$ 332048:List of 2
+  .. ..$ title: chr "4648"
+  .. ..$ uuid : chr "da2b6462-585c-4aea-bb7f-0524dade8b9e"
+  ..$ 363973:List of 2
+  .. ..$ title: chr "4lthangrund"
+  .. ..$ uuid : chr "fbc484d7-fa6a-4a83-b822-b91cb97d3ae4"
+  ..$ 75824 :List of 2
+  .. ..$ title: chr "56A Infoshop"
+  .. ..$ uuid : chr "23908964-0308-4646-9293-12c8681fece8"
+  ..$ 12459 :List of 2
+  .. ..$ title: chr "7Katu Gaztetxea"
+  .. ..$ uuid : chr "b776078f-e4b8-4f6f-bdb8-2e8ef10a0bf9"
+  ..$ 262323:List of 2
+  .. ..$ title: chr "[tbd]"
+  .. ..$ uuid : chr "b49c2bbf-93c7-4a47-9062-a017bed1bf8a"
+  ..$ 402349:List of 2
+  .. ..$ title: chr "A - Laden"
+  .. ..$ uuid : chr "251bcbc2-c034-400b-aaf5-823d5b33300d"
+  ..$ 140458:List of 2
+  .. ..$ title: chr "A Cova dos Ratos"
+  .. ..$ uuid : chr "468f0694-f596-4769-9d9b-da7cc32643b4"
+  ..$ 161638:List of 2
+  .. ..$ title: chr "À da Maxada"
+  .. ..$ uuid : chr "b36daaf6-692e-4b58-8c50-b636affbeb18"
+  ..$ 7889  :List of 2
+  .. ..$ title: chr "A Infoshop "
+  .. ..$ uuid : chr "18d8373f-1157-4762-9b43-49961ce09099"
+  ..$ 383604:List of 2
+  .. ..$ title: chr "À la cloche de bois"
+  .. ..$ uuid : chr "9e21609a-9421-4efe-b2c2-fb077553f476"
+  ..$ 493015:List of 2
+  .. ..$ title: chr "A(k)CAB, A Kansas City Anarchist Bookfair"
+  .. ..$ uuid : chr "9de6a1cf-f6f7-43ee-945c-8a84c685f9e9"
+  ..$ 10350 :List of 2
+  .. ..$ title: chr "A-Cafe Bremen"
+  .. ..$ uuid : chr "83200517-bd27-457c-a92a-c526b12e74c0"
+  ..$ 487633:List of 2
+  .. ..$ title: chr "A-mässan Stockholm"
+  .. ..$ uuid : chr "ce4f5ede-ae63-4e66-a100-8b862ddb63fa"
+  ..$ 421066:List of 2
+  .. ..$ title: chr "A-Radio Berlin"
+  .. ..$ uuid : chr "ad58a0cb-16e4-4310-80e4-6babb907b0e2"
+  ..$ 365318:List of 2
+  .. ..$ title: chr "A-Radio Network"
+  .. ..$ uuid : chr "a316d0f8-c487-4227-8824-0e902588b045"
+  ..$ 462001:List of 2
+  .. ..$ title: chr "A-Tram"
+  .. ..$ uuid : chr "18f584a9-6f55-4e00-8c0f-c1223e35c20d"
+  ..$ 348743:List of 2
+  .. ..$ title: chr "A.C. Tugurio"
+  .. ..$ uuid : chr "292db430-324d-416f-bb1a-52a827f10306"
+  ..$ 191186:List of 2
+  .. ..$ title: chr "A.K.C. Attack!"
+  .. ..$ uuid : chr "5fb520d9-5afd-4789-af43-82210c2d23da"
+  ..$ 135549:List of 2
+  .. ..$ title: chr "A4 unplugged Druck Kollektiv"
+  .. ..$ uuid : chr "48cdec1d-208e-404d-88f4-5ee579906f4e"
+  ..$ 381274:List of 2
+  .. ..$ title: chr "A_K_A_B"
+  .. ..$ uuid : chr "aea88ce4-2723-4c44-8b65-90a4dc84af2f"
+  ..$ 454110:List of 2
+  .. ..$ title: chr "a_sound"
+  .. ..$ uuid : chr "8f2348f2-9040-480a-9c83-26ba72573696"
+  ..$ 448309:List of 2
+  .. ..$ title: chr "AAA Pödelwitz"
+  .. ..$ uuid : chr "5c8b31dd-37d0-405f-94c1-14ea3c79b403"
+  ..$ 24829 :List of 2
+  .. ..$ title: chr "Aan Lager Wal"
+  .. ..$ uuid : chr "cd92c8c3-5cd0-454b-be33-4ad9ca2f98b0"
+  ..$ 370798:List of 2
+  .. ..$ title: chr "Abadiñoko Gaztetxea"
+  .. ..$ uuid : chr "2f1327af-6e69-4743-b90b-22d28dc835db"
+  ..$ 375697:List of 2
+  .. ..$ title: chr "Abbaye d’Ubu"
+  .. ..$ uuid : chr "1d140517-1d47-40d5-abad-b691aeb1c30a"
+  ..$ 73229 :List of 2
+  .. ..$ title: chr "ABC Gent"
+  .. ..$ uuid : chr "ef984904-66fa-4998-9152-d3a361aef949"
+  ..$ 377261:List of 2
+  .. ..$ title: chr "Aberdeen Anarchist Group"
+  .. ..$ uuid : chr "a5ef21cc-4eab-4724-b0db-ba0f12ada6ca"
+  ..$ 423410:List of 2
+  .. ..$ title: chr "Abortion Network Amsterdam"
+  .. ..$ uuid : chr "e68cde8a-b8b8-42bc-84bd-46ec19108045"
+  ..$ 7031  :List of 2
+  .. ..$ title: chr "about blank"
+  .. ..$ uuid : chr "da296694-ae72-47a9-9073-e450143b9c58"
+  ..$ 194614:List of 2
+  .. ..$ title: chr "about:fem"
+  .. ..$ uuid : chr "682d734a-0443-40cb-a340-efa9bfa84594"
+  ..$ 1608  :List of 2
+  .. ..$ title: chr "Abstand"
+  .. ..$ uuid : chr "2f2f9cb7-49f1-40b8-a609-7b0a2a91e476"
+  ..$ 55752 :List of 2
+  .. ..$ title: chr "Acrobax"
+  .. ..$ uuid : chr "80f993f5-7a99-47d8-8268-9b53093895ef"
+  ..$ 393169:List of 2
+  .. ..$ title: chr "ACT"
+  .. ..$ uuid : chr "ba178f71-801d-4fff-ae2e-7cc2ddcb41fc"
+  ..$ 413981:List of 2
+  .. ..$ title: chr "ACT UP Prague - Radical queers"
+  .. ..$ uuid : chr "64f3efd2-2b18-4aa1-a9a4-b07dc10fe193"
+  ..$ 399075:List of 2
+  .. ..$ title: chr "Actiegroep Niet Te Koop"
+  .. ..$ uuid : chr "88fffd45-32ee-4682-8247-02cd772cfe02"
+  ..$ 328627:List of 2
+  .. ..$ title: chr "Action Antifasciste Paris-Banlieue"
+  .. ..$ uuid : chr "3304535c-affa-4b44-ac97-8da738f11747"
+  ..$ 48457 :List of 2
+  .. ..$ title: chr "Action Antifasciste Tolosa"
+  .. ..$ uuid : chr "a2e6c9a5-9868-4dde-96e8-36df553b214d"
+  ..$ 211838:List of 2
+  .. ..$ title: chr "Action Culturelle Anarchiste Bruxelloise"
+  .. ..$ uuid : chr "43de0bfc-e5c1-409b-94b7-e7932c44bc7a"
+  ..$ 77933 :List of 2
+  .. ..$ title: chr "Action Days in Biel"
+  .. ..$ uuid : chr "a5bbd095-ee5c-4a56-bfc2-67b0cb61010f"
+  ..$ 478402:List of 2
+  .. ..$ title: chr "Action Sportive Libertaire"
+  .. ..$ uuid : chr "98093320-2eb2-4d12-ab94-b83db2d8e083"
+  ..$ 437902:List of 2
+  .. ..$ title: chr "Active for Justice"
+  .. ..$ uuid : chr "ae6bbd54-da11-4fc4-a70d-d7c479b22993"
+  ..$ 14    :List of 2
+  .. ..$ title: chr "ACU"
+  .. ..$ uuid : chr "f49fba09-0049-4fc5-b355-063695dba26b"
+  ..$ 388493:List of 2
+  .. ..$ title: chr "Ada Puławska"
+  .. ..$ uuid : chr "07d392f7-3f19-4835-9d19-48a6ffebe60b"
+  ..$ 416010:List of 2
+  .. ..$ title: chr "ADM Noord"
+  .. ..$ uuid : chr "19edf1a9-443f-406a-a702-67318d0adac4"
+  ..$ 23519 :List of 2
+  .. ..$ title: chr "Advisory Service For Squatters"
+  .. ..$ uuid : chr "646e2a41-be01-41a1-acb8-0567d6badf34"
+  ..$ 390178:List of 2
+  .. ..$ title: chr "AERI"
+  .. ..$ uuid : chr "c30c1f29-fc23-46f0-a6ee-4dff0a1c4440"
+  ..$ 383839:List of 2
+  .. ..$ title: chr "AFA Rotterdam"
+  .. ..$ uuid : chr "5b279bfd-ae0c-4c2c-a19c-d36e983c3e34"
+  ..$ 129049:List of 2
+  .. ..$ title: chr "Affinità Libertarie"
+  .. ..$ uuid : chr "0008697e-75d7-486a-a88a-cf1913992a51"
+  ..$ 495512:List of 2
+  .. ..$ title: chr "AG antifascite Paname"
+  .. ..$ uuid : chr "d844e2a0-7916-4a34-9c4d-ca038ad62940"
+  ..$ 434899:List of 2
+  .. ..$ title: chr "AG de coordination interluttes de Montreuil"
+  .. ..$ uuid : chr "9b8c8fbf-8435-4e65-83ae-2dbb1b984f6f"
+  ..$ 71675 :List of 2
+  .. ..$ title: chr "AG de lutte contre les expulsions"
+  .. ..$ uuid : chr "f0b1ec80-ebf1-4519-9495-ec79142d75ed"
+  ..$ 335538:List of 2
+  .. ..$ title: chr "AG inter-squats"
+  .. ..$ uuid : chr "cfaf616f-4a68-469d-8bdc-d41c6fddb0fc"
+  ..$ 70503 :List of 2
+  .. ..$ title: chr "Àgora Juan Andrés Benítez"
+  .. ..$ uuid : chr "8d5d51f6-a65a-4413-913e-f3c901eef3a4"
+  ..$ 110071:List of 2
+  .. ..$ title: chr "Ahwahnee / Le 106"
+  .. ..$ uuid : chr "b3fc8f3b-4254-4aff-b318-a13da92ff3f7"
+  ..$ 74236 :List of 2
+  .. ..$ title: chr "Aid Delivery Mission"
+  .. ..$ uuid : chr "76f53b16-b214-4480-a267-5dbf8e434365"
+  ..$ 441601:List of 2
+  .. ..$ title: chr "AIHS"
+  .. ..$ uuid : chr "284e5fd4-79c9-4a60-9dfd-04df44de5d3e"
+  ..$ 345169:List of 2
+  .. ..$ title: chr "AIM Strossburi"
+  .. ..$ uuid : chr "5aa4ccef-43e1-4757-ab77-220a10f0d3b6"
+  ..$ 346488:List of 2
+  .. ..$ title: chr "Ajo Negro"
+  .. ..$ uuid : chr "f30cf604-03a5-4ad5-959c-e24c08b61a90"
+  ..$ 447236:List of 2
+  .. ..$ title: chr "AKAB Okretnica"
+  .. ..$ uuid : chr "df3c7b4f-2e4b-438d-9a09-2186b561a2c5"
+  ..$ 130751:List of 2
+  .. ..$ title: chr "AKC Medika"
+  .. ..$ uuid : chr "b0813403-da66-4c62-ad9b-1b28a0131060"
+  ..$ 381674:List of 2
+  .. ..$ title: chr "AKC Metelkova mesto"
+  .. ..$ uuid : chr "bf20b8c1-b99f-441d-ae8f-33b1a3b213e7"
+  ..$ 58525 :List of 2
+  .. ..$ title: chr "AKC Nigdjezemska"
+  .. ..$ uuid : chr "c3ccb433-07e9-4d70-bb86-e6cc32ec19c6"
+  ..$ 394715:List of 2
+  .. ..$ title: chr "Akcja Lokatorska"
+  .. ..$ uuid : chr "ac27233d-b37c-4730-8304-f1ac41322cc8"
+  ..$ 194613:List of 2
+  .. ..$ title: chr "aktion./.arbeitsunrecht"
+  .. ..$ uuid : chr "b3d61bd8-c5e2-4508-b98b-5e47164dfb21"
+  ..$ 437892:List of 2
+  .. ..$ title: chr "AKuT - Alternatives Kulturzentrum Thun"
+  .. ..$ uuid : chr "1821f4a6-0ea7-42a4-a76a-90ca116e57aa"
+  ..$ 370800:List of 2
+  .. ..$ title: chr "Alegiako Gaztetxea"
+  .. ..$ uuid : chr "1f5ce5e4-d78e-495f-9ee3-6e327d3c2230"
+  ..$ 350054:List of 2
+  .. ..$ title: chr "Alerta Regensburg"
+  .. ..$ uuid : chr "66c526b9-28fc-4763-bc03-65486c424a8f"
+  ..$ 63425 :List of 2
+  .. ..$ title: chr "Alexis Occupato"
+  .. ..$ uuid : chr "db206ae4-e3ea-4d8b-a52a-484d0ed6f444"
+  ..$ 440967:List of 2
+  .. ..$ title: chr "Alkmaarse Anarchisten"
+  .. ..$ uuid : chr "2f1e833d-dcfc-4d24-a2e7-3d514082d199"
+  ..$ 482029:List of 2
+  .. ..$ title: chr "All Crafts Are Beautiful"
+  .. ..$ uuid : chr "25d4cf37-f6e3-4259-93f7-eb53f065bec6"
+  ..$ 295382:List of 2
+  .. ..$ title: chr "All Included"
+  .. ..$ uuid : chr "80aa62c1-4192-45b5-950c-811011d90d15"
+  ..$ 413888:List of 2
+  .. ..$ title: chr "Allmende Waldgarten"
+  .. ..$ uuid : chr "9add2c40-79ac-4a42-b7b3-80e0eadc1b92"
+  ..$ 403035:List of 2
+  .. ..$ title: chr "Allt Åt Alla Stockholm"
+  .. ..$ uuid : chr "a1e209f6-9f36-48fb-8f44-5e20634f6491"
+  ..$ 473037:List of 2
+  .. ..$ title: chr "Alte Hackerei"
+  .. ..$ uuid : chr "2b20b392-098a-4bec-84b5-d85a4fac11ae"
+  ..$ 435715:List of 2
+  .. ..$ title: chr "Alte Post Seebach ZuReich"
+  .. ..$ uuid : chr "478649d3-b951-4607-9b99-74f8f09cca99"
+  ..$ 337965:List of 2
+  .. ..$ title: chr "Alternadora"
+  .. ..$ uuid : chr "e409e0eb-a91a-4a62-b0f4-e94fac24cec5"
+  ..$ 194594:List of 2
+  .. ..$ title: chr "Alternative Liste (AL) Uni Köln"
+  .. ..$ uuid : chr "dc3d7e5f-8350-49ae-84b0-fe17bf2765c5"
+  ..$ 55178 :List of 2
+  .. ..$ title: chr "Altes Sportamt"
+  .. ..$ uuid : chr "f12b9492-88bf-46c4-9f98-f6fed72bf5ac"
+  ..$ 296690:List of 2
+  .. ..$ title: chr "Altsasuko Gaztetxea"
+  .. ..$ uuid : chr "2bf48bd1-c0c3-4f70-9338-a68d9b743152"
+  ..$ 435991:List of 2
+  .. ..$ title: chr "Amalthea bokkafé"
+  .. ..$ uuid : chr "7ca99daf-e561-4609-a3aa-187999adff64"
+  ..$ 291000:List of 2
+  .. ..$ title: chr "Aman molli"
+  .. ..$ uuid : chr "655e2baa-2a5a-4885-b9dd-def3b6360811"
+  ..$ 348156:List of 2
+  .. ..$ title: chr "Amanita Films"
+  .. ..$ uuid : chr "1b806ca8-15a4-4bd8-9abb-18ca366fd9cd"
+  ..$ 54449 :List of 2
+  .. ..$ title: chr "Ami* Curiae"
+  .. ..$ uuid : chr "c449febf-e09f-41c4-b23b-b982a7c572c1"
+  ..$ 150491:List of 2
+  .. ..$ title: chr "Amicale du Combat Libre"
+  .. ..$ uuid : chr "b1e18c60-7259-48d1-8c35-391be9341417"
+  .. [list output truncated]
+ $ count : num 2392
+ $ facets:List of 9
+  ..$ offline:map          :List of 50
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (13%2E3888599 52%2E5170365)"
+  .. .. ..$ count    : num 12
+  .. .. ..$ formatted: chr "POINT (13.3888599 52.5170365)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (4%2E9036369291796 52%2E379571004605)"
+  .. .. ..$ count    : num 9
+  .. .. ..$ formatted: chr "POINT (4.9036369291796 52.379571004605)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (8%2E4046640377972 49%2E015608313814)"
+  .. .. ..$ count    : num 7
+  .. .. ..$ formatted: chr "POINT (8.4046640377972 49.015608313814)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (4%2E8545364 52%2E3541478)"
+  .. .. ..$ count    : num 6
+  .. .. ..$ formatted: chr "POINT (4.8545364 52.3541478)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (4%2E8699580895654 52%2E363216308324)"
+  .. .. ..$ count    : num 6
+  .. .. ..$ formatted: chr "POINT (4.8699580895654 52.363216308324)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (13%2E3882686 52%2E4919181)"
+  .. .. ..$ count    : num 5
+  .. .. ..$ formatted: chr "POINT (13.3882686 52.4919181)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (7%2E5912199953716 47%2E577206145894)"
+  .. .. ..$ count    : num 5
+  .. .. ..$ formatted: chr "POINT (7.5912199953716 47.577206145894)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (9%2E5040678678448 51%2E313146318095)"
+  .. .. ..$ count    : num 5
+  .. .. ..$ formatted: chr "POINT (9.5040678678448 51.313146318095)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-0%2E070661410974657 51%2E516141553713)"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "POINT (-0.070661410974657 51.516141553713)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-0%2E11810310636843 51%2E494352243668)"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "POINT (-0.11810310636843 51.494352243668)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-70%2E6504451 -33%2E4377968)"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "POINT (-70.6504451 -33.4377968)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (15%2E964899512571 45%2E806372353391)"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "POINT (15.964899512571 45.806372353391)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (4%2E8892221 52%2E3716913)"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "POINT (4.8892221 52.3716913)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (4%2E9111676411567 52%2E368298)"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "POINT (4.9111676411567 52.368298)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (8%2E3105751187779 47%2E052299605718)"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "POINT (8.3105751187779 47.052299605718)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (8%2E3718512 48%2E9890192)"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "POINT (8.3718512 48.9890192)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-0%2E32966964062871 39%2E465852686019)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (-0.32966964062871 39.465852686019)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-70%2E6504558 -33%2E437913)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (-70.6504558 -33.437913)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (1%2E4427848 43%2E623479)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (1.4427848 43.623479)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (1%2E4611893563457 43%2E611888198366)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (1.4611893563457 43.611888198366)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (10%2E737478803066 59%2E918450902207)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (10.737478803066 59.918450902207)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (13%2E4072585 52%2E5308391)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (13.4072585 52.5308391)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (13%2E464188934799 52%2E512848060021)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (13.464188934799 52.512848060021)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (2%2E4308093 48%2E858116)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (2.4308093 48.858116)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (4%2E4692035 51%2E8922729)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (4.4692035 51.8922729)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (4%2E8319833024892 45%2E757959764945)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (4.8319833024892 45.757959764945)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (4%2E8656923 52%2E3601403)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (4.8656923 52.3601403)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (4%2E8924534 52%2E3730796)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (4.8924534 52.3730796)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (4%2E9299692083517 52%2E362285091514)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (4.9299692083517 52.362285091514)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (6%2E637960408208 46%2E522389557906)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (6.637960408208 46.522389557906)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (8%2E3017343801466 47%2E039193537662)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (8.3017343801466 47.039193537662)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (8%2E5423216 47%2E3723957)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (8.5423216 47.3723957)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POLYGON ((16%2E933593661142 51%2E141878865034, 16%2E944579989265 51%2E06427020857, 17%2E139587313449 51%2E06599"| __truncated__
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POLYGON ((16.933593661142 51.141878865034, 16.944579989265 51.06427020857, 17.139587313449 51.06599626106, 17.1"| __truncated__
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-0%2E036953797223098 39%2E992166283565)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-0.036953797223098 39.992166283565)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-0%2E3690815 49%2E1828008)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-0.3690815 49.1828008)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-0%2E5686945 44%2E8370861)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-0.5686945 44.8370861)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-0%2E87421836635874 41%2E652155876796)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-0.87421836635874 41.652155876796)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-0%2E8820989 52%2E24522)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-0.8820989 52.24522)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-1%2E5572426635912 47%2E221736342373)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-1.5572426635912 47.221736342373)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-1%2E560235 47%2E2185155)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-1.560235 47.2185155)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-1%2E5951078136173 54%2E97936760437)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-1.5951078136173 54.97936760437)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-1%2E7581345300569 53%2E794566780083)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-1.7581345300569 53.794566780083)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-2%2E0021705860337 43%2E311942302652)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-2.0021705860337 43.311942302652)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-2%2E2522977379336 53%2E481972564971)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-2.2522977379336 53.481972564971)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-2%2E5972985 51%2E4538022)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-2.5972985 51.4538022)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-3%2E7016631531503 40%2E455704473192)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-3.7016631531503 40.455704473192)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-3%2E7035825 40%2E4167047)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-3.7035825 40.4167047)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-3%2E73108291544 40%2E391780851878)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-3.73108291544 40.391780851878)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-4%2E7181885 41%2E6441148)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-4.7181885 41.6441148)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-43%2E250381222706 -22%2E914648532708)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-43.250381222706 -22.914648532708)"
+  ..$ city                 :List of 49
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "berlin"
+  .. .. ..$ count    : num 218
+  .. .. ..$ formatted: chr "berlin"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "amsterdam"
+  .. .. ..$ count    : num 143
+  .. .. ..$ formatted: chr "amsterdam"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "paris"
+  .. .. ..$ count    : num 89
+  .. .. ..$ formatted: chr "paris"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "barcelona"
+  .. .. ..$ count    : num 83
+  .. .. ..$ formatted: chr "barcelona"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "bruxelles"
+  .. .. ..$ count    : num 76
+  .. .. ..$ formatted: chr "bruxelles"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "toulouse"
+  .. .. ..$ count    : num 56
+  .. .. ..$ formatted: chr "toulouse"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "lyon"
+  .. .. ..$ count    : num 44
+  .. .. ..$ formatted: chr "lyon"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "marseille"
+  .. .. ..$ count    : num 41
+  .. .. ..$ formatted: chr "marseille"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "london"
+  .. .. ..$ count    : num 38
+  .. .. ..$ formatted: chr "london"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "madrid"
+  .. .. ..$ count    : num 36
+  .. .. ..$ formatted: chr "madrid"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "roma"
+  .. .. ..$ count    : num 34
+  .. .. ..$ formatted: chr "roma"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "zurich"
+  .. .. ..$ count    : num 28
+  .. .. ..$ formatted: chr "zurich"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "athens"
+  .. .. ..$ count    : num 24
+  .. .. ..$ formatted: chr "athens"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "karlsruhe"
+  .. .. ..$ count    : num 21
+  .. .. ..$ formatted: chr "karlsruhe"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "torino"
+  .. .. ..$ count    : num 21
+  .. .. ..$ formatted: chr "torino"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "milano"
+  .. .. ..$ count    : num 20
+  .. .. ..$ formatted: chr "milano"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "santiago"
+  .. .. ..$ count    : num 18
+  .. .. ..$ formatted: chr "santiago"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "prague"
+  .. .. ..$ count    : num 17
+  .. .. ..$ formatted: chr "prague"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "basel"
+  .. .. ..$ count    : num 16
+  .. .. ..$ formatted: chr "basel"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "grenoble"
+  .. .. ..$ count    : num 16
+  .. .. ..$ formatted: chr "grenoble"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "luzern"
+  .. .. ..$ count    : num 16
+  .. .. ..$ formatted: chr "luzern"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "utrecht"
+  .. .. ..$ count    : num 15
+  .. .. ..$ formatted: chr "utrecht"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "bilbo"
+  .. .. ..$ count    : num 14
+  .. .. ..$ formatted: chr "bilbo"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "dijon"
+  .. .. ..$ count    : num 14
+  .. .. ..$ formatted: chr "dijon"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "geneve"
+  .. .. ..$ count    : num 14
+  .. .. ..$ formatted: chr "geneve"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "montpellier"
+  .. .. ..$ count    : num 14
+  .. .. ..$ formatted: chr "montpellier"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "napoli"
+  .. .. ..$ count    : num 14
+  .. .. ..$ formatted: chr "napoli"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "rotterdam"
+  .. .. ..$ count    : num 14
+  .. .. ..$ formatted: chr "rotterdam"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "wroclaw"
+  .. .. ..$ count    : num 14
+  .. .. ..$ formatted: chr "wroclaw"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "nantes"
+  .. .. ..$ count    : num 13
+  .. .. ..$ formatted: chr "nantes"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "bern"
+  .. .. ..$ count    : num 12
+  .. .. ..$ formatted: chr "bern"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "caen"
+  .. .. ..$ count    : num 12
+  .. .. ..$ formatted: chr "caen"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "saint-etienne"
+  .. .. ..$ count    : num 12
+  .. .. ..$ formatted: chr "saint-etienne"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "sevilla"
+  .. .. ..$ count    : num 12
+  .. .. ..$ formatted: chr "sevilla"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "thessaloniki"
+  .. .. ..$ count    : num 12
+  .. .. ..$ formatted: chr "thessaloniki"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "valencia"
+  .. .. ..$ count    : num 12
+  .. .. ..$ formatted: chr "valencia"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "firenze"
+  .. .. ..$ count    : num 11
+  .. .. ..$ formatted: chr "firenze"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "groningen"
+  .. .. ..$ count    : num 11
+  .. .. ..$ formatted: chr "groningen"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "hamburg"
+  .. .. ..$ count    : num 11
+  .. .. ..$ formatted: chr "hamburg"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "lausanne"
+  .. .. ..$ count    : num 11
+  .. .. ..$ formatted: chr "lausanne"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "bologna"
+  .. .. ..$ count    : num 10
+  .. .. ..$ formatted: chr "bologna"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "bristol"
+  .. .. ..$ count    : num 10
+  .. .. ..$ formatted: chr "bristol"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "gent"
+  .. .. ..$ count    : num 10
+  .. .. ..$ formatted: chr "gent"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "porto alegre"
+  .. .. ..$ count    : num 10
+  .. .. ..$ formatted: chr "porto alegre"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "stockholm"
+  .. .. ..$ count    : num 10
+  .. .. ..$ formatted: chr "stockholm"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "wien"
+  .. .. ..$ count    : num 10
+  .. .. ..$ formatted: chr "wien"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "strasbourg"
+  .. .. ..$ count    : num 9
+  .. .. ..$ formatted: chr "strasbourg"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "warszawa"
+  .. .. ..$ count    : num 9
+  .. .. ..$ formatted: chr "warszawa"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "winterthur"
+  .. .. ..$ count    : num 9
+  .. .. ..$ formatted: chr "winterthur"
+  ..$ country              :List of 49
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "FR"
+  .. .. ..$ count    : num 408
+  .. .. ..$ formatted: chr "FR"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "DE"
+  .. .. ..$ count    : num 318
+  .. .. ..$ formatted: chr "DE"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "NL"
+  .. .. ..$ count    : num 249
+  .. .. ..$ formatted: chr "NL"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "IT"
+  .. .. ..$ count    : num 196
+  .. .. ..$ formatted: chr "IT"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "CH"
+  .. .. ..$ count    : num 139
+  .. .. ..$ formatted: chr "CH"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "XC"
+  .. .. ..$ count    : num 139
+  .. .. ..$ formatted: chr "XC"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "ES"
+  .. .. ..$ count    : num 138
+  .. .. ..$ formatted: chr "ES"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "GB"
+  .. .. ..$ count    : num 98
+  .. .. ..$ formatted: chr "GB"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "BE"
+  .. .. ..$ count    : num 97
+  .. .. ..$ formatted: chr "BE"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "XE"
+  .. .. ..$ count    : num 72
+  .. .. ..$ formatted: chr "XE"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "GR"
+  .. .. ..$ count    : num 57
+  .. .. ..$ formatted: chr "GR"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "PL"
+  .. .. ..$ count    : num 48
+  .. .. ..$ formatted: chr "PL"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "CZ"
+  .. .. ..$ count    : num 36
+  .. .. ..$ formatted: chr "CZ"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "US"
+  .. .. ..$ count    : num 32
+  .. .. ..$ formatted: chr "US"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "XI"
+  .. .. ..$ count    : num 31
+  .. .. ..$ formatted: chr "XI"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "CL"
+  .. .. ..$ count    : num 29
+  .. .. ..$ formatted: chr "CL"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "BR"
+  .. .. ..$ count    : num 26
+  .. .. ..$ formatted: chr "BR"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "AT"
+  .. .. ..$ count    : num 20
+  .. .. ..$ formatted: chr "AT"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "SE"
+  .. .. ..$ count    : num 17
+  .. .. ..$ formatted: chr "SE"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "AU"
+  .. .. ..$ count    : num 15
+  .. .. ..$ formatted: chr "AU"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "FI"
+  .. .. ..$ count    : num 13
+  .. .. ..$ formatted: chr "FI"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "PT"
+  .. .. ..$ count    : num 13
+  .. .. ..$ formatted: chr "PT"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "CA"
+  .. .. ..$ count    : num 12
+  .. .. ..$ formatted: chr "CA"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "HR"
+  .. .. ..$ count    : num 12
+  .. .. ..$ formatted: chr "HR"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "AR"
+  .. .. ..$ count    : num 11
+  .. .. ..$ formatted: chr "AR"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "SI"
+  .. .. ..$ count    : num 9
+  .. .. ..$ formatted: chr "SI"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "CO"
+  .. .. ..$ count    : num 8
+  .. .. ..$ formatted: chr "CO"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "MX"
+  .. .. ..$ count    : num 8
+  .. .. ..$ formatted: chr "MX"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "SK"
+  .. .. ..$ count    : num 6
+  .. .. ..$ formatted: chr "SK"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "UY"
+  .. .. ..$ count    : num 6
+  .. .. ..$ formatted: chr "UY"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "DK"
+  .. .. ..$ count    : num 5
+  .. .. ..$ formatted: chr "DK"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "NO"
+  .. .. ..$ count    : num 5
+  .. .. ..$ formatted: chr "NO"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "RO"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "RO"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "RS"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "RS"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "TR"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "TR"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "HU"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "HU"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "IE"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "IE"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "MK"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "MK"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "PE"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "PE"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "BA"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "BA"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "BG"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "BG"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "BO"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "BO"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "LV"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "LV"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "AL"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "AL"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "EE"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "EE"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "LT"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "LT"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "NZ"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "NZ"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "PH"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "PH"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "XK"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "XK"
+  ..$ squated              :List of 3
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "squat"
+  .. .. ..$ count    : num 489
+  .. .. ..$ formatted: chr "squat"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "former"
+  .. .. ..$ count    : num 139
+  .. .. ..$ formatted: chr "former"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "evicted"
+  .. .. ..$ count    : num 50
+  .. .. ..$ formatted: chr "evicted"
+  ..$ radar_group_listed_by:List of 9
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "1599"
+  .. .. ..$ count    : num 176
+  .. .. ..$ formatted: chr "1599"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "338365"
+  .. .. ..$ count    : num 96
+  .. .. ..$ formatted: chr "338365"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "194587"
+  .. .. ..$ count    : num 40
+  .. .. ..$ formatted: chr "194587"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "436012"
+  .. .. ..$ count    : num 21
+  .. .. ..$ formatted: chr "436012"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "141066"
+  .. .. ..$ count    : num 19
+  .. .. ..$ formatted: chr "141066"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "22312"
+  .. .. ..$ count    : num 6
+  .. .. ..$ formatted: chr "22312"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "281607"
+  .. .. ..$ count    : num 5
+  .. .. ..$ formatted: chr "281607"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "364044"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "364044"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "1625"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "1625"
+  ..$ field_active         :List of 2
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "0"
+  .. .. ..$ count    : num 2392
+  .. .. ..$ formatted: chr "0"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "1"
+  .. .. ..$ count    : num 596
+  .. .. ..$ formatted: chr "1"
+  ..$ topic                :List of 50
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "sans-papiers"
+  .. .. ..$ count    : num 86
+  .. .. ..$ formatted: chr "sans papiers"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "bookfair"
+  .. .. ..$ count    : num 60
+  .. .. ..$ formatted: chr "Bookfair"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "wagenplatz"
+  .. .. ..$ count    : num 17
+  .. .. ..$ formatted: chr "Wagenplatz"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "queer"
+  .. .. ..$ count    : num 16
+  .. .. ..$ formatted: chr "queer"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "hackerspace"
+  .. .. ..$ count    : num 16
+  .. .. ..$ formatted: chr "hackerspace"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "hacklab"
+  .. .. ..$ count    : num 12
+  .. .. ..$ formatted: chr "hacklab"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "migrants"
+  .. .. ..$ count    : num 12
+  .. .. ..$ formatted: chr "migrants"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "reseau-dautodefense-juridique-collective"
+  .. .. ..$ count    : num 11
+  .. .. ..$ formatted: chr "Réseau d&amp;#039;Autodéfense Juridique collective"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "spreekuur-ksu"
+  .. .. ..$ count    : num 10
+  .. .. ..$ formatted: chr "spreekuur (KSU)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "gardening"
+  .. .. ..$ count    : num 8
+  .. .. ..$ formatted: chr "gardening"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "oficina-de-okupación"
+  .. .. ..$ count    : num 8
+  .. .. ..$ formatted: chr "oficina de okupación"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "boxe"
+  .. .. ..$ count    : num 8
+  .. .. ..$ formatted: chr "Boxe"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "sans-papiers-0"
+  .. .. ..$ count    : num 8
+  .. .. ..$ formatted: chr "sans-papiers"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "jardinage"
+  .. .. ..$ count    : num 7
+  .. .. ..$ formatted: chr "jardinage"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "sport"
+  .. .. ..$ count    : num 6
+  .. .. ..$ formatted: chr "sport"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "antifa-0"
+  .. .. ..$ count    : num 6
+  .. .. ..$ formatted: chr "Antifa"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "squatting-assistance"
+  .. .. ..$ count    : num 5
+  .. .. ..$ formatted: chr "Squatting assistance"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "huerta"
+  .. .. ..$ count    : num 5
+  .. .. ..$ formatted: chr "huerta"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "okupacio-rural"
+  .. .. ..$ count    : num 5
+  .. .. ..$ formatted: chr "Okupació rural"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "anticra"
+  .. .. ..$ count    : num 5
+  .. .. ..$ formatted: chr "anticra"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "feminism"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "feminism"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "hort"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "hort"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "caisse-de-solidarité"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "Caisse de solidarité"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "tattoo-circus"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "Tattoo Circus"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "feminist"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "feminist"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "tattoo"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "tattoo"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "comune"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "comune"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "anarchism"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "anarchism"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "gaztetxea"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "Gaztetxea"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "horta"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "horta"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "palestra-popolare"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "Palestra Popolare"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "kickboxing"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "kickboxing"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "defense-collective"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "Défense Collective"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "jardin-potager"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "jardin potager"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "vegan"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "vegan"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "lesung"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "Lesung"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "bike-bicycle-workshop-fiets-werkplaats-fietsen"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "bike bicycle workshop fiets werkplaats fietsen"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "gender"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "Gender"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "antifascist"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "Antifascist"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "agroecological-project"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "Agroecological Project"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "museum"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "Museum"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "food-not-bombs"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "Food Not Bombs"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "okupazio-bulegoa"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "Okupazio Bulegoa"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "festival"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "festival"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "social-centre"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "social centre"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "logement"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "logement"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "library"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "library"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "reading-group"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "reading group"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "refugees"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "Refugees"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "autonomous"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "autonomous"
+  ..$ category             :List of 19
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "discussion-presentation"
+  .. .. ..$ count    : num 1325
+  .. .. ..$ formatted: chr "discussion/presentation"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "meeting"
+  .. .. ..$ count    : num 1150
+  .. .. ..$ formatted: chr "meeting"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "course-workshop"
+  .. .. ..$ count    : num 1016
+  .. .. ..$ formatted: chr "course/workshop"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "action-protest-camp"
+  .. .. ..$ count    : num 753
+  .. .. ..$ formatted: chr "action/protest/camp"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "book-shop-info-shop-library"
+  .. .. ..$ count    : num 691
+  .. .. ..$ formatted: chr "book shop/info shop/library"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "music-concert"
+  .. .. ..$ count    : num 678
+  .. .. ..$ formatted: chr "music/concert"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "film"
+  .. .. ..$ count    : num 668
+  .. .. ..$ formatted: chr "film"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "food"
+  .. .. ..$ count    : num 606
+  .. .. ..$ formatted: chr "food"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "bar-cafe"
+  .. .. ..$ count    : num 506
+  .. .. ..$ formatted: chr "bar/cafe"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "work-space-diy"
+  .. .. ..$ count    : num 446
+  .. .. ..$ formatted: chr "work space/diy"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "party"
+  .. .. ..$ count    : num 433
+  .. .. ..$ formatted: chr "party"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "exhibition"
+  .. .. ..$ count    : num 401
+  .. .. ..$ formatted: chr "exhibition"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "advice-help-office-hours"
+  .. .. ..$ count    : num 348
+  .. .. ..$ formatted: chr "advice/help/office hours"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "free-shop-market"
+  .. .. ..$ count    : num 231
+  .. .. ..$ formatted: chr "(free) shop/market"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "theater"
+  .. .. ..$ count    : num 177
+  .. .. ..$ formatted: chr "theater"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "childrens-activity"
+  .. .. ..$ count    : num 177
+  .. .. ..$ formatted: chr "children&amp;#039;s activity"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "radio-tv"
+  .. .. ..$ count    : num 76
+  .. .. ..$ formatted: chr "radio/tv"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "guided-tour"
+  .. .. ..$ count    : num 24
+  .. .. ..$ formatted: chr "guided tour"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "court-case"
+  .. .. ..$ count    : num 23
+  .. .. ..$ formatted: chr "court case"
+  ..$ title                :List of 50
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "barricade"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "barricade"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "casa"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "casa"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "csa intifada"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "csa intifada"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "de ontsporing"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "de ontsporing"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "food not bombs"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "food not bombs"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "la baf"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "la baf"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "le local"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "le local"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "porozumienie feministyczne 8 marca"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "porozumienie feministyczne 8 marca"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "prenons la ville"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "prenons la ville"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "quiosc okupat"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "quiosc okupat"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr " anarchist bookfair bern"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr " anarchist bookfair bern"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr " b ward"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr " b ward"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr " centro social comunitario luis bunuel"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr " centro social comunitario luis bunuel"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr " comunella fastidiosa "
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr " comunella fastidiosa "
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr " federazione anarchica torinese"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr " federazione anarchica torinese"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr " iniciativa dahlia"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr " iniciativa dahlia"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr " la candela"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr " la candela"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr " production"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr " production"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "&amp;#039;t landhuis"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "&amp;#039;t landhuis"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "(a)ction against prison society"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "(a)ction against prison society"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "1 in 12 club"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "1 in 12 club"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "1 mei tilburg"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "1 mei tilburg"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "100celle aperte"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "100celle aperte"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "105fm mytillni self organised radio"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "105fm mytillni self organised radio"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "1872"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "1872"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "1agrind"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "1agrind"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "2%2E mai - internationaler kampf- und feiertag der arbeitslosen"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "2. mai - internationaler kampf- und feiertag der arbeitslosen"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "2%2Edh5"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "2.dh5"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "254"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "254"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "269 life czech"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "269 life czech"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "3cr community radio"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "3cr community radio"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "42 avenue de la couronne"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "42 avenue de la couronne"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "430 on go"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "430 on go"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "4648"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "4648"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "4lthangrund"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "4lthangrund"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "56a infoshop"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "56a infoshop"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "7katu gaztetxea"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "7katu gaztetxea"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "[tbd]"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "[tbd]"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "a - laden"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "a - laden"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "a cova dos ratos"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "a cova dos ratos"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "a da maxada"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "a da maxada"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "a infoshop "
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "a infoshop "
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "a la cloche de bois"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "a la cloche de bois"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "a(k)cab, a kansas city anarchist bookfair"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "a(k)cab, a kansas city anarchist bookfair"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "a-cafe bremen"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "a-cafe bremen"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "a-massan stockholm"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "a-massan stockholm"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "a-radio berlin"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "a-radio berlin"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "a-radio network"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "a-radio network"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "a-tram"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "a-tram"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "a%2Ec%2E tugurio"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "a.c. tugurio"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          filter count     formatted
+1         berlin   218        berlin
+2      amsterdam   143     amsterdam
+3          paris    89         paris
+4      barcelona    83     barcelona
+5      bruxelles    76     bruxelles
+6       toulouse    56      toulouse
+7           lyon    44          lyon
+8      marseille    41     marseille
+9         london    38        london
+10        madrid    36        madrid
+11          roma    34          roma
+12        zurich    28        zurich
+13        athens    24        athens
+14     karlsruhe    21     karlsruhe
+15        torino    21        torino
+16        milano    20        milano
+17      santiago    18      santiago
+18        prague    17        prague
+19         basel    16         basel
+20      grenoble    16      grenoble
+21        luzern    16        luzern
+22       utrecht    15       utrecht
+23         bilbo    14         bilbo
+24         dijon    14         dijon
+25        geneve    14        geneve
+26   montpellier    14   montpellier
+27        napoli    14        napoli
+28     rotterdam    14     rotterdam
+29       wroclaw    14       wroclaw
+30        nantes    13        nantes
+31          bern    12          bern
+32          caen    12          caen
+33 saint-etienne    12 saint-etienne
+34       sevilla    12       sevilla
+35  thessaloniki    12  thessaloniki
+36      valencia    12      valencia
+37       firenze    11       firenze
+38     groningen    11     groningen
+39       hamburg    11       hamburg
+40      lausanne    11      lausanne
+41       bologna    10       bologna
+42       bristol    10       bristol
+43          gent    10          gent
+44  porto alegre    10  porto alegre
+45     stockholm    10     stockholm
+46          wien    10          wien
+47    strasbourg     9    strasbourg
+48      warszawa     9      warszawa
+49    winterthur     9    winterthur</code></pre>
+</div>
+</div>
+</section>
+<section id="geocoding-cites" class="level2">
+<h2 class="anchored" data-anchor-id="geocoding-cites">1.3 Geocoding cites</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 49 × 5
+   filter    count formatted latitude longitude
+   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;     &lt;dbl&gt;
+ 1 berlin    218   berlin        52.5    13.4  
+ 2 amsterdam 143   amsterdam     52.4     4.89 
+ 3 paris     89    paris         48.9     2.32 
+ 4 barcelona 83    barcelona     41.4     2.18 
+ 5 bruxelles 76    bruxelles     50.8     4.35 
+ 6 toulouse  56    toulouse      43.6     1.44 
+ 7 lyon      44    lyon          45.8     4.83 
+ 8 marseille 41    marseille     43.3     5.37 
+ 9 london    38    london        51.5    -0.144
+10 madrid    36    madrid        40.4    -3.70 
+# ℹ 39 more rows</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>geo_data <span class="ot">&lt;-</span> geo_data <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">city_1 =</span> filter,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">city_2 =</span> formatted)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>geo_data <span class="ot">&lt;-</span> geo_data <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">lat =</span> latitude,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">long =</span> longitude)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="plot-squat-cities-and-points" class="level1">
+<h1>2. Plot squat cities and points</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a Google Font (for example, "Roboto" or any font you like)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">showtext_auto</span>()  <span class="co"># Automatically use showtext for all plots</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">font_add_google</span>(<span class="st">"Roboto"</span>, <span class="at">family =</span> <span class="st">"Roboto"</span>)  <span class="co"># Add Google font "Roboto" (change to any font you like)</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">font_add_google</span>(<span class="st">"Noto Sans"</span>, <span class="at">family =</span> <span class="st">"Noto Sans"</span>)  <span class="co"># Add Google font "Noto Sans"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="add-logo" class="level2">
+<h2 class="anchored" data-anchor-id="add-logo">2.1 add logo</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download Rbanism logo</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>rbanism_logo <span class="ot">&lt;-</span> <span class="fu">image_read</span>(<span class="fu">here</span>(<span class="st">"17Nov_Collaborative/fig/Logo_Rbanism_ White.png"</span>))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>logo_grob <span class="ot">&lt;-</span> <span class="fu">rasterGrob</span>(rbanism_logo, <span class="at">interpolate =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="plot" class="level2">
+<h2 class="anchored" data-anchor-id="plot">2.2 plot</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert 'count' to numeric (if it's not already)</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>geo_data<span class="sc">$</span>count <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(geo_data<span class="sc">$</span>count)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> europe, <span class="at">fill =</span> <span class="st">"#1a2c44"</span>, <span class="at">color =</span> <span class="st">"#36454F"</span>) <span class="sc">+</span> <span class="co"># European boundaries</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> geo_data, <span class="fu">aes</span>(<span class="at">x =</span> long, <span class="at">y =</span> lat, <span class="at">size =</span> count<span class="sc">*</span><span class="dv">4</span>), </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"yellow"</span>, <span class="at">alpha =</span> <span class="fl">0.1</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">show.legend =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> <span class="co"># Outer glow with size based on count</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> geo_data, <span class="fu">aes</span>(<span class="at">x =</span> long, <span class="at">y =</span> lat, <span class="at">size =</span> count<span class="sc">*</span><span class="dv">2</span>), </span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"yellow"</span>, <span class="at">alpha =</span> <span class="fl">0.1</span>,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">show.legend =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> <span class="co"># Middle glow with size based on count</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> geo_data, <span class="fu">aes</span>(<span class="at">x =</span> long, <span class="at">y =</span> lat, <span class="at">size =</span> count<span class="sc">*</span><span class="fl">1.5</span>), </span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"darkorange"</span>, <span class="at">alpha =</span> <span class="fl">0.1</span>,</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">show.legend =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> <span class="co"># Inner glow with size based on count</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> geo_data, <span class="fu">aes</span>(<span class="at">x =</span> long, <span class="at">y =</span> lat, <span class="at">size =</span> count), </span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"gold"</span>, <span class="at">alpha =</span> <span class="fl">0.1</span>,</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">show.legend =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> <span class="co"># Core point with size based on count</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> geo_data, <span class="fu">aes</span>(<span class="at">x =</span> long, <span class="at">y =</span> lat, <span class="at">label =</span> <span class="fu">toTitleCase</span>(city_2)), </span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="dv">3</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">family =</span> <span class="st">"Noto Sans"</span>) <span class="sc">+</span> <span class="co"># Labels with Noto Sans font</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_continuous</span>(</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Number of groups per city"</span>, <span class="co"># Custom legend label</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">10</span>)) <span class="sc">+</span> <span class="co"># Adjust size range if necessary</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">25</span>, <span class="dv">30</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">35</span>, <span class="dv">70</span>), <span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="co"># Zoom in on Europe</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),        <span class="co"># Remove axis titles</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_blank</span>(),         <span class="co"># Remove axis labels</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),        <span class="co"># Remove axis ticks</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.line =</span> <span class="fu">element_blank</span>(),         <span class="co"># Remove axis lines</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),        <span class="co"># Remove grid lines</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>      <span class="at">family =</span> <span class="st">"Noto Sans"</span>,</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> <span class="dv">18</span>,</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> <span class="st">"white"</span>),  <span class="co"># Match the legend text styling,</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>      <span class="at">family =</span> <span class="st">"Noto Sans"</span>,</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> <span class="dv">14</span>,</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> <span class="st">"white"</span>),</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot.title = element_text(hjust = 0.5, face = "bold", color = "white", family = "Noto Sans"),</span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot.subtitle = element_text(hjust = 0.5, color = "white", family = "Noto Sans"),</span></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot.caption = element_text(color = "white", family = "Noto Sans"),</span></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axis.title = element_text(color = "white", family = "Noto Sans"),</span></span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axis.text = element_text(color = "white", family = "Noto Sans"),</span></span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#36454F"</span>, <span class="at">color =</span> <span class="cn">NA</span>), <span class="co"># Dark grey panel background</span></span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#36454F"</span>,</span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">color =</span> <span class="cn">NA</span>), <span class="co"># Dark grey plot background</span></span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.5</span>), <span class="co"># Custom position</span></span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="fl">2.5</span>, <span class="dv">0</span>, <span class="fl">2.5</span>, <span class="dv">0</span>),</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Noto Sans"</span>,</span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">size =</span> <span class="dv">30</span>,</span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">color =</span> <span class="st">"white"</span>),  <span class="co"># Title styling</span></span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Noto Sans"</span>,</span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">size =</span> <span class="dv">26</span>,</span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>                                <span class="at">color =</span> <span class="st">"white"</span>),  <span class="co"># Subtitle styling</span></span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Noto Sans"</span>,</span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>                                <span class="at">size =</span> <span class="dv">18</span>,</span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>                                <span class="at">color =</span> <span class="st">"white"</span>,</span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>                               <span class="at">lineheight =</span> <span class="fl">0.5</span>)</span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: A numeric `legend.position` argument in `theme()` was deprecated in ggplot2
+3.5.0.
+ℹ Please use the `legend.position.inside` argument of `theme()` instead.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> p <span class="sc">+</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Control legend appearance</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Events organized by squats in European cities"</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># subtitle = "number",</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="st">"Event Density"</span>, <span class="co"># Custom legend title</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"#30DayMapChallenge. Chiara Mazzarella, Daniele Cannatella, and Clémentine Cottineau-Mugadza, 2024.  </span><span class="sc">\n</span><span class="st"> 17 November: Collaborative. Source: radar.squat.net"</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="17Nov_Collaborative_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine plot and logo</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> cowplot<span class="sc">::</span><span class="fu">ggdraw</span>(p) <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  cowplot<span class="sc">::</span><span class="fu">draw_image</span>(rbanism_logo, <span class="at">x =</span> <span class="fl">0.05</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">width =</span> <span class="fl">0.075</span>, <span class="at">height =</span> <span class="fl">0.075</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="dv">0</span>)<span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="fl">2.5</span>, <span class="dv">0</span>, <span class="fl">2.5</span>, <span class="dv">0</span>),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#36454F"</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">color =</span> <span class="cn">NA</span>,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">linewidth =</span> <span class="fl">0.1</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Noto Sans' not found in PostScript font database</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+'Noto Sans' not found in PostScript font database</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the output file name</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>output_file <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"17Nov_Collaborative/output/17Nov_collaborative.png"</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Export the map as a PNG with 1:1 aspect ratio</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> output_file, <span class="at">plot =</span> p, <span class="at">device =</span> <span class="st">"png"</span>, </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">6</span>, <span class="at">units =</span> <span class="st">"in"</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Print a message to confirm export</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Map has been exported as"</span>, output_file, <span class="st">"with a 1:1 aspect ratio.</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Map has been exported as C:/Users/dcannatella/surfdrive/01_Research/2024-30daysmapchallenge/30DayMapChallenge2024_old/17Nov_Collaborative/output/17Nov_collaborative.png with a 1:1 aspect ratio.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="and-here-is-the-map" class="level1">
+<h1>And here is the map!</h1>
+<p><img src="C:/Users/dcannatella/surfdrive/01_Research/2024-30daysmapchallenge/30DayMapChallenge2024_old/17Nov_Collaborative/output/17Nov_collaborative.png" id="fig:example_map" class="img-fluid"></p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

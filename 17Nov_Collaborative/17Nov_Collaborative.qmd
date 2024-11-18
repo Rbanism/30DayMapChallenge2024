@@ -1,0 +1,214 @@
+---
+title: "17Nov_collaborative"
+author: "Chiara Mazzarella, Daniele Cannatella, Clementine Cottineau-Mugadza"
+date: "2024-11-17"
+format: 
+  html: default
+  pdf: default
+---
+
+## 0. Import libraries
+
+```{r, echo=FALSE, warning=FALSE, message=TRUE, output=TRUE, include=FALSE}
+
+# Define the packages to be used
+packages <- c("rnaturalearth", "rnaturalearthdata", "sf", "ggplot2", "dplyr", "jsonlite", "tidygeocoder", "rjson", "here", "tools", "showtext", "grid","magick", "ggspatial", "cowplot")
+
+# Function to check if packages are installed and load them
+load_packages <- function(pkgs) {
+  # Check for missing packages
+  missing_pkgs <- pkgs[!(pkgs %in% installed.packages()[, "Package"])]
+  
+  # Install missing packages
+  if (length(missing_pkgs)) {
+    install.packages(missing_pkgs)
+  }
+  
+  # Load all packages
+  lapply(pkgs, library, character.only = TRUE)
+}
+
+# Load the packages
+load_packages(packages)
+
+# Print a message to confirm successful loading
+cat("All specified packages have been loaded successfully!\n")
+```
+
+# 1. Import data from Natural Earth
+
+## 1.1 Import European boundaries and cities
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+# European boundaries
+europe <- ne_countries(scale = "medium", continent = "Europe", returnclass = "sf")
+
+```
+
+## 1.2 Import data from radar.squats.net
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+# Json for squats
+json_file <- "https://radar.squat.net/api/1.2/search/groups.json"
+json_data <- fromJSON(paste(readLines(json_file), collapse=""))
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+
+str(json_data)
+
+cities <- as.data.frame(t(matrix(unlist(json_data$facets$city), nrow = 3)))
+colnames(cities) <- c("filter", "count", "formatted")
+
+cities
+```
+
+## 1.3 Geocoding cites
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+
+# Geocode cities
+geo_data <- cities %>%
+  geocode(filter, method = "osm", lat = latitude, long = longitude)
+
+print(geo_data)
+```
+
+```{r}
+geo_data <- geo_data %>%
+  rename(city_1 = filter,
+         city_2 = formatted)
+```
+
+```{r}
+geo_data <- geo_data %>%
+  rename(lat = latitude,
+         long = longitude)
+```
+
+# 2. Plot squat cities and points
+
+```{r}
+# Add a Google Font (for example, "Roboto" or any font you like)
+showtext_auto()  # Automatically use showtext for all plots
+font_add_google("Roboto", family = "Roboto")  # Add Google font "Roboto" (change to any font you like)
+font_add_google("Noto Sans", family = "Noto Sans")  # Add Google font "Noto Sans"
+
+```
+
+## 2.1 add logo
+
+```{r}
+# Download Rbanism logo
+rbanism_logo <- image_read(here("17Nov_Collaborative/fig/Logo_Rbanism_ White.png"))
+
+logo_grob <- rasterGrob(rbanism_logo, interpolate = TRUE)
+```
+
+## 2.2 plot
+
+```{r}
+# Convert 'count' to numeric (if it's not already)
+geo_data$count <- as.numeric(geo_data$count)
+
+p <- ggplot() +
+  geom_sf(data = europe, fill = "#1a2c44", color = "#36454F") + # European boundaries
+  geom_point(data = geo_data, aes(x = long, y = lat, size = count*4), 
+             color = "yellow", alpha = 0.1,
+             show.legend = TRUE) + # Outer glow with size based on count
+  geom_point(data = geo_data, aes(x = long, y = lat, size = count*2), 
+             color = "yellow", alpha = 0.1,
+             show.legend = TRUE) + # Middle glow with size based on count
+  geom_point(data = geo_data, aes(x = long, y = lat, size = count*1.5), 
+             color = "darkorange", alpha = 0.1,
+             show.legend = TRUE) + # Inner glow with size based on count
+  geom_point(data = geo_data, aes(x = long, y = lat, size = count), 
+             color = "gold", alpha = 0.1,
+             show.legend = TRUE) + # Core point with size based on count
+  geom_text(data = geo_data, aes(x = long, y = lat, label = toTitleCase(city_2)), 
+            size = 3, vjust = -0.5, hjust = 0.5, color = "white", family = "Noto Sans") + # Labels with Noto Sans font
+  scale_size_continuous(
+    name = "Number of groups per city", # Custom legend label
+    range = c(3, 10)) + # Adjust size range if necessary
+  coord_sf(xlim = c(-25, 30), ylim = c(35, 70), expand = FALSE) + # Zoom in on Europe
+  theme_minimal() +
+  theme(
+    axis.title = element_blank(),        # Remove axis titles
+    axis.text = element_blank(),         # Remove axis labels
+    axis.ticks = element_blank(),        # Remove axis ticks
+    axis.line = element_blank(),         # Remove axis lines
+    panel.grid = element_blank(),        # Remove grid lines
+    legend.title = element_text(
+      family = "Noto Sans",
+      size = 18,
+      color = "white"),  # Match the legend text styling,
+    legend.text = element_text(
+      family = "Noto Sans",
+      size = 14,
+      color = "white"),
+    # plot.title = element_text(hjust = 0.5, face = "bold", color = "white", family = "Noto Sans"),
+    # plot.subtitle = element_text(hjust = 0.5, color = "white", family = "Noto Sans"),
+    # plot.caption = element_text(color = "white", family = "Noto Sans"),
+    # axis.title = element_text(color = "white", family = "Noto Sans"),
+    # axis.text = element_text(color = "white", family = "Noto Sans"),
+    panel.background = element_rect(fill = "#36454F", color = NA), # Dark grey panel background
+    plot.background = element_rect(fill = "#36454F",
+                                   color = NA), # Dark grey plot background
+    legend.position = c(0.3, 0.5), # Custom position
+    plot.margin = margin(2.5, 0, 2.5, 0),
+    plot.title = element_text(family = "Noto Sans",
+                                 size = 30,
+                                  color = "white"),  # Title styling
+    plot.subtitle = element_text(family = "Noto Sans",
+                                 size = 26,
+                                color = "white"),  # Subtitle styling
+    plot.caption = element_text(family = "Noto Sans",
+                                size = 18,
+                                color = "white",
+                               lineheight = 0.5)
+  )
+
+p <- p +
+   # Control legend appearance
+    labs(
+    title = "Events organized by squats in European cities",
+    # subtitle = "number",
+    legend.title = "Event Density", # Custom legend title
+    caption = "#30DayMapChallenge. Chiara Mazzarella, Daniele Cannatella, and Clémentine Cottineau-Mugadza, 2024.  \n 17 November: Collaborative. Source: radar.squat.net"
+  )
+
+p
+
+```
+
+```{r}
+
+# Combine plot and logo
+p <- cowplot::ggdraw(p) +
+  cowplot::draw_image(rbanism_logo, x = 0.05, y = 0, width = 0.075, height = 0.075, hjust = 0, vjust = 0)+
+  theme(
+    plot.margin = margin(2.5, 0, 2.5, 0),
+    plot.background = element_rect(fill = "#36454F",
+                                   color = NA,
+                                   linewidth = 0.1)
+  )
+
+```
+
+```{r}
+# Define the output file name
+output_file <- here("17Nov_Collaborative/output/17Nov_collaborative.png")
+
+# Export the map as a PNG with 1:1 aspect ratio
+ggsave(filename = output_file, plot = p, device = "png", 
+       width = 6, height = 6, units = "in", dpi = 300)
+
+# Print a message to confirm export
+cat("Map has been exported as", output_file, "with a 1:1 aspect ratio.\n")
+
+# 
+```
+
+# And here is the map!
+
+![](C:/Users/dcannatella/surfdrive/01_Research/2024-30daysmapchallenge/30DayMapChallenge2024_old/17Nov_Collaborative/output/17Nov_collaborative.png){#fig:example_map}

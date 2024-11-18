@@ -1,0 +1,2055 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod]{scrartcl}
+
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{241,243,245}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.40,0.45,0.13}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.07,0.07,0.07}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={17Nov\_collaborative},
+  pdfauthor={Chiara Mazzarella, Daniele Cannatella, Clementine Cottineau-Mugadza},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{17Nov\_collaborative}
+\author{Chiara Mazzarella, Daniele Cannatella, Clementine
+Cottineau-Mugadza}
+\date{2024-11-17}
+
+\begin{document}
+\maketitle
+
+
+\section{0. Import libraries}\label{import-libraries}
+
+\begin{verbatim}
+[[1]]
+[1] "rnaturalearth" "stats"         "graphics"      "grDevices"    
+[5] "utils"         "datasets"      "methods"       "base"         
+
+[[2]]
+[1] "rnaturalearthdata" "rnaturalearth"     "stats"            
+[4] "graphics"          "grDevices"         "utils"            
+[7] "datasets"          "methods"           "base"             
+
+[[3]]
+ [1] "sf"                "rnaturalearthdata" "rnaturalearth"    
+ [4] "stats"             "graphics"          "grDevices"        
+ [7] "utils"             "datasets"          "methods"          
+[10] "base"             
+
+[[4]]
+ [1] "ggplot2"           "sf"                "rnaturalearthdata"
+ [4] "rnaturalearth"     "stats"             "graphics"         
+ [7] "grDevices"         "utils"             "datasets"         
+[10] "methods"           "base"             
+
+[[5]]
+ [1] "dplyr"             "ggplot2"           "sf"               
+ [4] "rnaturalearthdata" "rnaturalearth"     "stats"            
+ [7] "graphics"          "grDevices"         "utils"            
+[10] "datasets"          "methods"           "base"             
+
+[[6]]
+ [1] "jsonlite"          "dplyr"             "ggplot2"          
+ [4] "sf"                "rnaturalearthdata" "rnaturalearth"    
+ [7] "stats"             "graphics"          "grDevices"        
+[10] "utils"             "datasets"          "methods"          
+[13] "base"             
+
+[[7]]
+ [1] "tidygeocoder"      "jsonlite"          "dplyr"            
+ [4] "ggplot2"           "sf"                "rnaturalearthdata"
+ [7] "rnaturalearth"     "stats"             "graphics"         
+[10] "grDevices"         "utils"             "datasets"         
+[13] "methods"           "base"             
+
+[[8]]
+ [1] "rjson"             "tidygeocoder"      "jsonlite"         
+ [4] "dplyr"             "ggplot2"           "sf"               
+ [7] "rnaturalearthdata" "rnaturalearth"     "stats"            
+[10] "graphics"          "grDevices"         "utils"            
+[13] "datasets"          "methods"           "base"             
+
+[[9]]
+ [1] "here"              "rjson"             "tidygeocoder"     
+ [4] "jsonlite"          "dplyr"             "ggplot2"          
+ [7] "sf"                "rnaturalearthdata" "rnaturalearth"    
+[10] "stats"             "graphics"          "grDevices"        
+[13] "utils"             "datasets"          "methods"          
+[16] "base"             
+
+[[10]]
+ [1] "tools"             "here"              "rjson"            
+ [4] "tidygeocoder"      "jsonlite"          "dplyr"            
+ [7] "ggplot2"           "sf"                "rnaturalearthdata"
+[10] "rnaturalearth"     "stats"             "graphics"         
+[13] "grDevices"         "utils"             "datasets"         
+[16] "methods"           "base"             
+
+[[11]]
+ [1] "showtext"          "showtextdb"        "sysfonts"         
+ [4] "tools"             "here"              "rjson"            
+ [7] "tidygeocoder"      "jsonlite"          "dplyr"            
+[10] "ggplot2"           "sf"                "rnaturalearthdata"
+[13] "rnaturalearth"     "stats"             "graphics"         
+[16] "grDevices"         "utils"             "datasets"         
+[19] "methods"           "base"             
+
+[[12]]
+ [1] "grid"              "showtext"          "showtextdb"       
+ [4] "sysfonts"          "tools"             "here"             
+ [7] "rjson"             "tidygeocoder"      "jsonlite"         
+[10] "dplyr"             "ggplot2"           "sf"               
+[13] "rnaturalearthdata" "rnaturalearth"     "stats"            
+[16] "graphics"          "grDevices"         "utils"            
+[19] "datasets"          "methods"           "base"             
+
+[[13]]
+ [1] "magick"            "grid"              "showtext"         
+ [4] "showtextdb"        "sysfonts"          "tools"            
+ [7] "here"              "rjson"             "tidygeocoder"     
+[10] "jsonlite"          "dplyr"             "ggplot2"          
+[13] "sf"                "rnaturalearthdata" "rnaturalearth"    
+[16] "stats"             "graphics"          "grDevices"        
+[19] "utils"             "datasets"          "methods"          
+[22] "base"             
+
+[[14]]
+ [1] "ggspatial"         "magick"            "grid"             
+ [4] "showtext"          "showtextdb"        "sysfonts"         
+ [7] "tools"             "here"              "rjson"            
+[10] "tidygeocoder"      "jsonlite"          "dplyr"            
+[13] "ggplot2"           "sf"                "rnaturalearthdata"
+[16] "rnaturalearth"     "stats"             "graphics"         
+[19] "grDevices"         "utils"             "datasets"         
+[22] "methods"           "base"             
+
+[[15]]
+ [1] "cowplot"           "ggspatial"         "magick"           
+ [4] "grid"              "showtext"          "showtextdb"       
+ [7] "sysfonts"          "tools"             "here"             
+[10] "rjson"             "tidygeocoder"      "jsonlite"         
+[13] "dplyr"             "ggplot2"           "sf"               
+[16] "rnaturalearthdata" "rnaturalearth"     "stats"            
+[19] "graphics"          "grDevices"         "utils"            
+[22] "datasets"          "methods"           "base"             
+\end{verbatim}
+
+\begin{verbatim}
+All specified packages have been loaded successfully!
+\end{verbatim}
+
+\section{1. Import data from Natural
+Earth}\label{import-data-from-natural-earth}
+
+\subsection{1.1 Import European boundaries and
+cities}\label{import-european-boundaries-and-cities}
+
+\subsection{1.2 Import data from
+radar.squats.net}\label{import-data-from-radar.squats.net}
+
+\begin{verbatim}
+List of 3
+ $ result:List of 500
+  ..$ 7215  :List of 2
+  .. ..$ title: chr "‘T Landhuis"
+  .. ..$ uuid : chr "aa9bc262-f61b-42f0-b52f-ff40b9057ea3"
+  ..$ 447762:List of 2
+  .. ..$ title: chr "(A)ction Against Prison Society"
+  .. ..$ uuid : chr "47199736-73b1-4d71-b5b3-59f34d73c8a9"
+  ..$ 356218:List of 2
+  .. ..$ title: chr "1 in 12 Club"
+  .. ..$ uuid : chr "0268f9ef-da79-4007-b193-c6c9de29bd1f"
+  ..$ 362536:List of 2
+  .. ..$ title: chr "1 mei tilburg"
+  .. ..$ uuid : chr "44bc2a8a-f335-4db1-bcd5-f306cf595ef2"
+  ..$ 63423 :List of 2
+  .. ..$ title: chr "100CELLE Aperte"
+  .. ..$ uuid : chr "21969fb0-126d-4585-b46c-0e374a4bbc78"
+  ..$ 387495:List of 2
+  .. ..$ title: chr "105FM Mytillni self organised radio"
+  .. ..$ uuid : chr "5b92a99b-1ae8-4231-b50a-4df6ccc3c07e"
+  ..$ 381170:List of 2
+  .. ..$ title: chr "1872"
+  .. ..$ uuid : chr "473d7daa-dae4-4f51-84db-942b999ce817"
+  ..$ 329881:List of 2
+  .. ..$ title: chr "1aGrind"
+  .. ..$ uuid : chr "f2087157-cc94-419a-a4d9-103d3386ef40"
+  ..$ 232845:List of 2
+  .. ..$ title: chr "2. Mai - Internationaler Kampf- und Feiertag der Arbeitslosen"
+  .. ..$ uuid : chr "17678585-4812-42ee-ae11-7c51563a138c"
+  ..$ 432999:List of 2
+  .. ..$ title: chr "2.Dh5"
+  .. ..$ uuid : chr "581ec318-c509-4df1-a9d6-395049b5ae1d"
+  ..$ 490037:List of 2
+  .. ..$ title: chr "254"
+  .. ..$ uuid : chr "dcc12c91-9fd4-4203-b539-315b5e0abed0"
+  ..$ 80318 :List of 2
+  .. ..$ title: chr "269 Life Czech"
+  .. ..$ uuid : chr "4f44f9f2-d8fc-4287-abe4-8197c073766f"
+  ..$ 73421 :List of 2
+  .. ..$ title: chr "3CR Community Radio"
+  .. ..$ uuid : chr "47e0e922-2cc0-456c-a79d-7aabc9cf96a0"
+  ..$ 473015:List of 2
+  .. ..$ title: chr "42 avenue de la Couronne"
+  .. ..$ uuid : chr "8cce75e0-230a-4ab3-a91d-317cddb04a33"
+  ..$ 358927:List of 2
+  .. ..$ title: chr "430 On the Go"
+  .. ..$ uuid : chr "4e9a27e5-668c-4d63-9e29-c9642563e629"
+  ..$ 332048:List of 2
+  .. ..$ title: chr "4648"
+  .. ..$ uuid : chr "da2b6462-585c-4aea-bb7f-0524dade8b9e"
+  ..$ 363973:List of 2
+  .. ..$ title: chr "4lthangrund"
+  .. ..$ uuid : chr "fbc484d7-fa6a-4a83-b822-b91cb97d3ae4"
+  ..$ 75824 :List of 2
+  .. ..$ title: chr "56A Infoshop"
+  .. ..$ uuid : chr "23908964-0308-4646-9293-12c8681fece8"
+  ..$ 12459 :List of 2
+  .. ..$ title: chr "7Katu Gaztetxea"
+  .. ..$ uuid : chr "b776078f-e4b8-4f6f-bdb8-2e8ef10a0bf9"
+  ..$ 262323:List of 2
+  .. ..$ title: chr "[tbd]"
+  .. ..$ uuid : chr "b49c2bbf-93c7-4a47-9062-a017bed1bf8a"
+  ..$ 402349:List of 2
+  .. ..$ title: chr "A - Laden"
+  .. ..$ uuid : chr "251bcbc2-c034-400b-aaf5-823d5b33300d"
+  ..$ 140458:List of 2
+  .. ..$ title: chr "A Cova dos Ratos"
+  .. ..$ uuid : chr "468f0694-f596-4769-9d9b-da7cc32643b4"
+  ..$ 161638:List of 2
+  .. ..$ title: chr "À da Maxada"
+  .. ..$ uuid : chr "b36daaf6-692e-4b58-8c50-b636affbeb18"
+  ..$ 7889  :List of 2
+  .. ..$ title: chr "A Infoshop "
+  .. ..$ uuid : chr "18d8373f-1157-4762-9b43-49961ce09099"
+  ..$ 383604:List of 2
+  .. ..$ title: chr "À la cloche de bois"
+  .. ..$ uuid : chr "9e21609a-9421-4efe-b2c2-fb077553f476"
+  ..$ 493015:List of 2
+  .. ..$ title: chr "A(k)CAB, A Kansas City Anarchist Bookfair"
+  .. ..$ uuid : chr "9de6a1cf-f6f7-43ee-945c-8a84c685f9e9"
+  ..$ 10350 :List of 2
+  .. ..$ title: chr "A-Cafe Bremen"
+  .. ..$ uuid : chr "83200517-bd27-457c-a92a-c526b12e74c0"
+  ..$ 487633:List of 2
+  .. ..$ title: chr "A-mässan Stockholm"
+  .. ..$ uuid : chr "ce4f5ede-ae63-4e66-a100-8b862ddb63fa"
+  ..$ 421066:List of 2
+  .. ..$ title: chr "A-Radio Berlin"
+  .. ..$ uuid : chr "ad58a0cb-16e4-4310-80e4-6babb907b0e2"
+  ..$ 365318:List of 2
+  .. ..$ title: chr "A-Radio Network"
+  .. ..$ uuid : chr "a316d0f8-c487-4227-8824-0e902588b045"
+  ..$ 462001:List of 2
+  .. ..$ title: chr "A-Tram"
+  .. ..$ uuid : chr "18f584a9-6f55-4e00-8c0f-c1223e35c20d"
+  ..$ 348743:List of 2
+  .. ..$ title: chr "A.C. Tugurio"
+  .. ..$ uuid : chr "292db430-324d-416f-bb1a-52a827f10306"
+  ..$ 191186:List of 2
+  .. ..$ title: chr "A.K.C. Attack!"
+  .. ..$ uuid : chr "5fb520d9-5afd-4789-af43-82210c2d23da"
+  ..$ 135549:List of 2
+  .. ..$ title: chr "A4 unplugged Druck Kollektiv"
+  .. ..$ uuid : chr "48cdec1d-208e-404d-88f4-5ee579906f4e"
+  ..$ 381274:List of 2
+  .. ..$ title: chr "A_K_A_B"
+  .. ..$ uuid : chr "aea88ce4-2723-4c44-8b65-90a4dc84af2f"
+  ..$ 454110:List of 2
+  .. ..$ title: chr "a_sound"
+  .. ..$ uuid : chr "8f2348f2-9040-480a-9c83-26ba72573696"
+  ..$ 448309:List of 2
+  .. ..$ title: chr "AAA Pödelwitz"
+  .. ..$ uuid : chr "5c8b31dd-37d0-405f-94c1-14ea3c79b403"
+  ..$ 24829 :List of 2
+  .. ..$ title: chr "Aan Lager Wal"
+  .. ..$ uuid : chr "cd92c8c3-5cd0-454b-be33-4ad9ca2f98b0"
+  ..$ 370798:List of 2
+  .. ..$ title: chr "Abadiñoko Gaztetxea"
+  .. ..$ uuid : chr "2f1327af-6e69-4743-b90b-22d28dc835db"
+  ..$ 375697:List of 2
+  .. ..$ title: chr "Abbaye d’Ubu"
+  .. ..$ uuid : chr "1d140517-1d47-40d5-abad-b691aeb1c30a"
+  ..$ 73229 :List of 2
+  .. ..$ title: chr "ABC Gent"
+  .. ..$ uuid : chr "ef984904-66fa-4998-9152-d3a361aef949"
+  ..$ 377261:List of 2
+  .. ..$ title: chr "Aberdeen Anarchist Group"
+  .. ..$ uuid : chr "a5ef21cc-4eab-4724-b0db-ba0f12ada6ca"
+  ..$ 423410:List of 2
+  .. ..$ title: chr "Abortion Network Amsterdam"
+  .. ..$ uuid : chr "e68cde8a-b8b8-42bc-84bd-46ec19108045"
+  ..$ 7031  :List of 2
+  .. ..$ title: chr "about blank"
+  .. ..$ uuid : chr "da296694-ae72-47a9-9073-e450143b9c58"
+  ..$ 194614:List of 2
+  .. ..$ title: chr "about:fem"
+  .. ..$ uuid : chr "682d734a-0443-40cb-a340-efa9bfa84594"
+  ..$ 1608  :List of 2
+  .. ..$ title: chr "Abstand"
+  .. ..$ uuid : chr "2f2f9cb7-49f1-40b8-a609-7b0a2a91e476"
+  ..$ 55752 :List of 2
+  .. ..$ title: chr "Acrobax"
+  .. ..$ uuid : chr "80f993f5-7a99-47d8-8268-9b53093895ef"
+  ..$ 393169:List of 2
+  .. ..$ title: chr "ACT"
+  .. ..$ uuid : chr "ba178f71-801d-4fff-ae2e-7cc2ddcb41fc"
+  ..$ 413981:List of 2
+  .. ..$ title: chr "ACT UP Prague - Radical queers"
+  .. ..$ uuid : chr "64f3efd2-2b18-4aa1-a9a4-b07dc10fe193"
+  ..$ 399075:List of 2
+  .. ..$ title: chr "Actiegroep Niet Te Koop"
+  .. ..$ uuid : chr "88fffd45-32ee-4682-8247-02cd772cfe02"
+  ..$ 328627:List of 2
+  .. ..$ title: chr "Action Antifasciste Paris-Banlieue"
+  .. ..$ uuid : chr "3304535c-affa-4b44-ac97-8da738f11747"
+  ..$ 48457 :List of 2
+  .. ..$ title: chr "Action Antifasciste Tolosa"
+  .. ..$ uuid : chr "a2e6c9a5-9868-4dde-96e8-36df553b214d"
+  ..$ 211838:List of 2
+  .. ..$ title: chr "Action Culturelle Anarchiste Bruxelloise"
+  .. ..$ uuid : chr "43de0bfc-e5c1-409b-94b7-e7932c44bc7a"
+  ..$ 77933 :List of 2
+  .. ..$ title: chr "Action Days in Biel"
+  .. ..$ uuid : chr "a5bbd095-ee5c-4a56-bfc2-67b0cb61010f"
+  ..$ 478402:List of 2
+  .. ..$ title: chr "Action Sportive Libertaire"
+  .. ..$ uuid : chr "98093320-2eb2-4d12-ab94-b83db2d8e083"
+  ..$ 437902:List of 2
+  .. ..$ title: chr "Active for Justice"
+  .. ..$ uuid : chr "ae6bbd54-da11-4fc4-a70d-d7c479b22993"
+  ..$ 14    :List of 2
+  .. ..$ title: chr "ACU"
+  .. ..$ uuid : chr "f49fba09-0049-4fc5-b355-063695dba26b"
+  ..$ 388493:List of 2
+  .. ..$ title: chr "Ada Puławska"
+  .. ..$ uuid : chr "07d392f7-3f19-4835-9d19-48a6ffebe60b"
+  ..$ 416010:List of 2
+  .. ..$ title: chr "ADM Noord"
+  .. ..$ uuid : chr "19edf1a9-443f-406a-a702-67318d0adac4"
+  ..$ 23519 :List of 2
+  .. ..$ title: chr "Advisory Service For Squatters"
+  .. ..$ uuid : chr "646e2a41-be01-41a1-acb8-0567d6badf34"
+  ..$ 390178:List of 2
+  .. ..$ title: chr "AERI"
+  .. ..$ uuid : chr "c30c1f29-fc23-46f0-a6ee-4dff0a1c4440"
+  ..$ 383839:List of 2
+  .. ..$ title: chr "AFA Rotterdam"
+  .. ..$ uuid : chr "5b279bfd-ae0c-4c2c-a19c-d36e983c3e34"
+  ..$ 129049:List of 2
+  .. ..$ title: chr "Affinità Libertarie"
+  .. ..$ uuid : chr "0008697e-75d7-486a-a88a-cf1913992a51"
+  ..$ 495512:List of 2
+  .. ..$ title: chr "AG antifascite Paname"
+  .. ..$ uuid : chr "d844e2a0-7916-4a34-9c4d-ca038ad62940"
+  ..$ 434899:List of 2
+  .. ..$ title: chr "AG de coordination interluttes de Montreuil"
+  .. ..$ uuid : chr "9b8c8fbf-8435-4e65-83ae-2dbb1b984f6f"
+  ..$ 71675 :List of 2
+  .. ..$ title: chr "AG de lutte contre les expulsions"
+  .. ..$ uuid : chr "f0b1ec80-ebf1-4519-9495-ec79142d75ed"
+  ..$ 335538:List of 2
+  .. ..$ title: chr "AG inter-squats"
+  .. ..$ uuid : chr "cfaf616f-4a68-469d-8bdc-d41c6fddb0fc"
+  ..$ 70503 :List of 2
+  .. ..$ title: chr "Àgora Juan Andrés Benítez"
+  .. ..$ uuid : chr "8d5d51f6-a65a-4413-913e-f3c901eef3a4"
+  ..$ 110071:List of 2
+  .. ..$ title: chr "Ahwahnee / Le 106"
+  .. ..$ uuid : chr "b3fc8f3b-4254-4aff-b318-a13da92ff3f7"
+  ..$ 74236 :List of 2
+  .. ..$ title: chr "Aid Delivery Mission"
+  .. ..$ uuid : chr "76f53b16-b214-4480-a267-5dbf8e434365"
+  ..$ 441601:List of 2
+  .. ..$ title: chr "AIHS"
+  .. ..$ uuid : chr "284e5fd4-79c9-4a60-9dfd-04df44de5d3e"
+  ..$ 345169:List of 2
+  .. ..$ title: chr "AIM Strossburi"
+  .. ..$ uuid : chr "5aa4ccef-43e1-4757-ab77-220a10f0d3b6"
+  ..$ 346488:List of 2
+  .. ..$ title: chr "Ajo Negro"
+  .. ..$ uuid : chr "f30cf604-03a5-4ad5-959c-e24c08b61a90"
+  ..$ 447236:List of 2
+  .. ..$ title: chr "AKAB Okretnica"
+  .. ..$ uuid : chr "df3c7b4f-2e4b-438d-9a09-2186b561a2c5"
+  ..$ 130751:List of 2
+  .. ..$ title: chr "AKC Medika"
+  .. ..$ uuid : chr "b0813403-da66-4c62-ad9b-1b28a0131060"
+  ..$ 381674:List of 2
+  .. ..$ title: chr "AKC Metelkova mesto"
+  .. ..$ uuid : chr "bf20b8c1-b99f-441d-ae8f-33b1a3b213e7"
+  ..$ 58525 :List of 2
+  .. ..$ title: chr "AKC Nigdjezemska"
+  .. ..$ uuid : chr "c3ccb433-07e9-4d70-bb86-e6cc32ec19c6"
+  ..$ 394715:List of 2
+  .. ..$ title: chr "Akcja Lokatorska"
+  .. ..$ uuid : chr "ac27233d-b37c-4730-8304-f1ac41322cc8"
+  ..$ 194613:List of 2
+  .. ..$ title: chr "aktion./.arbeitsunrecht"
+  .. ..$ uuid : chr "b3d61bd8-c5e2-4508-b98b-5e47164dfb21"
+  ..$ 437892:List of 2
+  .. ..$ title: chr "AKuT - Alternatives Kulturzentrum Thun"
+  .. ..$ uuid : chr "1821f4a6-0ea7-42a4-a76a-90ca116e57aa"
+  ..$ 370800:List of 2
+  .. ..$ title: chr "Alegiako Gaztetxea"
+  .. ..$ uuid : chr "1f5ce5e4-d78e-495f-9ee3-6e327d3c2230"
+  ..$ 350054:List of 2
+  .. ..$ title: chr "Alerta Regensburg"
+  .. ..$ uuid : chr "66c526b9-28fc-4763-bc03-65486c424a8f"
+  ..$ 63425 :List of 2
+  .. ..$ title: chr "Alexis Occupato"
+  .. ..$ uuid : chr "db206ae4-e3ea-4d8b-a52a-484d0ed6f444"
+  ..$ 440967:List of 2
+  .. ..$ title: chr "Alkmaarse Anarchisten"
+  .. ..$ uuid : chr "2f1e833d-dcfc-4d24-a2e7-3d514082d199"
+  ..$ 482029:List of 2
+  .. ..$ title: chr "All Crafts Are Beautiful"
+  .. ..$ uuid : chr "25d4cf37-f6e3-4259-93f7-eb53f065bec6"
+  ..$ 295382:List of 2
+  .. ..$ title: chr "All Included"
+  .. ..$ uuid : chr "80aa62c1-4192-45b5-950c-811011d90d15"
+  ..$ 413888:List of 2
+  .. ..$ title: chr "Allmende Waldgarten"
+  .. ..$ uuid : chr "9add2c40-79ac-4a42-b7b3-80e0eadc1b92"
+  ..$ 403035:List of 2
+  .. ..$ title: chr "Allt Åt Alla Stockholm"
+  .. ..$ uuid : chr "a1e209f6-9f36-48fb-8f44-5e20634f6491"
+  ..$ 473037:List of 2
+  .. ..$ title: chr "Alte Hackerei"
+  .. ..$ uuid : chr "2b20b392-098a-4bec-84b5-d85a4fac11ae"
+  ..$ 435715:List of 2
+  .. ..$ title: chr "Alte Post Seebach ZuReich"
+  .. ..$ uuid : chr "478649d3-b951-4607-9b99-74f8f09cca99"
+  ..$ 337965:List of 2
+  .. ..$ title: chr "Alternadora"
+  .. ..$ uuid : chr "e409e0eb-a91a-4a62-b0f4-e94fac24cec5"
+  ..$ 194594:List of 2
+  .. ..$ title: chr "Alternative Liste (AL) Uni Köln"
+  .. ..$ uuid : chr "dc3d7e5f-8350-49ae-84b0-fe17bf2765c5"
+  ..$ 55178 :List of 2
+  .. ..$ title: chr "Altes Sportamt"
+  .. ..$ uuid : chr "f12b9492-88bf-46c4-9f98-f6fed72bf5ac"
+  ..$ 296690:List of 2
+  .. ..$ title: chr "Altsasuko Gaztetxea"
+  .. ..$ uuid : chr "2bf48bd1-c0c3-4f70-9338-a68d9b743152"
+  ..$ 435991:List of 2
+  .. ..$ title: chr "Amalthea bokkafé"
+  .. ..$ uuid : chr "7ca99daf-e561-4609-a3aa-187999adff64"
+  ..$ 291000:List of 2
+  .. ..$ title: chr "Aman molli"
+  .. ..$ uuid : chr "655e2baa-2a5a-4885-b9dd-def3b6360811"
+  ..$ 348156:List of 2
+  .. ..$ title: chr "Amanita Films"
+  .. ..$ uuid : chr "1b806ca8-15a4-4bd8-9abb-18ca366fd9cd"
+  ..$ 54449 :List of 2
+  .. ..$ title: chr "Ami* Curiae"
+  .. ..$ uuid : chr "c449febf-e09f-41c4-b23b-b982a7c572c1"
+  ..$ 150491:List of 2
+  .. ..$ title: chr "Amicale du Combat Libre"
+  .. ..$ uuid : chr "b1e18c60-7259-48d1-8c35-391be9341417"
+  .. [list output truncated]
+ $ count : num 2392
+ $ facets:List of 9
+  ..$ offline:map          :List of 50
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (13%2E3888599 52%2E5170365)"
+  .. .. ..$ count    : num 12
+  .. .. ..$ formatted: chr "POINT (13.3888599 52.5170365)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (4%2E9036369291796 52%2E379571004605)"
+  .. .. ..$ count    : num 9
+  .. .. ..$ formatted: chr "POINT (4.9036369291796 52.379571004605)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (8%2E4046640377972 49%2E015608313814)"
+  .. .. ..$ count    : num 7
+  .. .. ..$ formatted: chr "POINT (8.4046640377972 49.015608313814)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (4%2E8545364 52%2E3541478)"
+  .. .. ..$ count    : num 6
+  .. .. ..$ formatted: chr "POINT (4.8545364 52.3541478)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (4%2E8699580895654 52%2E363216308324)"
+  .. .. ..$ count    : num 6
+  .. .. ..$ formatted: chr "POINT (4.8699580895654 52.363216308324)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (13%2E3882686 52%2E4919181)"
+  .. .. ..$ count    : num 5
+  .. .. ..$ formatted: chr "POINT (13.3882686 52.4919181)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (7%2E5912199953716 47%2E577206145894)"
+  .. .. ..$ count    : num 5
+  .. .. ..$ formatted: chr "POINT (7.5912199953716 47.577206145894)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (9%2E5040678678448 51%2E313146318095)"
+  .. .. ..$ count    : num 5
+  .. .. ..$ formatted: chr "POINT (9.5040678678448 51.313146318095)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-0%2E070661410974657 51%2E516141553713)"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "POINT (-0.070661410974657 51.516141553713)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-0%2E11810310636843 51%2E494352243668)"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "POINT (-0.11810310636843 51.494352243668)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-70%2E6504451 -33%2E4377968)"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "POINT (-70.6504451 -33.4377968)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (15%2E964899512571 45%2E806372353391)"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "POINT (15.964899512571 45.806372353391)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (4%2E8892221 52%2E3716913)"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "POINT (4.8892221 52.3716913)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (4%2E9111676411567 52%2E368298)"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "POINT (4.9111676411567 52.368298)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (8%2E3105751187779 47%2E052299605718)"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "POINT (8.3105751187779 47.052299605718)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (8%2E3718512 48%2E9890192)"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "POINT (8.3718512 48.9890192)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-0%2E32966964062871 39%2E465852686019)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (-0.32966964062871 39.465852686019)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-70%2E6504558 -33%2E437913)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (-70.6504558 -33.437913)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (1%2E4427848 43%2E623479)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (1.4427848 43.623479)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (1%2E4611893563457 43%2E611888198366)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (1.4611893563457 43.611888198366)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (10%2E737478803066 59%2E918450902207)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (10.737478803066 59.918450902207)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (13%2E4072585 52%2E5308391)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (13.4072585 52.5308391)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (13%2E464188934799 52%2E512848060021)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (13.464188934799 52.512848060021)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (2%2E4308093 48%2E858116)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (2.4308093 48.858116)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (4%2E4692035 51%2E8922729)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (4.4692035 51.8922729)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (4%2E8319833024892 45%2E757959764945)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (4.8319833024892 45.757959764945)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (4%2E8656923 52%2E3601403)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (4.8656923 52.3601403)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (4%2E8924534 52%2E3730796)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (4.8924534 52.3730796)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (4%2E9299692083517 52%2E362285091514)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (4.9299692083517 52.362285091514)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (6%2E637960408208 46%2E522389557906)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (6.637960408208 46.522389557906)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (8%2E3017343801466 47%2E039193537662)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (8.3017343801466 47.039193537662)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (8%2E5423216 47%2E3723957)"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POINT (8.5423216 47.3723957)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POLYGON ((16%2E933593661142 51%2E141878865034, 16%2E944579989265 51%2E06427020857, 17%2E139587313449 51%2E06599"| __truncated__
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "POLYGON ((16.933593661142 51.141878865034, 16.944579989265 51.06427020857, 17.139587313449 51.06599626106, 17.1"| __truncated__
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-0%2E036953797223098 39%2E992166283565)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-0.036953797223098 39.992166283565)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-0%2E3690815 49%2E1828008)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-0.3690815 49.1828008)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-0%2E5686945 44%2E8370861)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-0.5686945 44.8370861)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-0%2E87421836635874 41%2E652155876796)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-0.87421836635874 41.652155876796)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-0%2E8820989 52%2E24522)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-0.8820989 52.24522)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-1%2E5572426635912 47%2E221736342373)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-1.5572426635912 47.221736342373)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-1%2E560235 47%2E2185155)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-1.560235 47.2185155)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-1%2E5951078136173 54%2E97936760437)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-1.5951078136173 54.97936760437)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-1%2E7581345300569 53%2E794566780083)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-1.7581345300569 53.794566780083)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-2%2E0021705860337 43%2E311942302652)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-2.0021705860337 43.311942302652)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-2%2E2522977379336 53%2E481972564971)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-2.2522977379336 53.481972564971)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-2%2E5972985 51%2E4538022)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-2.5972985 51.4538022)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-3%2E7016631531503 40%2E455704473192)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-3.7016631531503 40.455704473192)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-3%2E7035825 40%2E4167047)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-3.7035825 40.4167047)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-3%2E73108291544 40%2E391780851878)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-3.73108291544 40.391780851878)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-4%2E7181885 41%2E6441148)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-4.7181885 41.6441148)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "POINT (-43%2E250381222706 -22%2E914648532708)"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "POINT (-43.250381222706 -22.914648532708)"
+  ..$ city                 :List of 49
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "berlin"
+  .. .. ..$ count    : num 218
+  .. .. ..$ formatted: chr "berlin"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "amsterdam"
+  .. .. ..$ count    : num 143
+  .. .. ..$ formatted: chr "amsterdam"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "paris"
+  .. .. ..$ count    : num 89
+  .. .. ..$ formatted: chr "paris"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "barcelona"
+  .. .. ..$ count    : num 83
+  .. .. ..$ formatted: chr "barcelona"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "bruxelles"
+  .. .. ..$ count    : num 76
+  .. .. ..$ formatted: chr "bruxelles"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "toulouse"
+  .. .. ..$ count    : num 56
+  .. .. ..$ formatted: chr "toulouse"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "lyon"
+  .. .. ..$ count    : num 44
+  .. .. ..$ formatted: chr "lyon"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "marseille"
+  .. .. ..$ count    : num 41
+  .. .. ..$ formatted: chr "marseille"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "london"
+  .. .. ..$ count    : num 38
+  .. .. ..$ formatted: chr "london"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "madrid"
+  .. .. ..$ count    : num 36
+  .. .. ..$ formatted: chr "madrid"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "roma"
+  .. .. ..$ count    : num 34
+  .. .. ..$ formatted: chr "roma"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "zurich"
+  .. .. ..$ count    : num 28
+  .. .. ..$ formatted: chr "zurich"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "athens"
+  .. .. ..$ count    : num 24
+  .. .. ..$ formatted: chr "athens"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "karlsruhe"
+  .. .. ..$ count    : num 21
+  .. .. ..$ formatted: chr "karlsruhe"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "torino"
+  .. .. ..$ count    : num 21
+  .. .. ..$ formatted: chr "torino"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "milano"
+  .. .. ..$ count    : num 20
+  .. .. ..$ formatted: chr "milano"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "santiago"
+  .. .. ..$ count    : num 18
+  .. .. ..$ formatted: chr "santiago"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "prague"
+  .. .. ..$ count    : num 17
+  .. .. ..$ formatted: chr "prague"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "basel"
+  .. .. ..$ count    : num 16
+  .. .. ..$ formatted: chr "basel"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "grenoble"
+  .. .. ..$ count    : num 16
+  .. .. ..$ formatted: chr "grenoble"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "luzern"
+  .. .. ..$ count    : num 16
+  .. .. ..$ formatted: chr "luzern"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "utrecht"
+  .. .. ..$ count    : num 15
+  .. .. ..$ formatted: chr "utrecht"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "bilbo"
+  .. .. ..$ count    : num 14
+  .. .. ..$ formatted: chr "bilbo"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "dijon"
+  .. .. ..$ count    : num 14
+  .. .. ..$ formatted: chr "dijon"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "geneve"
+  .. .. ..$ count    : num 14
+  .. .. ..$ formatted: chr "geneve"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "montpellier"
+  .. .. ..$ count    : num 14
+  .. .. ..$ formatted: chr "montpellier"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "napoli"
+  .. .. ..$ count    : num 14
+  .. .. ..$ formatted: chr "napoli"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "rotterdam"
+  .. .. ..$ count    : num 14
+  .. .. ..$ formatted: chr "rotterdam"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "wroclaw"
+  .. .. ..$ count    : num 14
+  .. .. ..$ formatted: chr "wroclaw"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "nantes"
+  .. .. ..$ count    : num 13
+  .. .. ..$ formatted: chr "nantes"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "bern"
+  .. .. ..$ count    : num 12
+  .. .. ..$ formatted: chr "bern"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "caen"
+  .. .. ..$ count    : num 12
+  .. .. ..$ formatted: chr "caen"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "saint-etienne"
+  .. .. ..$ count    : num 12
+  .. .. ..$ formatted: chr "saint-etienne"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "sevilla"
+  .. .. ..$ count    : num 12
+  .. .. ..$ formatted: chr "sevilla"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "thessaloniki"
+  .. .. ..$ count    : num 12
+  .. .. ..$ formatted: chr "thessaloniki"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "valencia"
+  .. .. ..$ count    : num 12
+  .. .. ..$ formatted: chr "valencia"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "firenze"
+  .. .. ..$ count    : num 11
+  .. .. ..$ formatted: chr "firenze"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "groningen"
+  .. .. ..$ count    : num 11
+  .. .. ..$ formatted: chr "groningen"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "hamburg"
+  .. .. ..$ count    : num 11
+  .. .. ..$ formatted: chr "hamburg"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "lausanne"
+  .. .. ..$ count    : num 11
+  .. .. ..$ formatted: chr "lausanne"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "bologna"
+  .. .. ..$ count    : num 10
+  .. .. ..$ formatted: chr "bologna"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "bristol"
+  .. .. ..$ count    : num 10
+  .. .. ..$ formatted: chr "bristol"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "gent"
+  .. .. ..$ count    : num 10
+  .. .. ..$ formatted: chr "gent"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "porto alegre"
+  .. .. ..$ count    : num 10
+  .. .. ..$ formatted: chr "porto alegre"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "stockholm"
+  .. .. ..$ count    : num 10
+  .. .. ..$ formatted: chr "stockholm"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "wien"
+  .. .. ..$ count    : num 10
+  .. .. ..$ formatted: chr "wien"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "strasbourg"
+  .. .. ..$ count    : num 9
+  .. .. ..$ formatted: chr "strasbourg"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "warszawa"
+  .. .. ..$ count    : num 9
+  .. .. ..$ formatted: chr "warszawa"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "winterthur"
+  .. .. ..$ count    : num 9
+  .. .. ..$ formatted: chr "winterthur"
+  ..$ country              :List of 49
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "FR"
+  .. .. ..$ count    : num 408
+  .. .. ..$ formatted: chr "FR"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "DE"
+  .. .. ..$ count    : num 318
+  .. .. ..$ formatted: chr "DE"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "NL"
+  .. .. ..$ count    : num 249
+  .. .. ..$ formatted: chr "NL"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "IT"
+  .. .. ..$ count    : num 196
+  .. .. ..$ formatted: chr "IT"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "CH"
+  .. .. ..$ count    : num 139
+  .. .. ..$ formatted: chr "CH"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "XC"
+  .. .. ..$ count    : num 139
+  .. .. ..$ formatted: chr "XC"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "ES"
+  .. .. ..$ count    : num 138
+  .. .. ..$ formatted: chr "ES"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "GB"
+  .. .. ..$ count    : num 98
+  .. .. ..$ formatted: chr "GB"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "BE"
+  .. .. ..$ count    : num 97
+  .. .. ..$ formatted: chr "BE"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "XE"
+  .. .. ..$ count    : num 72
+  .. .. ..$ formatted: chr "XE"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "GR"
+  .. .. ..$ count    : num 57
+  .. .. ..$ formatted: chr "GR"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "PL"
+  .. .. ..$ count    : num 48
+  .. .. ..$ formatted: chr "PL"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "CZ"
+  .. .. ..$ count    : num 36
+  .. .. ..$ formatted: chr "CZ"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "US"
+  .. .. ..$ count    : num 32
+  .. .. ..$ formatted: chr "US"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "XI"
+  .. .. ..$ count    : num 31
+  .. .. ..$ formatted: chr "XI"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "CL"
+  .. .. ..$ count    : num 29
+  .. .. ..$ formatted: chr "CL"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "BR"
+  .. .. ..$ count    : num 26
+  .. .. ..$ formatted: chr "BR"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "AT"
+  .. .. ..$ count    : num 20
+  .. .. ..$ formatted: chr "AT"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "SE"
+  .. .. ..$ count    : num 17
+  .. .. ..$ formatted: chr "SE"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "AU"
+  .. .. ..$ count    : num 15
+  .. .. ..$ formatted: chr "AU"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "FI"
+  .. .. ..$ count    : num 13
+  .. .. ..$ formatted: chr "FI"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "PT"
+  .. .. ..$ count    : num 13
+  .. .. ..$ formatted: chr "PT"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "CA"
+  .. .. ..$ count    : num 12
+  .. .. ..$ formatted: chr "CA"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "HR"
+  .. .. ..$ count    : num 12
+  .. .. ..$ formatted: chr "HR"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "AR"
+  .. .. ..$ count    : num 11
+  .. .. ..$ formatted: chr "AR"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "SI"
+  .. .. ..$ count    : num 9
+  .. .. ..$ formatted: chr "SI"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "CO"
+  .. .. ..$ count    : num 8
+  .. .. ..$ formatted: chr "CO"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "MX"
+  .. .. ..$ count    : num 8
+  .. .. ..$ formatted: chr "MX"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "SK"
+  .. .. ..$ count    : num 6
+  .. .. ..$ formatted: chr "SK"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "UY"
+  .. .. ..$ count    : num 6
+  .. .. ..$ formatted: chr "UY"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "DK"
+  .. .. ..$ count    : num 5
+  .. .. ..$ formatted: chr "DK"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "NO"
+  .. .. ..$ count    : num 5
+  .. .. ..$ formatted: chr "NO"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "RO"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "RO"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "RS"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "RS"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "TR"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "TR"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "HU"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "HU"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "IE"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "IE"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "MK"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "MK"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "PE"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "PE"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "BA"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "BA"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "BG"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "BG"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "BO"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "BO"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "LV"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "LV"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "AL"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "AL"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "EE"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "EE"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "LT"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "LT"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "NZ"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "NZ"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "PH"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "PH"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "XK"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "XK"
+  ..$ squated              :List of 3
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "squat"
+  .. .. ..$ count    : num 489
+  .. .. ..$ formatted: chr "squat"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "former"
+  .. .. ..$ count    : num 139
+  .. .. ..$ formatted: chr "former"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "evicted"
+  .. .. ..$ count    : num 50
+  .. .. ..$ formatted: chr "evicted"
+  ..$ radar_group_listed_by:List of 9
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "1599"
+  .. .. ..$ count    : num 176
+  .. .. ..$ formatted: chr "1599"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "338365"
+  .. .. ..$ count    : num 96
+  .. .. ..$ formatted: chr "338365"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "194587"
+  .. .. ..$ count    : num 40
+  .. .. ..$ formatted: chr "194587"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "436012"
+  .. .. ..$ count    : num 21
+  .. .. ..$ formatted: chr "436012"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "141066"
+  .. .. ..$ count    : num 19
+  .. .. ..$ formatted: chr "141066"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "22312"
+  .. .. ..$ count    : num 6
+  .. .. ..$ formatted: chr "22312"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "281607"
+  .. .. ..$ count    : num 5
+  .. .. ..$ formatted: chr "281607"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "364044"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "364044"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "1625"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "1625"
+  ..$ field_active         :List of 2
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "0"
+  .. .. ..$ count    : num 2392
+  .. .. ..$ formatted: chr "0"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "1"
+  .. .. ..$ count    : num 596
+  .. .. ..$ formatted: chr "1"
+  ..$ topic                :List of 50
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "sans-papiers"
+  .. .. ..$ count    : num 86
+  .. .. ..$ formatted: chr "sans papiers"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "bookfair"
+  .. .. ..$ count    : num 60
+  .. .. ..$ formatted: chr "Bookfair"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "wagenplatz"
+  .. .. ..$ count    : num 17
+  .. .. ..$ formatted: chr "Wagenplatz"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "queer"
+  .. .. ..$ count    : num 16
+  .. .. ..$ formatted: chr "queer"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "hackerspace"
+  .. .. ..$ count    : num 16
+  .. .. ..$ formatted: chr "hackerspace"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "hacklab"
+  .. .. ..$ count    : num 12
+  .. .. ..$ formatted: chr "hacklab"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "migrants"
+  .. .. ..$ count    : num 12
+  .. .. ..$ formatted: chr "migrants"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "reseau-dautodefense-juridique-collective"
+  .. .. ..$ count    : num 11
+  .. .. ..$ formatted: chr "Réseau d&#039;Autodéfense Juridique collective"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "spreekuur-ksu"
+  .. .. ..$ count    : num 10
+  .. .. ..$ formatted: chr "spreekuur (KSU)"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "gardening"
+  .. .. ..$ count    : num 8
+  .. .. ..$ formatted: chr "gardening"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "oficina-de-okupación"
+  .. .. ..$ count    : num 8
+  .. .. ..$ formatted: chr "oficina de okupación"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "boxe"
+  .. .. ..$ count    : num 8
+  .. .. ..$ formatted: chr "Boxe"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "sans-papiers-0"
+  .. .. ..$ count    : num 8
+  .. .. ..$ formatted: chr "sans-papiers"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "jardinage"
+  .. .. ..$ count    : num 7
+  .. .. ..$ formatted: chr "jardinage"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "sport"
+  .. .. ..$ count    : num 6
+  .. .. ..$ formatted: chr "sport"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "antifa-0"
+  .. .. ..$ count    : num 6
+  .. .. ..$ formatted: chr "Antifa"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "squatting-assistance"
+  .. .. ..$ count    : num 5
+  .. .. ..$ formatted: chr "Squatting assistance"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "huerta"
+  .. .. ..$ count    : num 5
+  .. .. ..$ formatted: chr "huerta"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "okupacio-rural"
+  .. .. ..$ count    : num 5
+  .. .. ..$ formatted: chr "Okupació rural"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "anticra"
+  .. .. ..$ count    : num 5
+  .. .. ..$ formatted: chr "anticra"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "feminism"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "feminism"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "hort"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "hort"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "caisse-de-solidarité"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "Caisse de solidarité"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "tattoo-circus"
+  .. .. ..$ count    : num 4
+  .. .. ..$ formatted: chr "Tattoo Circus"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "feminist"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "feminist"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "tattoo"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "tattoo"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "comune"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "comune"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "anarchism"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "anarchism"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "gaztetxea"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "Gaztetxea"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "horta"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "horta"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "palestra-popolare"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "Palestra Popolare"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "kickboxing"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "kickboxing"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "defense-collective"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "Défense Collective"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "jardin-potager"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "jardin potager"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "vegan"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "vegan"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "lesung"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "Lesung"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "bike-bicycle-workshop-fiets-werkplaats-fietsen"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "bike bicycle workshop fiets werkplaats fietsen"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "gender"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "Gender"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "antifascist"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "Antifascist"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "agroecological-project"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "Agroecological Project"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "museum"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "Museum"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "food-not-bombs"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "Food Not Bombs"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "okupazio-bulegoa"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "Okupazio Bulegoa"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "festival"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "festival"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "social-centre"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "social centre"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "logement"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "logement"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "library"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "library"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "reading-group"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "reading group"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "refugees"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "Refugees"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "autonomous"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "autonomous"
+  ..$ category             :List of 19
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "discussion-presentation"
+  .. .. ..$ count    : num 1325
+  .. .. ..$ formatted: chr "discussion/presentation"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "meeting"
+  .. .. ..$ count    : num 1150
+  .. .. ..$ formatted: chr "meeting"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "course-workshop"
+  .. .. ..$ count    : num 1016
+  .. .. ..$ formatted: chr "course/workshop"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "action-protest-camp"
+  .. .. ..$ count    : num 753
+  .. .. ..$ formatted: chr "action/protest/camp"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "book-shop-info-shop-library"
+  .. .. ..$ count    : num 691
+  .. .. ..$ formatted: chr "book shop/info shop/library"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "music-concert"
+  .. .. ..$ count    : num 678
+  .. .. ..$ formatted: chr "music/concert"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "film"
+  .. .. ..$ count    : num 668
+  .. .. ..$ formatted: chr "film"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "food"
+  .. .. ..$ count    : num 606
+  .. .. ..$ formatted: chr "food"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "bar-cafe"
+  .. .. ..$ count    : num 506
+  .. .. ..$ formatted: chr "bar/cafe"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "work-space-diy"
+  .. .. ..$ count    : num 446
+  .. .. ..$ formatted: chr "work space/diy"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "party"
+  .. .. ..$ count    : num 433
+  .. .. ..$ formatted: chr "party"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "exhibition"
+  .. .. ..$ count    : num 401
+  .. .. ..$ formatted: chr "exhibition"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "advice-help-office-hours"
+  .. .. ..$ count    : num 348
+  .. .. ..$ formatted: chr "advice/help/office hours"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "free-shop-market"
+  .. .. ..$ count    : num 231
+  .. .. ..$ formatted: chr "(free) shop/market"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "theater"
+  .. .. ..$ count    : num 177
+  .. .. ..$ formatted: chr "theater"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "childrens-activity"
+  .. .. ..$ count    : num 177
+  .. .. ..$ formatted: chr "children&#039;s activity"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "radio-tv"
+  .. .. ..$ count    : num 76
+  .. .. ..$ formatted: chr "radio/tv"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "guided-tour"
+  .. .. ..$ count    : num 24
+  .. .. ..$ formatted: chr "guided tour"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "court-case"
+  .. .. ..$ count    : num 23
+  .. .. ..$ formatted: chr "court case"
+  ..$ title                :List of 50
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "barricade"
+  .. .. ..$ count    : num 3
+  .. .. ..$ formatted: chr "barricade"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "casa"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "casa"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "csa intifada"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "csa intifada"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "de ontsporing"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "de ontsporing"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "food not bombs"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "food not bombs"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "la baf"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "la baf"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "le local"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "le local"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "porozumienie feministyczne 8 marca"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "porozumienie feministyczne 8 marca"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "prenons la ville"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "prenons la ville"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "quiosc okupat"
+  .. .. ..$ count    : num 2
+  .. .. ..$ formatted: chr "quiosc okupat"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr " anarchist bookfair bern"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr " anarchist bookfair bern"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr " b ward"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr " b ward"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr " centro social comunitario luis bunuel"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr " centro social comunitario luis bunuel"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr " comunella fastidiosa "
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr " comunella fastidiosa "
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr " federazione anarchica torinese"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr " federazione anarchica torinese"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr " iniciativa dahlia"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr " iniciativa dahlia"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr " la candela"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr " la candela"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr " production"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr " production"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "&#039;t landhuis"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "&#039;t landhuis"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "(a)ction against prison society"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "(a)ction against prison society"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "1 in 12 club"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "1 in 12 club"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "1 mei tilburg"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "1 mei tilburg"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "100celle aperte"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "100celle aperte"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "105fm mytillni self organised radio"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "105fm mytillni self organised radio"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "1872"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "1872"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "1agrind"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "1agrind"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "2%2E mai - internationaler kampf- und feiertag der arbeitslosen"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "2. mai - internationaler kampf- und feiertag der arbeitslosen"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "2%2Edh5"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "2.dh5"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "254"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "254"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "269 life czech"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "269 life czech"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "3cr community radio"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "3cr community radio"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "42 avenue de la couronne"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "42 avenue de la couronne"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "430 on go"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "430 on go"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "4648"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "4648"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "4lthangrund"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "4lthangrund"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "56a infoshop"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "56a infoshop"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "7katu gaztetxea"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "7katu gaztetxea"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "[tbd]"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "[tbd]"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "a - laden"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "a - laden"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "a cova dos ratos"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "a cova dos ratos"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "a da maxada"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "a da maxada"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "a infoshop "
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "a infoshop "
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "a la cloche de bois"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "a la cloche de bois"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "a(k)cab, a kansas city anarchist bookfair"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "a(k)cab, a kansas city anarchist bookfair"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "a-cafe bremen"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "a-cafe bremen"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "a-massan stockholm"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "a-massan stockholm"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "a-radio berlin"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "a-radio berlin"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "a-radio network"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "a-radio network"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "a-tram"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "a-tram"
+  .. ..$ :List of 3
+  .. .. ..$ filter   : chr "a%2Ec%2E tugurio"
+  .. .. ..$ count    : num 1
+  .. .. ..$ formatted: chr "a.c. tugurio"
+\end{verbatim}
+
+\begin{verbatim}
+          filter count     formatted
+1         berlin   218        berlin
+2      amsterdam   143     amsterdam
+3          paris    89         paris
+4      barcelona    83     barcelona
+5      bruxelles    76     bruxelles
+6       toulouse    56      toulouse
+7           lyon    44          lyon
+8      marseille    41     marseille
+9         london    38        london
+10        madrid    36        madrid
+11          roma    34          roma
+12        zurich    28        zurich
+13        athens    24        athens
+14     karlsruhe    21     karlsruhe
+15        torino    21        torino
+16        milano    20        milano
+17      santiago    18      santiago
+18        prague    17        prague
+19         basel    16         basel
+20      grenoble    16      grenoble
+21        luzern    16        luzern
+22       utrecht    15       utrecht
+23         bilbo    14         bilbo
+24         dijon    14         dijon
+25        geneve    14        geneve
+26   montpellier    14   montpellier
+27        napoli    14        napoli
+28     rotterdam    14     rotterdam
+29       wroclaw    14       wroclaw
+30        nantes    13        nantes
+31          bern    12          bern
+32          caen    12          caen
+33 saint-etienne    12 saint-etienne
+34       sevilla    12       sevilla
+35  thessaloniki    12  thessaloniki
+36      valencia    12      valencia
+37       firenze    11       firenze
+38     groningen    11     groningen
+39       hamburg    11       hamburg
+40      lausanne    11      lausanne
+41       bologna    10       bologna
+42       bristol    10       bristol
+43          gent    10          gent
+44  porto alegre    10  porto alegre
+45     stockholm    10     stockholm
+46          wien    10          wien
+47    strasbourg     9    strasbourg
+48      warszawa     9      warszawa
+49    winterthur     9    winterthur
+\end{verbatim}
+
+\subsection{1.3 Geocoding cites}\label{geocoding-cites}
+
+\begin{verbatim}
+# A tibble: 49 x 5
+   filter    count formatted latitude longitude
+   <chr>     <chr> <chr>        <dbl>     <dbl>
+ 1 berlin    218   berlin        52.5    13.4  
+ 2 amsterdam 143   amsterdam     52.4     4.89 
+ 3 paris     89    paris         48.9     2.35 
+ 4 barcelona 83    barcelona     41.4     2.18 
+ 5 bruxelles 76    bruxelles     50.8     4.35 
+ 6 toulouse  56    toulouse      43.6     1.44 
+ 7 lyon      44    lyon          45.8     4.83 
+ 8 marseille 41    marseille     43.3     5.37 
+ 9 london    38    london        51.5    -0.128
+10 madrid    36    madrid        40.4    -3.70 
+# i 39 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{geo\_data }\OtherTok{\textless{}{-}}\NormalTok{ geo\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{city\_1 =}\NormalTok{ filter,}
+         \AttributeTok{city\_2 =}\NormalTok{ formatted)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{geo\_data }\OtherTok{\textless{}{-}}\NormalTok{ geo\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{lat =}\NormalTok{ latitude,}
+         \AttributeTok{long =}\NormalTok{ longitude)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{2. Plot squat cities and
+points}\label{plot-squat-cities-and-points}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Add a Google Font (for example, "Roboto" or any font you like)}
+\FunctionTok{showtext\_auto}\NormalTok{()  }\CommentTok{\# Automatically use showtext for all plots}
+\FunctionTok{font\_add\_google}\NormalTok{(}\StringTok{"Roboto"}\NormalTok{, }\AttributeTok{family =} \StringTok{"Roboto"}\NormalTok{)  }\CommentTok{\# Add Google font "Roboto" (change to any font you like)}
+\FunctionTok{font\_add\_google}\NormalTok{(}\StringTok{"Noto Sans"}\NormalTok{, }\AttributeTok{family =} \StringTok{"Noto Sans"}\NormalTok{)  }\CommentTok{\# Add Google font "Noto Sans"}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{2.1 add logo}\label{add-logo}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Download Rbanism logo}
+\NormalTok{rbanism\_logo }\OtherTok{\textless{}{-}} \FunctionTok{image\_read}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"17Nov\_Collaborative/fig/Logo\_Rbanism\_ White.png"}\NormalTok{))}
+
+\NormalTok{logo\_grob }\OtherTok{\textless{}{-}} \FunctionTok{rasterGrob}\NormalTok{(rbanism\_logo, }\AttributeTok{interpolate =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{2.2 plot}\label{plot}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Convert \textquotesingle{}count\textquotesingle{} to numeric (if it\textquotesingle{}s not already)}
+\NormalTok{geo\_data}\SpecialCharTok{$}\NormalTok{count }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(geo\_data}\SpecialCharTok{$}\NormalTok{count)}
+
+\NormalTok{p }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data =}\NormalTok{ europe, }\AttributeTok{fill =} \StringTok{"\#1a2c44"}\NormalTok{, }\AttributeTok{color =} \StringTok{"\#36454F"}\NormalTok{) }\SpecialCharTok{+} \CommentTok{\# European boundaries}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{data =}\NormalTok{ geo\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ long, }\AttributeTok{y =}\NormalTok{ lat, }\AttributeTok{size =}\NormalTok{ count}\SpecialCharTok{*}\DecValTok{4}\NormalTok{), }
+             \AttributeTok{color =} \StringTok{"yellow"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.1}\NormalTok{,}
+             \AttributeTok{show.legend =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{+} \CommentTok{\# Outer glow with size based on count}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{data =}\NormalTok{ geo\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ long, }\AttributeTok{y =}\NormalTok{ lat, }\AttributeTok{size =}\NormalTok{ count}\SpecialCharTok{*}\DecValTok{2}\NormalTok{), }
+             \AttributeTok{color =} \StringTok{"yellow"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.1}\NormalTok{,}
+             \AttributeTok{show.legend =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{+} \CommentTok{\# Middle glow with size based on count}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{data =}\NormalTok{ geo\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ long, }\AttributeTok{y =}\NormalTok{ lat, }\AttributeTok{size =}\NormalTok{ count}\SpecialCharTok{*}\FloatTok{1.5}\NormalTok{), }
+             \AttributeTok{color =} \StringTok{"darkorange"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.1}\NormalTok{,}
+             \AttributeTok{show.legend =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{+} \CommentTok{\# Inner glow with size based on count}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{data =}\NormalTok{ geo\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ long, }\AttributeTok{y =}\NormalTok{ lat, }\AttributeTok{size =}\NormalTok{ count), }
+             \AttributeTok{color =} \StringTok{"gold"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.1}\NormalTok{,}
+             \AttributeTok{show.legend =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{+} \CommentTok{\# Core point with size based on count}
+  \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{data =}\NormalTok{ geo\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ long, }\AttributeTok{y =}\NormalTok{ lat, }\AttributeTok{label =} \FunctionTok{toTitleCase}\NormalTok{(city\_2)), }
+            \AttributeTok{size =} \DecValTok{3}\NormalTok{, }\AttributeTok{vjust =} \SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{, }\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{color =} \StringTok{"white"}\NormalTok{, }\AttributeTok{family =} \StringTok{"Noto Sans"}\NormalTok{) }\SpecialCharTok{+} \CommentTok{\# Labels with Noto Sans font}
+  \FunctionTok{scale\_size\_continuous}\NormalTok{(}
+    \AttributeTok{name =} \StringTok{"Number of groups per city"}\NormalTok{, }\CommentTok{\# Custom legend label}
+    \AttributeTok{range =} \FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{10}\NormalTok{)) }\SpecialCharTok{+} \CommentTok{\# Adjust size range if necessary}
+  \FunctionTok{coord\_sf}\NormalTok{(}\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{25}\NormalTok{, }\DecValTok{30}\NormalTok{), }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{35}\NormalTok{, }\DecValTok{70}\NormalTok{), }\AttributeTok{expand =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+} \CommentTok{\# Zoom in on Europe}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{axis.title =} \FunctionTok{element\_blank}\NormalTok{(),        }\CommentTok{\# Remove axis titles}
+    \AttributeTok{axis.text =} \FunctionTok{element\_blank}\NormalTok{(),         }\CommentTok{\# Remove axis labels}
+    \AttributeTok{axis.ticks =} \FunctionTok{element\_blank}\NormalTok{(),        }\CommentTok{\# Remove axis ticks}
+    \AttributeTok{axis.line =} \FunctionTok{element\_blank}\NormalTok{(),         }\CommentTok{\# Remove axis lines}
+    \AttributeTok{panel.grid =} \FunctionTok{element\_blank}\NormalTok{(),        }\CommentTok{\# Remove grid lines}
+    \AttributeTok{legend.title =} \FunctionTok{element\_text}\NormalTok{(}
+      \AttributeTok{family =} \StringTok{"Noto Sans"}\NormalTok{,}
+      \AttributeTok{size =} \DecValTok{18}\NormalTok{,}
+      \AttributeTok{color =} \StringTok{"white"}\NormalTok{),  }\CommentTok{\# Match the legend text styling,}
+    \AttributeTok{legend.text =} \FunctionTok{element\_text}\NormalTok{(}
+      \AttributeTok{family =} \StringTok{"Noto Sans"}\NormalTok{,}
+      \AttributeTok{size =} \DecValTok{14}\NormalTok{,}
+      \AttributeTok{color =} \StringTok{"white"}\NormalTok{),}
+    \CommentTok{\# plot.title = element\_text(hjust = 0.5, face = "bold", color = "white", family = "Noto Sans"),}
+    \CommentTok{\# plot.subtitle = element\_text(hjust = 0.5, color = "white", family = "Noto Sans"),}
+    \CommentTok{\# plot.caption = element\_text(color = "white", family = "Noto Sans"),}
+    \CommentTok{\# axis.title = element\_text(color = "white", family = "Noto Sans"),}
+    \CommentTok{\# axis.text = element\_text(color = "white", family = "Noto Sans"),}
+    \AttributeTok{panel.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{fill =} \StringTok{"\#36454F"}\NormalTok{, }\AttributeTok{color =} \ConstantTok{NA}\NormalTok{), }\CommentTok{\# Dark grey panel background}
+    \AttributeTok{plot.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{fill =} \StringTok{"\#36454F"}\NormalTok{,}
+                                   \AttributeTok{color =} \ConstantTok{NA}\NormalTok{), }\CommentTok{\# Dark grey plot background}
+    \AttributeTok{legend.position =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.3}\NormalTok{, }\FloatTok{0.5}\NormalTok{), }\CommentTok{\# Custom position}
+    \AttributeTok{plot.margin =} \FunctionTok{margin}\NormalTok{(}\FloatTok{2.5}\NormalTok{, }\DecValTok{0}\NormalTok{, }\FloatTok{2.5}\NormalTok{, }\DecValTok{0}\NormalTok{),}
+    \AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{family =} \StringTok{"Noto Sans"}\NormalTok{,}
+                                 \AttributeTok{size =} \DecValTok{30}\NormalTok{,}
+                                  \AttributeTok{color =} \StringTok{"white"}\NormalTok{),  }\CommentTok{\# Title styling}
+    \AttributeTok{plot.subtitle =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{family =} \StringTok{"Noto Sans"}\NormalTok{,}
+                                 \AttributeTok{size =} \DecValTok{26}\NormalTok{,}
+                                \AttributeTok{color =} \StringTok{"white"}\NormalTok{),  }\CommentTok{\# Subtitle styling}
+    \AttributeTok{plot.caption =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{family =} \StringTok{"Noto Sans"}\NormalTok{,}
+                                \AttributeTok{size =} \DecValTok{18}\NormalTok{,}
+                                \AttributeTok{color =} \StringTok{"white"}\NormalTok{,}
+                               \AttributeTok{lineheight =} \FloatTok{0.5}\NormalTok{)}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Warning: A numeric `legend.position` argument in `theme()` was deprecated in ggplot2
+3.5.0.
+i Please use the `legend.position.inside` argument of `theme()` instead.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p }\OtherTok{\textless{}{-}}\NormalTok{ p }\SpecialCharTok{+}
+   \CommentTok{\# Control legend appearance}
+    \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{title =} \StringTok{"Events organized by squats in European cities"}\NormalTok{,}
+    \CommentTok{\# subtitle = "number",}
+    \AttributeTok{legend.title =} \StringTok{"Event Density"}\NormalTok{, }\CommentTok{\# Custom legend title}
+    \AttributeTok{caption =} \StringTok{"\#30DayMapChallenge. Chiara Mazzarella, Daniele Cannatella, and Clémentine Cottineau{-}Mugadza, 2024.  }\SpecialCharTok{\textbackslash{}n}\StringTok{ 17 November: Collaborative. Source: radar.squat.net"}
+\NormalTok{  )}
+
+\NormalTok{p}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{17Nov_Collaborative_files/figure-pdf/unnamed-chunk-10-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Combine plot and logo}
+\NormalTok{p }\OtherTok{\textless{}{-}}\NormalTok{ cowplot}\SpecialCharTok{::}\FunctionTok{ggdraw}\NormalTok{(p) }\SpecialCharTok{+}
+\NormalTok{  cowplot}\SpecialCharTok{::}\FunctionTok{draw\_image}\NormalTok{(rbanism\_logo, }\AttributeTok{x =} \FloatTok{0.05}\NormalTok{, }\AttributeTok{y =} \DecValTok{0}\NormalTok{, }\AttributeTok{width =} \FloatTok{0.075}\NormalTok{, }\AttributeTok{height =} \FloatTok{0.075}\NormalTok{, }\AttributeTok{hjust =} \DecValTok{0}\NormalTok{, }\AttributeTok{vjust =} \DecValTok{0}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{plot.margin =} \FunctionTok{margin}\NormalTok{(}\FloatTok{2.5}\NormalTok{, }\DecValTok{0}\NormalTok{, }\FloatTok{2.5}\NormalTok{, }\DecValTok{0}\NormalTok{),}
+    \AttributeTok{plot.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{fill =} \StringTok{"\#36454F"}\NormalTok{,}
+                                   \AttributeTok{color =} \ConstantTok{NA}\NormalTok{,}
+                                   \AttributeTok{linewidth =} \FloatTok{0.1}\NormalTok{)}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Noto Sans' not found in PostScript font database
+
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family 'Noto Sans' not found in PostScript font database
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Define the output file name}
+\NormalTok{output\_file }\OtherTok{\textless{}{-}} \FunctionTok{here}\NormalTok{(}\StringTok{"17Nov\_Collaborative/output/17Nov\_collaborative.png"}\NormalTok{)}
+
+\CommentTok{\# Export the map as a PNG with 1:1 aspect ratio}
+\FunctionTok{ggsave}\NormalTok{(}\AttributeTok{filename =}\NormalTok{ output\_file, }\AttributeTok{plot =}\NormalTok{ p, }\AttributeTok{device =} \StringTok{"png"}\NormalTok{, }
+       \AttributeTok{width =} \DecValTok{6}\NormalTok{, }\AttributeTok{height =} \DecValTok{6}\NormalTok{, }\AttributeTok{units =} \StringTok{"in"}\NormalTok{, }\AttributeTok{dpi =} \DecValTok{300}\NormalTok{)}
+
+\CommentTok{\# Print a message to confirm export}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Map has been exported as"}\NormalTok{, output\_file, }\StringTok{"with a 1:1 aspect ratio.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Map has been exported as C:/Users/dcannatella/surfdrive/01_Research/2024-30daysmapchallenge/30DayMapChallenge2024_old/17Nov_Collaborative/output/17Nov_collaborative.png with a 1:1 aspect ratio.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# }
+\end{Highlighting}
+\end{Shaded}
+
+\section{And here is the map!}\label{and-here-is-the-map}
+
+\includegraphics{C:/Users/dcannatella/surfdrive/01_Research/2024-30daysmapchallenge/30DayMapChallenge2024_old/17Nov_Collaborative/output/17Nov_collaborative.png}
+
+
+
+
+\end{document}
