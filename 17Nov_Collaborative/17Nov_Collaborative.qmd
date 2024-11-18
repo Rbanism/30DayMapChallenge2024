@@ -171,9 +171,9 @@ p <- ggplot() +
 p <- p +
    # Control legend appearance
     labs(
-    title = "Events organized by squats in European cities",
+    title = "Number of squat groups in European cities",
     # subtitle = "number",
-    legend.title = "Event Density", # Custom legend title
+    legend.title = "count", # Custom legend title
     caption = "#30DayMapChallenge. Chiara Mazzarella, Daniele Cannatella, and Clémentine Cottineau-Mugadza, 2024.  \n 17 November: Collaborative. Source: radar.squat.net"
   )
 
