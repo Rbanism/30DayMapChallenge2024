@@ -1,0 +1,99 @@
+---
+title: "18Nov_3d"
+author: "Daniele Cannatella"
+date: "2024-11-16"
+format: 
+  html: default
+  pdf: default
+---
+
+```{r, echo=FALSE, warning=FALSE, message=TRUE}
+
+# Define the packages to be used
+packages <- c("ggplot2", "dplyr", "sf", "readr", "here", "terra", "rayshader",
+              "viridis","magick")
+
+# Function to check if packages are installed and load them
+load_packages <- function(pkgs) {
+  # Check for missing packages
+  missing_pkgs <- pkgs[!(pkgs %in% installed.packages()[, "Package"])]
+  
+  # Install missing packages
+  if (length(missing_pkgs)) {
+    install.packages(missing_pkgs)
+  }
+  
+  # Load all packages
+  lapply(pkgs, library, character.only = TRUE)
+}
+
+# Load the packages
+load_packages(packages)
+
+# Print a message to confirm successful loading
+cat("All specified packages have been loaded successfully!\n")
+```
+
+## Import data
+
+```{r}
+
+calabria <- rast(here("18Nov_3D/data/gebco_2020_clip4.tif"))
+```
+
+```{r}
+# Current bounding box for Catanzaro (approximate)
+c_calabria <- aggregate(calabria, fact = 1, fun = mean)
+
+plot(c_calabria)
+```
+
+```{r}
+
+cal_mat  <- raster_to_matrix(c_calabria)
+```
+
+```{r}
+#sphere_shade can shift the sun direction:
+cal_mat %>%
+  sphere_shade(texture = "imhof1") %>%
+  add_water(detect_water(cal_mat), color = "imhof3") %>%
+  add_shadow(ray_shade(cal_mat, zscale = 300), 0.5) %>%
+  add_shadow(ambient_shade(cal_mat), 0) %>%
+  plot_3d(cal_mat,
+          zscale = 100,
+          fov = 30,
+          shadowdepth = -50,
+          theta = 45,
+          phi = 30,
+          zoom = 1, 
+          background = "#F2E1D0", shadowcolor = "#523E2B",
+          water = TRUE, waterdepth = 0, wateralpha = 0.5, watercolor = "lightblue",
+            waterlinecolor = "white", waterlinealpha = 0.5,
+          windowsize = c(1000, 800))
+
+Sys.sleep(0.2)
+render_snapshot("output/3D.png")
+```
+
+```{r}
+# Load image with magick
+img <- image_read("output/3D.png")
+logo <- image_read("fig/Logo_Rbanism_ White.png")
+
+# Resize the logo if needed
+logo <- image_scale(logo, "100x100") # Adjust size
+
+# Add title and description
+img_with_text <- img %>%
+  image_annotate("Italy's Narrowest Point in 3D: The Isthmus of Catanzaro", size = 20, gravity = "northeast", color = "black", location = "+20+20") %>%
+  image_annotate("#30DayMapChallenge. Daniele Cannatella, 2024.\n 18 November: 3D. Source: GEBCO_2020 Grid", size = 15, gravity = "southeast", color = "black", location = "+20+20")
+
+img_with_text <- image_composite(img_with_text, logo, offset = "+50+20") # Adjust offset
+
+# Save the edited image
+image_write(img_with_text, "output/3Dfin.png")
+
+```
+
+![](output/3Dfin.png)
