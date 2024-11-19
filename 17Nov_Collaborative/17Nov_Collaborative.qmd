@@ -113,23 +113,23 @@ geo_data$count <- as.numeric(geo_data$count)
 
 p <- ggplot() +
   geom_sf(data = europe, fill = "#1a2c44", color = "#36454F") + # European boundaries
-  geom_point(data = geo_data, aes(x = long, y = lat, size = count*4), 
+  geom_point(data = geo_data, aes(x = long, y = lat, size = count), 
              color = "yellow", alpha = 0.1,
              show.legend = TRUE) + # Outer glow with size based on count
-  geom_point(data = geo_data, aes(x = long, y = lat, size = count*2), 
+  geom_point(data = geo_data, aes(x = long, y = lat, size = count*0.5), 
              color = "yellow", alpha = 0.1,
              show.legend = TRUE) + # Middle glow with size based on count
-  geom_point(data = geo_data, aes(x = long, y = lat, size = count*1.5), 
+  geom_point(data = geo_data, aes(x = long, y = lat, size = count*0.25), 
              color = "darkorange", alpha = 0.1,
              show.legend = TRUE) + # Inner glow with size based on count
-  geom_point(data = geo_data, aes(x = long, y = lat, size = count), 
+  geom_point(data = geo_data, aes(x = long, y = lat, size = count*0.1), 
              color = "gold", alpha = 0.1,
              show.legend = TRUE) + # Core point with size based on count
   geom_text(data = geo_data, aes(x = long, y = lat, label = toTitleCase(city_2)), 
             size = 3, vjust = -0.5, hjust = 0.5, color = "white", family = "Noto Sans") + # Labels with Noto Sans font
   scale_size_continuous(
     name = "Number of groups per city", # Custom legend label
-    range = c(3, 10)) + # Adjust size range if necessary
+    range = c(3, 12)) + # Adjust size range if necessary
   coord_sf(xlim = c(-25, 30), ylim = c(35, 70), expand = FALSE) + # Zoom in on Europe
   theme_minimal() +
   theme(
@@ -171,7 +171,7 @@ p <- ggplot() +
 p <- p +
    # Control legend appearance
     labs(
-    title = "Number of squat groups in European cities",
+    title = "Squat vitality: groups across European cities",
     # subtitle = "number",
     legend.title = "count", # Custom legend title
     caption = "#30DayMapChallenge. Chiara Mazzarella, Daniele Cannatella, and Clémentine Cottineau-Mugadza, 2024.  \n 17 November: Collaborative. Source: radar.squat.net"

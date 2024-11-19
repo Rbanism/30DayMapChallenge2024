@@ -259,7 +259,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   .. ..$ uuid : chr "da296694-ae72-47a9-9073-e450143b9c58"
   ..$ 194614:List of 2
   .. ..$ title: chr "about:fem"
-  .. ..$ uuid : chr "682d734a-0443-40cb-a340-efa9bfa84594"
+  .. ..$ uuid : chr "d0c25ef6-f4a1-44e7-9afa-dff6d20b9755"
   ..$ 1608  :List of 2
   .. ..$ title: chr "Abstand"
   .. ..$ uuid : chr "2f2f9cb7-49f1-40b8-a609-7b0a2a91e476"
@@ -361,7 +361,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   .. ..$ uuid : chr "ac27233d-b37c-4730-8304-f1ac41322cc8"
   ..$ 194613:List of 2
   .. ..$ title: chr "aktion./.arbeitsunrecht"
-  .. ..$ uuid : chr "b3d61bd8-c5e2-4508-b98b-5e47164dfb21"
+  .. ..$ uuid : chr "74225e9c-d64a-405e-bc84-afb7aa2103ea"
   ..$ 437892:List of 2
   .. ..$ title: chr "AKuT - Alternatives Kulturzentrum Thun"
   .. ..$ uuid : chr "1821f4a6-0ea7-42a4-a76a-90ca116e57aa"
@@ -400,7 +400,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   .. ..$ uuid : chr "e409e0eb-a91a-4a62-b0f4-e94fac24cec5"
   ..$ 194594:List of 2
   .. ..$ title: chr "Alternative Liste (AL) Uni Köln"
-  .. ..$ uuid : chr "dc3d7e5f-8350-49ae-84b0-fe17bf2765c5"
+  .. ..$ uuid : chr "dc452f50-7b55-4dc0-901d-7b64b95a58b4"
   ..$ 55178 :List of 2
   .. ..$ title: chr "Altes Sportamt"
   .. ..$ uuid : chr "f12b9492-88bf-46c4-9f98-f6fed72bf5ac"
@@ -1622,7 +1622,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;     &lt;dbl&gt;
  1 berlin    218   berlin        52.5    13.4  
  2 amsterdam 143   amsterdam     52.4     4.89 
- 3 paris     89    paris         48.9     2.32 
+ 3 paris     89    paris         48.9     2.35 
  4 barcelona 83    barcelona     41.4     2.18 
  5 bruxelles 76    bruxelles     50.8     4.35 
  6 toulouse  56    toulouse      43.6     1.44 
@@ -1670,23 +1670,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> europe, <span class="at">fill =</span> <span class="st">"#1a2c44"</span>, <span class="at">color =</span> <span class="st">"#36454F"</span>) <span class="sc">+</span> <span class="co"># European boundaries</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> geo_data, <span class="fu">aes</span>(<span class="at">x =</span> long, <span class="at">y =</span> lat, <span class="at">size =</span> count<span class="sc">*</span><span class="dv">4</span>), </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> geo_data, <span class="fu">aes</span>(<span class="at">x =</span> long, <span class="at">y =</span> lat, <span class="at">size =</span> count), </span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"yellow"</span>, <span class="at">alpha =</span> <span class="fl">0.1</span>,</span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">show.legend =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> <span class="co"># Outer glow with size based on count</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> geo_data, <span class="fu">aes</span>(<span class="at">x =</span> long, <span class="at">y =</span> lat, <span class="at">size =</span> count<span class="sc">*</span><span class="dv">2</span>), </span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> geo_data, <span class="fu">aes</span>(<span class="at">x =</span> long, <span class="at">y =</span> lat, <span class="at">size =</span> count<span class="sc">*</span><span class="fl">0.5</span>), </span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"yellow"</span>, <span class="at">alpha =</span> <span class="fl">0.1</span>,</span>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">show.legend =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> <span class="co"># Middle glow with size based on count</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> geo_data, <span class="fu">aes</span>(<span class="at">x =</span> long, <span class="at">y =</span> lat, <span class="at">size =</span> count<span class="sc">*</span><span class="fl">1.5</span>), </span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> geo_data, <span class="fu">aes</span>(<span class="at">x =</span> long, <span class="at">y =</span> lat, <span class="at">size =</span> count<span class="sc">*</span><span class="fl">0.25</span>), </span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"darkorange"</span>, <span class="at">alpha =</span> <span class="fl">0.1</span>,</span>
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">show.legend =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> <span class="co"># Inner glow with size based on count</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> geo_data, <span class="fu">aes</span>(<span class="at">x =</span> long, <span class="at">y =</span> lat, <span class="at">size =</span> count), </span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> geo_data, <span class="fu">aes</span>(<span class="at">x =</span> long, <span class="at">y =</span> lat, <span class="at">size =</span> count<span class="sc">*</span><span class="fl">0.1</span>), </span>
 <span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"gold"</span>, <span class="at">alpha =</span> <span class="fl">0.1</span>,</span>
 <span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">show.legend =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> <span class="co"># Core point with size based on count</span></span>
 <span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> geo_data, <span class="fu">aes</span>(<span class="at">x =</span> long, <span class="at">y =</span> lat, <span class="at">label =</span> <span class="fu">toTitleCase</span>(city_2)), </span>
 <span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="dv">3</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">family =</span> <span class="st">"Noto Sans"</span>) <span class="sc">+</span> <span class="co"># Labels with Noto Sans font</span></span>
 <span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_continuous</span>(</span>
 <span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Number of groups per city"</span>, <span class="co"># Custom legend label</span></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">10</span>)) <span class="sc">+</span> <span class="co"># Adjust size range if necessary</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">12</span>)) <span class="sc">+</span> <span class="co"># Adjust size range if necessary</span></span>
 <span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">25</span>, <span class="dv">30</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">35</span>, <span class="dv">70</span>), <span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="co"># Zoom in on Europe</span></span>
 <span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
@@ -1732,9 +1732,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> p <span class="sc">+</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Control legend appearance</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Events organized by squats in European cities"</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Squat vitality: groups across European cities"</span>,</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># subtitle = "number",</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="st">"Event Density"</span>, <span class="co"># Custom legend title</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="st">"count"</span>, <span class="co"># Custom legend title</span></span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"#30DayMapChallenge. Chiara Mazzarella, Daniele Cannatella, and Clémentine Cottineau-Mugadza, 2024.  </span><span class="sc">\n</span><span class="st"> 17 November: Collaborative. Source: radar.squat.net"</span></span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
