@@ -1,0 +1,102 @@
+---
+title: "20. OSM: OSM data in CRiSp"
+author:
+  - "Claudiu Forgaci"
+date: "2024-11-19"
+format: 
+  html: default
+  pdf: default
+---
+
+### 0. Load packages
+
+```{r}
+pkgs <- c("tidyverse", "sf", "pak", "sysfonts", "showtext", 
+          "osmdata", "magick", "grid")
+
+missing_pkgs <- pkgs[!(pkgs %in% installed.packages()[, "Package"])]
+if (length(missing_pkgs)) install.packages(missing_pkgs)
+lapply(pkgs, library, character.only = TRUE)
+
+suppressMessages({
+  devtools::install_github("CityRiverSpaces/CRiSp", ref = "37-refactoring")
+})
+
+library(CRiSp)
+```
+
+```{r}
+rbanism_logo <- image_read('../rbanism_logo_white.png')
+colored_rbanism_logo <- image_colorize(rbanism_logo, opacity = 100, color = "#FFFFC5")
+image_write(colored_rbanism_logo, "img/colored_rbanism_logo.png")
+```
+
+### 1. Get OSM data
+
+```{r osm-data}
+bd <- CRiSp::get_osmdata("Bucharest", "Dâmbovița", buffer = 2000)
+bd_corridor <- st_read("data/corridor_Dâmbovița.gpkg")
+```
+
+### 2. Create the plot
+
+```{r base-plot}
+p <- ggplot() +
+  geom_sf(data = bd$streets, linewidth = 0.1, color = "#FFFFC5") +
+  geom_sf(data = bd$railways, linewidth = 0.2, color = "#a1a17d") +
+  geom_sf(data = bd$river_centerline, linewidth = 0.5, color = "#89bfc9") +
+  geom_sf(data = bd$river_surface, linewidth = 0, color = "#89bfc9", fill = "#89bfc9") +
+  geom_sf(data = bd$boundary, linewidth = 0.05, color = "white", fill = "white", alpha = 0.1) +
+  geom_sf(data = bd_corridor, linewidth = 0.8, color = "#e39e59", fill = NA) +
+  xlim(418500, 437500) +
+  ylim(4909800, 4931500)
+```
+
+### 3. Style the map
+
+#### 3.1 Add custom fonts
+
+```{r plot-styling}
+font_add_google("Montserrat", "m")
+showtext_auto()
+```
+
+#### 3.2 Plot your map
+
+```{r plot}
+p_styled <- p +
+  theme_void() +
+  theme(
+    plot.background = element_rect(fill = "#3a4d54", color = NA),
+    plot.margin = margin(10, 90, 10, 90),
+    legend.position = "bottom",
+    legend.box = "horizontal",
+    legend.title = element_text(size = 13, family = "m", color = "#FFFFC5"), 
+    legend.text = element_text(size = 13, family = "m", color = "#FFFFC5"),  
+    plot.title = element_text(size = 34, family = "m", color = "#FFFFC5", 
+                              face = "bold"), 
+    plot.subtitle = element_text(size = 13, family = "m", color = "#FFFFC5"), 
+    plot.caption = element_text(size = 10, family = "m", color = "#FFFFC5",
+                                hjust = 0, lineheight = 0.4),
+    legend.key.height = unit(1, "cm"),
+    legend.key.width = unit(1, "cm")) +
+  labs(title = "The corridor of River Dâmbovița, Bucharest",
+       subtitle = "Using OSM data in CRiSp, the R package for urban river space delineation\n",
+       caption = "Data: OpenStreetMap\nAuthor: Claudiu Forgaci\nForgaci C, Nattino F (2024). CRiSp: Automate the Delineation of Urban River Spaces. R package version 0.0.0.9000, https://cityriverspaces.github.io/CRiSp/.") 
+
+p_styled
+```
+
+```{r}
+p_styled <- cowplot::ggdraw(p_styled) +
+  cowplot::draw_image(colored_rbanism_logo, x = 0.85, y = 0.79, width = 0.085, height = 0.085, hjust = 0, vjust = 0)
+```
+
+```{r}
+output_file <- "output/20Nov_OSM.png"
+ggsave(filename = output_file, plot = p_styled, device = "png", 
+       width = 6, height = 6, dpi = 300)
+```
+
+## And here is the map!
+![The corridor of River Dâmbovița, Bucharest](output/20Nov_OSM.png)
