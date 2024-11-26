@@ -151,17 +151,17 @@ p_styled <- p +
     plot.margin = margin(45, 10, 45, 10),
     legend.position = "bottom",
     legend.box = "horizontal",
-    legend.title = element_text(size = 13, family = "m", color = "#155294"), 
+    legend.title = element_markdown(size = 13, family = "m", color = "#155294"), 
     legend.text = element_text(size = 13, family = "m", color = "#155294"),  
     plot.title = element_text(size = 34, family = "m", color = "#155294", 
                               face = "bold", lineheight = 1), 
-    plot.subtitle = element_markdown(size = 13, family = "m", color = "#155294"), 
+    plot.subtitle = element_text(size = 13, family = "m", color = "#155294"), 
     plot.caption = element_text(size = 16, family = "m", color = "#155294",
                                 hjust = 0, lineheight = 0.4),
     legend.key.height = unit(1, "cm"),
     legend.key.width = unit(1, "cm")) +
   labs(title = "World Capitals with River Orientations",
-       subtitle = "<span style='color:#29d1ff; letter-spacing:0px;'>Population</span>& <span style='color:#ff5b29; letter-spacing:0px;'>River Orientation</span>",
+       subtitle = "",
        caption = "Data: OpenStreetMap, NaturalEarth\nAuthor: Claudiu Forgaci")
 
 p_styled
