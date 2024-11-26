@@ -1,0 +1,179 @@
+---
+title: "20. OSM: OSM data in CRiSp"
+author: "Claudiu Forgaci"
+date: "2024-11-19"
+format: 
+  html: default
+  pdf: default
+---
+
+### 0. Load packages
+
+```{r}
+pkgs <- c("tidyverse", "sf", "pak", "sysfonts", "showtext", "ggtext", "scales",
+          "osmdata", "magick", "grid", "rnaturalearth", "rnaturalearthdata")
+missing_pkgs <- pkgs[!(pkgs %in% installed.packages()[, "Package"])]
+if (length(missing_pkgs)) install.packages(missing_pkgs)
+lapply(pkgs, library, character.only = TRUE)
+```
+
+```{r}
+rbanism_logo <- image_read('../rbanism_logo_white.png')
+colored_rbanism_logo <- image_colorize(rbanism_logo, opacity = 100, color = "#155294")
+image_write(colored_rbanism_logo, "img/colored_rbanism_logo.png")
+```
+
+### 1. Get world map and capitals data
+
+```{r osm-data}
+world <- ne_countries(scale = "medium", returnclass = "sf")
+capitals <- ne_download(scale = "medium", type = "populated_places", category = "cultural", returnclass = "sf")
+capitals <- capitals |> 
+  filter(POP_MIN > 0 & FEATURECLA == "Admin-0 capital") |> 
+  select(name = NAME, latitude = LATITUDE, longitude = LONGITUDE, pop = POP_MIN, geom = geometry)
+```
+
+### 2. Get rivers from OSM
+
+```{r}
+river_data_list <- list()
+
+for (i in 1:nrow(capitals)) {
+  bbox <- st_bbox(capitals[i, ])
+  bbox_expanded <- c(xmin = bbox["xmin"] - 0.1, ymin = bbox["ymin"] - 0.1,
+                     xmax = bbox["xmax"] + 0.1, ymax = bbox["ymax"] + 0.1)
+  
+  river_data <- opq(bbox_expanded) |> 
+    add_osm_feature(key = "waterway", value = "river") |> 
+    osmdata_sf()
+  
+  if (!is.null(river_data$osm_lines)) {
+    river_data_list[[capitals$name[i]]] <- river_data$osm_lines
+  }
+}
+
+standardize_sf <- function(sf_object, template) {
+  missing_cols <- setdiff(names(template), names(sf_object))
+  for (col in missing_cols) sf_object[[col]] <- NA
+  sf_object <- sf_object[, names(template)]
+}
+
+template <- river_data_list[[1]][1, ]
+river_data_list <- lapply(river_data_list, \(river) {
+  if (!is.null(river)) {standardize_sf(river, template)} else {NULL}
+})
+
+river_data_list <- river_data_list[!sapply(river_data_list, is.null)]
+
+rivers <- do.call(rbind, river_data_list)
+```
+
+### 3. Calculate river orientation
+
+```{r}
+calculate_orientation <- function(linestring) {
+  coords <- st_coordinates(linestring)
+  lm_fit <- lm(coords[,2] ~ coords[,1])
+  atan(coef(lm_fit)[2]) * 180 / pi
+}
+
+rivers <- rivers |>
+  rowwise() |>
+  mutate(orientation = calculate_orientation(geometry))
+
+capital_river_dist <- st_distance(capitals, rivers)
+nearest_rivers <- apply(capital_river_dist, 1, which.min)
+capitals$ro <- rivers$orientation[nearest_rivers]
+```
+
+### 4. Create the plot
+
+```{r base-plot}
+scaling_factor <- 1000
+world <- st_transform(world, crs = 3857)
+capitals <- st_transform(capitals, crs = 3857)
+lat_min <- -60 * 111320
+lat_max <- 100 * 111320
+
+p <- ggplot() +
+  geom_sf(data = world, fill = "#155294", color = NA) +
+  geom_sf(data = capitals, aes(size = pop), shape = 21, fill = "#29d1ff", color = "#29d1ff", alpha = 0.8) +
+  geom_segment(
+    data = capitals |> filter(!is.na(ro)),
+    aes(
+      x = st_coordinates(geom)[,1] - cos(ro * pi / 180) * sqrt(pop) * scaling_factor / 2,
+      y = st_coordinates(geom)[,2] - sin(ro * pi / 180) * sqrt(pop) * scaling_factor / 2,
+      xend = st_coordinates(geom)[,1] + cos(ro * pi / 180) * sqrt(pop) * scaling_factor / 2,
+      yend = st_coordinates(geom)[,2] + sin(ro * pi / 180) * sqrt(pop) * scaling_factor / 2
+    ), 
+    color = "#ff5b29",
+    alpha = 0.8,
+    show.legend = TRUE
+  ) +
+  geom_segment(
+    aes(x = 0, y = 0, xend = 1, yend = 1),
+    color = "#ff5b29",
+    linetype = "solid",
+    inherit.aes = FALSE,
+    show.legend = TRUE
+  ) +
+  scale_size(
+    range = c(1, 10),
+    labels = label_number(scale = 1e-6, suffix = " mil.", accuracy = 0.1)
+  ) +
+  coord_sf(crs = st_crs(3857),
+           ylim = c(lat_min, lat_max)) +
+  labs(
+    title = "World Capitals with River Orientations",
+    # size = "<span style='color:#29d1ff;'>Population</span>& <span style='color:#ff5b29;'>River Orientation</span>",
+    size = NULL,
+    color = "River Orientation"
+  ) +
+  guides(color = guide_legend(override.aes = list(linetype = "solid")))
+```
+
+### 5. Style the map
+
+#### 5.1 Add custom fonts
+
+```{r plot-styling}
+font_add_google("Montserrat", "m")
+showtext_auto()
+```
+
+#### 5.2 Plot your map
+
+```{r plot}
+p_styled <- p +
+  theme_void() +
+  theme(
+    plot.background = element_rect(fill = "#d8e1f0", color = NA),
+    plot.margin = margin(45, 10, 45, 10),
+    legend.position = "bottom",
+    legend.box = "horizontal",
+    legend.title = element_text(size = 13, family = "m", color = "#155294"), 
+    legend.text = element_text(size = 13, family = "m", color = "#155294"),  
+    plot.title = element_text(size = 34, family = "m", color = "#155294", 
+                              face = "bold", lineheight = 1), 
+    plot.subtitle = element_markdown(size = 13, family = "m", color = "#155294"), 
+    plot.caption = element_text(size = 16, family = "m", color = "#155294",
+                                hjust = 0, lineheight = 0.4),
+    legend.key.height = unit(1, "cm"),
+    legend.key.width = unit(1, "cm")) +
+  labs(title = "World Capitals with River Orientations",
+       subtitle = "<span style='color:#29d1ff; letter-spacing:0px;'>Population</span>& <span style='color:#ff5b29; letter-spacing:0px;'>River Orientation</span>",
+       caption = "Data: OpenStreetMap, NaturalEarth\nAuthor: Claudiu Forgaci")
+
+p_styled
+```
+
+```{r}
+p_styled <- cowplot::ggdraw(p_styled) +
+  cowplot::draw_image(colored_rbanism_logo, x = 0.85, y = 0.77, width = 0.09, height = 0.09, hjust = 0, vjust = 0)
+```
+
+```{r}
+output_file <- "output/28Nov_BluePlanet.png"
+ggsave(filename = output_file, plot = p_styled, device = "png", 
+       width = 6, height = 6, dpi = 300)
+```
