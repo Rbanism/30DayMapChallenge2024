@@ -36,8 +36,8 @@ ls_street <- record_batch_reader('segment', bbox = ls_bbox)
 
 ```{r base-plot}
 p <- ggplot() +
-  geom_sf(data = ls_building, fill = "#FFFFC5", color = NA) +
-  geom_sf(data = ls_street, linewidth = 0.1, color = "#ff9a42")
+  geom_sf(data = ls_street, linewidth = 0.05, color = "#ff9a42") +
+  geom_sf(data = ls_building, fill = "#FFFFC5", color = NA)
 ```
 
 ### 3. Style the map
@@ -58,13 +58,13 @@ p_styled <- p +
     plot.background = element_rect(fill = "#3a4d54", color = NA),
     plot.margin = margin(10, 50, 10, 50),
     plot.title = element_text(size = 34, family = "m", color = "#FFFFC5", 
-                              face = "bold", margin = margin(0, 0, 0, 10)), 
+                              face = "bold", margin = margin(0, 0, 0, 15)), 
     plot.subtitle = element_text(size = 24, family = "m", color = "#FFFFC5", 
                                  lineheight = 0.4,
-                                 margin = margin(0, 0, 0, 10)), 
+                                 margin = margin(0, 0, 0, 15)), 
     plot.caption = element_text(size = 16, family = "m", color = "#FFFFC5",
                                 hjust = 0, lineheight = 0.4, 
-                                margin = margin(0, 0, 0, 10))) +
+                                margin = margin(0, 0, 0, 15))) +
   labs(title = "The Urban Fabric of Warsaw",
        subtitle = "\nBased on Overture Maps data",
        caption = "Data: Overture Maps\nAuthor: Claudiu Forgaci") 
