@@ -1,0 +1,84 @@
+---
+title: "29. Overture"
+author: "Claudiu Forgaci"
+date: "2024-11-29"
+format: 
+  html: default
+  pdf: default
+---
+
+### 0. Load packages
+
+```{r}
+pkgs <- c("tidyverse", "sf", "pak", "sysfonts", "showtext", 
+          "osmdata", "magick", "grid", "overturemapsr", "arrow")
+missing_pkgs <- pkgs[!(pkgs %in% installed.packages()[, "Package"])]
+if (length(missing_pkgs)) install.packages(missing_pkgs)
+lapply(pkgs, library, character.only = TRUE)
+```
+
+```{r}
+rbanism_logo <- image_read('../rbanism_logo_white.png')
+colored_rbanism_logo <- image_colorize(rbanism_logo, opacity = 100, color = "#FFFFC5")
+image_write(colored_rbanism_logo, "img/colored_rbanism_logo.png")
+```
+
+### 1. Get Overture data
+
+```{r osm-data}
+# bbox Warsaw
+ls_bbox <- c(20.860350,52.139920,21.184446,52.335449)
+ls_building <- record_batch_reader('building', bbox = ls_bbox)
+ls_street <- record_batch_reader('segment', bbox = ls_bbox)
+```
+
+### 2. Create the plot
+
+```{r base-plot}
+p <- ggplot() +
+  geom_sf(data = ls_street, linewidth = 0.05, color = "#ff9a42") +
+  geom_sf(data = ls_building, fill = "#FFFFC5", color = NA)
+```
+
+### 3. Style the map
+
+#### 3.1 Add custom fonts
+
+```{r plot-styling}
+font_add_google("Montserrat", "m")
+showtext_auto()
+```
+
+#### 3.2 Plot your map
+
+```{r plot}
+p_styled <- p +
+  theme_void() +
+  theme(
+    plot.background = element_rect(fill = "#3a4d54", color = NA),
+    plot.margin = margin(10, 50, 10, 50),
+    plot.title = element_text(size = 34, family = "m", color = "#FFFFC5", 
+                              face = "bold", margin = margin(0, 0, 0, 15)), 
+    plot.subtitle = element_text(size = 24, family = "m", color = "#FFFFC5", 
+                                 lineheight = 0.4,
+                                 margin = margin(0, 0, 0, 15)), 
+    plot.caption = element_text(size = 16, family = "m", color = "#FFFFC5",
+                                hjust = 0, lineheight = 0.4, 
+                                margin = margin(0, 0, 0, 15))) +
+  labs(title = "The Urban Fabric of Warsaw",
+       subtitle = "\nBased on Overture Maps data",
+       caption = "Data: Overture Maps\nAuthor: Claudiu Forgaci") 
+
+p_styled
+```
+
+```{r}
+p_styled <- cowplot::ggdraw(p_styled) +
+  cowplot::draw_image(colored_rbanism_logo, x = 0.88, y = 0.83, width = 0.085, height = 0.085, hjust = 0, vjust = 0)
+```
+
+```{r}
+output_file <- "output/29Nov_Overture.png"
+ggsave(filename = output_file, plot = p_styled, device = "png", 
+       width = 6, height = 6, dpi = 300)
+```
