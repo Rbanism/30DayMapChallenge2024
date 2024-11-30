@@ -1,0 +1,126 @@
+---
+title: "2. Lines Map: Natural roads in Bucharest"
+author:
+  - "Claudiu Forgaci"
+  - "Francesco Nattino"
+date: "2024-10-25"
+format: 
+  html: default
+  pdf: default
+---
+
+### 0. Load packages
+
+```{r}
+pkgs <- c("tidyverse", "sf", "pak", "sysfonts", "showtext", "ggtext", "scales",
+          "osmdata", "magick", "grid", "rnaturalearth", "rnaturalearthdata",
+          "fs", "spacyr", "nominatimlite")
+missing_pkgs <- pkgs[!(pkgs %in% installed.packages()[, "Package"])]
+if (length(missing_pkgs)) install.packages(missing_pkgs)
+lapply(pkgs, library, character.only = TRUE)
+```
+
+```{r}
+rbanism_logo <- image_read('../rbanism_logo_white.png')
+colored_rbanism_logo <- image_colorize(rbanism_logo, opacity = 100, color = "white")
+image_write(colored_rbanism_logo, "img/colored_rbanism_logo.png")
+```
+
+### 1. Get all place names
+
+```{r}
+spacy_initialize(model = "en_core_web_sm")
+
+all_dirs <- fs::dir_ls("../", recurse = TRUE, type = "file")
+
+filtered_files <- all_dirs[
+  grepl("^\\.\\.\\/..Nov", all_files) & 
+  grepl("\\.(qmd|R)$", all_files)
+]
+```
+
+```{r}
+extract_places_from_file <- function(file_path) {
+  text <- paste(readLines(file_path, warn = FALSE), collapse = " ")
+  parsed <- spacy_parse(text, entity = TRUE)
+  entities <- entity_extract(parsed)
+  places <- entities[entities$entity_type %in% c("GPE", "LOC", "FAC"), ]
+  if (nrow(places) > 0) places$file <- file_path
+  return(places)
+}
+
+results <- do.call(rbind, lapply(filtered_files, extract_places_from_file))
+```
+
+## 2. Prepare geographic data
+
+```{r}
+world <- ne_countries(scale = "medium", returnclass = "sf")
+locations <- geo_lite(results$entity, return_addresses = TRUE)
+
+locations <- locations |> 
+  filter(!is.na(lat)) |> 
+  select(-address) |> 
+  group_by(query, lat, lon) |> 
+  summarise(n = n(), .groups = "drop")
+```
+
+
+## Plot the Map
+
+```{r}
+p <- ggplot() +
+  geom_sf(data = world, fill = "#6da0f2", color = NA) +
+  geom_point(data = locations, mapping = aes(lon, lat, size = n), 
+             color = "#ff9a42", alpha = 0.8) +
+  scale_size_continuous(breaks = c(1, 2, 5, 10), labels = c("1", "2", "5", "10"), name = NULL)
+```
+
+### 2. Style the map
+
+#### 2.1 Add custom fonts
+
+```{r}
+# Add Google Fonts to the system
+font_add_google("Roboto", "r")  # Add the "Roboto" font
+font_add_google("Montserrat", "m")  # Add the "Montserrat" font
+showtext_auto()
+```
+
+#### 2.2 Plot your map
+
+```{r}
+p_styled <- p +
+  theme_void() +
+  theme(
+    plot.background = element_rect(fill = "#103251",
+                                    color = NA),
+    plot.margin = margin(45, 10, 45, 10),
+    legend.position = "bottom",
+    legend.box = "horizontal",
+    legend.title = element_markdown(size = 13, family = "m", color = "white"), 
+    legend.text = element_text(size = 13, family = "m", color = "white"),  
+    plot.title = element_text(size = 34, family = "m", color = "white", 
+                              face = "bold", lineheight = 1), 
+    plot.subtitle = element_text(size = 13, family = "m", color = "white"), 
+    plot.caption = element_text(size = 16, family = "m", color = "white",
+                                hjust = 0, lineheight = 0.4),
+    legend.key.height = unit(1, "cm"),
+    legend.key.width = unit(1, "cm")) +
+  labs(title = "Places in the Rbanism #30DayMapChallenge",
+       subtitle = "Size of the point represents the number of mentions. Place names were not validated.",
+       caption = "Data: Rbanism #30DayMapChallenge repository\nAuthor: Claudiu Forgaci\nPackages used: spacyr, nominatimlite") 
+
+p_styled
+```
+
+```{r}
+p_styled <- cowplot::ggdraw(p_styled) +
+  cowplot::draw_image(colored_rbanism_logo, x = 0.85, y = 0.77, width = 0.09, height = 0.09, hjust = 0, vjust = 0)
+```
+
+```{r}
+output_file <- "output/30Nov_FinalMap.png"
+ggsave(filename = output_file, plot = p_styled, device = "png", 
+       width = 6, height = 6, dpi = 300)
+```
