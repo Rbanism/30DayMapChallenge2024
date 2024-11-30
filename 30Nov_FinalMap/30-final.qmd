@@ -22,7 +22,7 @@ lapply(pkgs, library, character.only = TRUE)
 
 ```{r}
 rbanism_logo <- image_read('../rbanism_logo_white.png')
-colored_rbanism_logo <- image_colorize(rbanism_logo, opacity = 100, color = "#155294")
+colored_rbanism_logo <- image_colorize(rbanism_logo, opacity = 100, color = "white")
 image_write(colored_rbanism_logo, "img/colored_rbanism_logo.png")
 ```
 
@@ -50,14 +50,9 @@ extract_places_from_file <- function(file_path) {
 }
 
 results <- do.call(rbind, lapply(filtered_files, extract_places_from_file))
-
-if (!is.null(results)) {
-  results <- unique(results)
-  print(results)
-} else {
-  message("No place names found.")
-}
 ```
+
+## 2. Prepare geographic data
 
 ```{r}
 world <- ne_countries(scale = "medium", returnclass = "sf")
@@ -68,28 +63,17 @@ locations <- locations |>
   select(-address) |> 
   group_by(query, lat, lon) |> 
   summarise(n = n(), .groups = "drop")
-
-ggplot(locations, aes(lon, lat)) +
-  geom_point(color = "red") +
-  labs(title = "Places mentioned in the text",
-       subtitle = "Size of the point represents the number of mentions",
-       caption = "Data: OpenStreetMap\nAuthor: Claudiu Forgaci\nPackages used: spacyr, nominatimlite")
 ```
 
 
-## Plot the Point Map
-
-### 1. Create the plot
+## Plot the Map
 
 ```{r}
-# Create the base plot
 p <- ggplot() +
-  geom_sf(data = street_data, linewidth = 0.05, color = "white") +
-  geom_sf(data = strokes, aes(linewidth = as.numeric(length)), color = "#FFFFC5") +
-  scale_linewidth_continuous(name = "Main structures:", range = c(0.1, 1.2)) +
-  xlim(418500, 437500) +
-  ylim(4909800, 4931500) +
-  coord_sf(datum = st_crs(32635))
+  geom_sf(data = world, fill = "#6da0f2", color = NA) +
+  geom_point(data = locations, mapping = aes(lon, lat, size = n), 
+             color = "#ff9a42", alpha = 0.8) +
+  scale_size_continuous(breaks = c(1, 2, 5, 10), labels = c("1", "2", "5", "10"), name = NULL)
 ```
 
 ### 2. Style the map
@@ -98,8 +82,8 @@ p <- ggplot() +
 
 ```{r}
 # Add Google Fonts to the system
-font_add_google("Roboto", "roboto")  # Add the "Roboto" font
-font_add_google("Montserrat", "montserrat")  # Add the "Montserrat" font
+font_add_google("Roboto", "r")  # Add the "Roboto" font
+font_add_google("Montserrat", "m")  # Add the "Montserrat" font
 showtext_auto()
 ```
 
@@ -111,58 +95,32 @@ p_styled <- p +
   theme(
     plot.background = element_rect(fill = "#103251",
                                     color = NA),
-    plot.margin = margin(10, 90, 10, 90),
+    plot.margin = margin(45, 10, 45, 10),
     legend.position = "bottom",
     legend.box = "horizontal",
-    # legend.title = element_blank(), 
-    legend.title = element_text(size = 13,
-                              family = "montserrat",
-                              color = "white"), 
-    legend.text = element_text(size = 13,
-                              family = "montserrat",
-                              color = "white"),  
-    plot.title = element_text(size = 34,
-                              face = "bold",
-                              family = "montserrat",
-                              color = "white"), 
-    plot.subtitle = element_text(size = 13,
-                              family = "montserrat",
-                              color = "white"), 
-    plot.caption = element_text(size = 10,
-                              family = "montserrat",
-                              color = "white",
-                              hjust = 0,
-                              lineheight = 0.4),
-    legend.key.height = unit(1, "cm"),  # Adjust height to make keys squared
-    legend.key.width = unit(1, "cm"),   # Adjust width to match height
-  ) +
-  # Control legend appearance
-  labs(title = "The structure of Bucharest",
-       subtitle = "Continuous streets along the main street network, lineweight by length\n",
-       caption = "Data: OpenStreetMap\nAuthor: Claudiu Forgaci\nPackages used:
-- Forgaci C, Nattino F (2024). CRiSp: Automate the Delineation of Urban River Spaces. R package version 0.0.0.9000, https://cityriverspaces.github.io/CRiSp/.
-- Nattino F, Forgaci C (2024). rcoins: Continuity in street networks. R package version 0.0.0.9000, https://cityriverspaces.github.io/rcoins/") 
+    legend.title = element_markdown(size = 13, family = "m", color = "white"), 
+    legend.text = element_text(size = 13, family = "m", color = "white"),  
+    plot.title = element_text(size = 34, family = "m", color = "white", 
+                              face = "bold", lineheight = 1), 
+    plot.subtitle = element_text(size = 13, family = "m", color = "white"), 
+    plot.caption = element_text(size = 16, family = "m", color = "white",
+                                hjust = 0, lineheight = 0.4),
+    legend.key.height = unit(1, "cm"),
+    legend.key.width = unit(1, "cm")) +
+  labs(title = "Places in the Rbanism #30DayMapChallenge",
+       subtitle = "Size of the point represents the number of mentions. Place names were not validated.",
+       caption = "Data: Rbanism #30DayMapChallenge repository\nAuthor: Claudiu Forgaci\nPackages used: spacyr, nominatimlite") 
 
 p_styled
 ```
 
 ```{r}
 p_styled <- cowplot::ggdraw(p_styled) +
-  cowplot::draw_image(rbanism_logo, x = 0, y = 0, width = 0.1, height = 0.1, hjust = 0, vjust = 0)
+  cowplot::draw_image(colored_rbanism_logo, x = 0.85, y = 0.77, width = 0.09, height = 0.09, hjust = 0, vjust = 0)
 ```
 
 ```{r}
-# Define the output file name
-output_file <- "output/2Nov_StreetStrokes.png"
-
-# Export the map as a PNG with 1:1 aspect ratio
+output_file <- "output/30Nov_FinalMap.png"
 ggsave(filename = output_file, plot = p_styled, device = "png", 
        width = 6, height = 6, dpi = 300)
-
-# Print a message to confirm export
-cat("Map has been exported as", output_file, "with a 1:1 aspect ratio.\n")
 ```
-
-## And here is the map!
-
-![Street strokes in Bucharest](output/2-streetstrokes.png)
